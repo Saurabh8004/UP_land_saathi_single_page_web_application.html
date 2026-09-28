@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { t, PORTALS, STAMP_DUTY_RATES, REGISTRATION_FEE_RATE, CHECKLISTS, type Lang } from '../config';
 import { ExternalLink, Calculator, ClipboardList } from 'lucide-react';
+import { useInView, useReducedMotion, staggerContainer, staggerItem } from '../hooks/useAnimations';
 
 interface FreeToolsProps {
   lang: Lang;
@@ -8,49 +10,68 @@ interface FreeToolsProps {
 
 export default function FreeTools({ lang }: FreeToolsProps) {
   const tr = t[lang];
+  const { ref, isInView } = useInView();
+  const reducedMotion = useReducedMotion();
 
   return (
-    <section id="free-tools" className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-slate mb-12">
-          {tr.freeTools.title}
-        </h2>
+    <section id="free-tools" className="py-20 md:py-28 bg-white">
+      <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={reducedMotion ? {} : { opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <span className="inline-block px-3 py-1 rounded-full bg-primary/5 text-primary text-xs font-semibold mb-4">
+            {lang === 'hi' ? '🛠️ मुफ्त टूल्स' : '🛠️ FREE TOOLS'}
+          </span>
+          <h2 className="section-title text-text">{tr.freeTools.title}</h2>
+        </motion.div>
 
         {/* Government Portals */}
-        <div className="mb-12">
-          <h3 className="text-lg font-bold text-slate mb-4 flex items-center gap-2">
+        <motion.div
+          initial={reducedMotion ? {} : { opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.2 }}
+          className="mb-14"
+        >
+          <h3 className="text-lg font-bold text-text mb-5 flex items-center gap-2">
             <ExternalLink size={18} className="text-primary" />
             {tr.freeTools.portals}
           </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <motion.div
+            variants={staggerContainer}
+            initial={reducedMotion ? {} : "hidden"}
+            animate={isInView ? "visible" : "hidden"}
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
             {PORTALS.map((portal, i) => (
-              <a
+              <motion.a
                 key={i}
                 href={portal.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-3 p-4 rounded-xl border border-gray-100 bg-bg hover:border-primary/30 hover:shadow-md transition-all group"
+                variants={staggerItem}
+                whileHover={reducedMotion ? {} : { y: -4, transition: { duration: 0.2 } }}
+                className="flex items-start gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary/20 hover:shadow-md transition-all group"
               >
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20">
-                  <ExternalLink size={18} className="text-primary" />
+                <div className="w-10 h-10 rounded-lg bg-primary/5 border border-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                  <ExternalLink size={16} className="text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-slate text-sm">{portal.name[lang]}</h4>
-                  <p className="text-xs text-slate-light mt-0.5">{portal.desc[lang]}</p>
-                  <p className="text-xs text-amber-600 mt-1">{tr.common.officialSite}</p>
+                  <h4 className="font-semibold text-text text-sm group-hover:text-primary transition-colors">{portal.name[lang]}</h4>
+                  <p className="text-xs text-muted mt-0.5">{portal.desc[lang]}</p>
+                  <p className="text-xs text-accent mt-1 font-medium">{tr.common.officialSite}</p>
                 </div>
-              </a>
+              </motion.a>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Tools Grid */}
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Stamp Duty Calculator */}
-          <StampDutyCalculator lang={lang} />
-          
-          {/* Document Checklist */}
-          <DocumentChecklist lang={lang} />
+          <StampDutyCalculator lang={lang} isInView={isInView} reducedMotion={reducedMotion} />
+          <DocumentChecklist lang={lang} isInView={isInView} reducedMotion={reducedMotion} />
         </div>
       </div>
     </section>
@@ -60,7 +81,7 @@ export default function FreeTools({ lang }: FreeToolsProps) {
 // ============================================================
 // STAMP DUTY CALCULATOR
 // ============================================================
-function StampDutyCalculator({ lang }: { lang: Lang }) {
+function StampDutyCalculator({ lang, isInView, reducedMotion }: { lang: Lang; isInView: boolean; reducedMotion: boolean }) {
   const tr = t[lang];
   const [value, setValue] = useState('');
   const [buyerType, setBuyerType] = useState<'male' | 'female' | 'joint'>('male');
@@ -70,7 +91,6 @@ function StampDutyCalculator({ lang }: { lang: Lang }) {
   const calculate = () => {
     const propValue = parseFloat(value);
     if (!propValue || propValue <= 0) return;
-    
     const rate = STAMP_DUTY_RATES[buyerType][areaType];
     const stampDuty = Math.round(propValue * rate / 100);
     const regFee = Math.round(propValue * REGISTRATION_FEE_RATE / 100);
@@ -78,35 +98,34 @@ function StampDutyCalculator({ lang }: { lang: Lang }) {
   };
 
   return (
-    <div className="bg-bg rounded-2xl p-6 border border-gray-100">
-      <h3 className="text-lg font-bold text-slate mb-4 flex items-center gap-2">
+    <motion.div
+      initial={reducedMotion ? {} : { opacity: 0, x: -20 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.3 }}
+      className="premium-card p-6"
+    >
+      <h3 className="text-lg font-bold text-text mb-5 flex items-center gap-2">
         <Calculator size={18} className="text-primary" />
         {tr.freeTools.calculator.title}
       </h3>
-
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-slate mb-1">
-            {tr.freeTools.calculator.propertyValue}
-          </label>
+          <label className="block text-sm font-medium text-text mb-1.5">{tr.freeTools.calculator.propertyValue}</label>
           <input
             type="number"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="₹ 10,00,000"
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-base focus:border-primary focus:ring-2 focus:ring-primary/20"
+            className="w-full px-4 py-3 rounded-xl border border-border bg-bg/50 text-base focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
           />
         </div>
-
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-slate mb-1">
-              {tr.freeTools.calculator.buyerType}
-            </label>
+            <label className="block text-sm font-medium text-text mb-1.5">{tr.freeTools.calculator.buyerType}</label>
             <select
               value={buyerType}
               onChange={(e) => setBuyerType(e.target.value as 'male' | 'female' | 'joint')}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm focus:border-primary focus:ring-2 focus:ring-primary/20"
+              className="w-full px-4 py-3 rounded-xl border border-border bg-bg/50 text-sm focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
             >
               <option value="male">{tr.freeTools.calculator.male}</option>
               <option value="female">{tr.freeTools.calculator.female}</option>
@@ -114,107 +133,114 @@ function StampDutyCalculator({ lang }: { lang: Lang }) {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-slate mb-1">
-              {tr.freeTools.calculator.areaType}
-            </label>
+            <label className="block text-sm font-medium text-text mb-1.5">{tr.freeTools.calculator.areaType}</label>
             <select
               value={areaType}
               onChange={(e) => setAreaType(e.target.value as 'urban' | 'rural')}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm focus:border-primary focus:ring-2 focus:ring-primary/20"
+              className="w-full px-4 py-3 rounded-xl border border-border bg-bg/50 text-sm focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all"
             >
               <option value="urban">{tr.freeTools.calculator.urban}</option>
               <option value="rural">{tr.freeTools.calculator.rural}</option>
             </select>
           </div>
         </div>
-
-        <button
+        <motion.button
+          whileHover={reducedMotion ? {} : { scale: 1.01 }}
+          whileTap={reducedMotion ? {} : { scale: 0.99 }}
           onClick={calculate}
-          className="w-full px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary-light transition-colors"
+          className="w-full px-6 py-3 bg-primary text-white rounded-xl font-semibold hover:bg-primary-light transition-all shadow-md shadow-primary/15"
         >
           {tr.freeTools.calculator.calculate}
-        </button>
-
+        </motion.button>
         {result && (
-          <div className="bg-white rounded-xl p-4 border border-gray-100 space-y-2">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-bg rounded-xl p-4 border border-border space-y-2"
+          >
             <div className="flex justify-between text-sm">
-              <span className="text-slate-light">{tr.freeTools.calculator.result}:</span>
-              <span className="font-bold text-slate">₹{result.stampDuty.toLocaleString('en-IN')}</span>
+              <span className="text-muted">{tr.freeTools.calculator.result}:</span>
+              <span className="font-bold text-text">₹{result.stampDuty.toLocaleString('en-IN')}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-light">{tr.freeTools.calculator.regFee}:</span>
-              <span className="font-bold text-slate">₹{result.regFee.toLocaleString('en-IN')}</span>
+              <span className="text-muted">{tr.freeTools.calculator.regFee}:</span>
+              <span className="font-bold text-text">₹{result.regFee.toLocaleString('en-IN')}</span>
             </div>
-            <div className="flex justify-between text-sm pt-2 border-t border-gray-100">
-              <span className="font-bold text-slate">{tr.freeTools.calculator.total}:</span>
+            <div className="flex justify-between text-sm pt-2 border-t border-border">
+              <span className="font-bold text-text">{tr.freeTools.calculator.total}:</span>
               <span className="font-bold text-primary text-lg">₹{result.total.toLocaleString('en-IN')}</span>
             </div>
-          </div>
+          </motion.div>
         )}
-
-        <p className="text-xs text-amber-600">⚠️ {tr.freeTools.calculator.note}</p>
+        <p className="text-xs text-accent">⚠️ {tr.freeTools.calculator.note}</p>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 // ============================================================
 // DOCUMENT CHECKLIST
 // ============================================================
-function DocumentChecklist({ lang }: { lang: Lang }) {
+function DocumentChecklist({ lang, isInView, reducedMotion }: { lang: Lang; isInView: boolean; reducedMotion: boolean }) {
   const tr = t[lang];
   const [type, setType] = useState<'buy' | 'sell' | 'inherit'>('buy');
 
-  const handlePrint = () => {
-    window.print();
-  };
-
   return (
-    <div className="bg-bg rounded-2xl p-6 border border-gray-100">
-      <h3 className="text-lg font-bold text-slate mb-4 flex items-center gap-2">
+    <motion.div
+      initial={reducedMotion ? {} : { opacity: 0, x: 20 }}
+      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      transition={{ duration: 0.5, delay: 0.4 }}
+      className="premium-card p-6"
+    >
+      <h3 className="text-lg font-bold text-text mb-5 flex items-center gap-2">
         <ClipboardList size={18} className="text-primary" />
         {tr.freeTools.checklistTool.title}
       </h3>
-
-      {/* Type selector */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-5">
         {(['buy', 'sell', 'inherit'] as const).map((t_type) => (
-          <button
+          <motion.button
             key={t_type}
+            whileHover={reducedMotion ? {} : { scale: 1.02 }}
+            whileTap={reducedMotion ? {} : { scale: 0.98 }}
             onClick={() => setType(t_type)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               type === t_type
-                ? 'bg-primary text-white'
-                : 'bg-white text-slate border border-gray-200 hover:border-primary/30'
+                ? 'bg-primary text-white shadow-md shadow-primary/15'
+                : 'bg-bg text-text border border-border hover:border-primary/20'
             }`}
           >
             {t_type === 'buy' ? tr.freeTools.checklistTool.buy : t_type === 'sell' ? tr.freeTools.checklistTool.sell : tr.freeTools.checklistTool.inherit}
-          </button>
+          </motion.button>
         ))}
       </div>
-
-      {/* Checklist */}
-      <ul className="space-y-2 mb-4">
+      <ul className="space-y-2.5 mb-5">
         {CHECKLISTS[type][lang].map((item, i) => (
-          <li key={i} className="flex items-center gap-3 text-sm">
+          <motion.li
+            key={`${type}-${i}`}
+            initial={reducedMotion ? {} : { opacity: 0, x: -10 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ delay: i * 0.03 }}
+            className="flex items-center gap-3 text-sm"
+          >
             <input
               type="checkbox"
-              className="w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary"
-              id={`check-${i}`}
+              className="w-5 h-5 rounded border-border text-primary focus:ring-primary/20 accent-primary"
+              id={`check-${type}-${i}`}
             />
-            <label htmlFor={`check-${i}`} className="text-slate-light cursor-pointer">
+            <label htmlFor={`check-${type}-${i}`} className="text-muted cursor-pointer hover:text-text transition-colors">
               {item}
             </label>
-          </li>
+          </motion.li>
         ))}
       </ul>
-
-      <button
-        onClick={handlePrint}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-slate hover:border-primary/30 transition-colors no-print"
+      <motion.button
+        whileHover={reducedMotion ? {} : { scale: 1.02 }}
+        whileTap={reducedMotion ? {} : { scale: 0.98 }}
+        onClick={() => window.print()}
+        className="inline-flex items-center gap-2 px-4 py-2.5 bg-bg border border-border rounded-lg text-sm font-medium text-text hover:border-primary/20 transition-all no-print"
       >
         🖨️ {tr.freeTools.checklistTool.print}
-      </button>
-    </div>
+      </motion.button>
+    </motion.div>
   );
 }
