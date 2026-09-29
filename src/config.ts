@@ -656,3 +656,102 @@ export const LEGAL_TERMS: Record<string, { hi: string; en: string }> = {
   naksha: { hi: 'नक्शा — ज़मीन का मैप', en: 'Naksha — Map of the land' },
   rccms: { hi: 'RCCMS — राजस्व कोर्ट केस मैनेजमेंट सिस्टम', en: 'RCCMS — Revenue Court Case Management System' }
 };
+
+// ============================================================
+// PRICING CONFIGURATION
+// ============================================================
+export const PRICING = {
+  document: {
+    id: 'document',
+    name: { hi: 'Document Intelligence', en: 'Document Intelligence' },
+    price: 199,
+    priceLabel: { hi: 'प्रति दस्तावेज़', en: 'Per document' },
+    headline: { hi: 'पुरानी रजिस्ट्री समझ नहीं आ रही?', en: 'Purani registry samajh nahi aa rahi?' },
+    description: { hi: 'एक प्रॉपर्टी डॉक्यूमेंट को सिंपल लैंग्वेज में समझें और इम्पॉर्टेंट डिटेल्स आइडेंटिफाई करें।', en: 'Ek property document ko simple language mein samjhein aur important details identify karein.' },
+    features: {
+      hi: ['OCR & डॉक्यूमेंट रीडिंग', 'ओनर / बायर / सेलर डिटेल्स', 'गाटा / खसरा / रकबा एक्सट्रैक्शन', 'रजिस्ट्रेशन डेट और डिटेल्स', 'इम्पॉर्टेंट इन्फॉर्मेशन / क्लॉज़ेस', 'बेसिक इनकंसिस्टेंसी फ्लैग्स', 'सिंपल हिंदी समरी'],
+      en: ['OCR & document reading', 'Owner / buyer / seller details', 'Gata / Khasra / Rakba extraction', 'Registration date & details', 'Important information / clauses', 'Basic inconsistency flags', 'Simple Hindi summary']
+    },
+    delivery: { hi: 'सेम-डे डिजिटल एनालिसिस', en: 'Same-day digital analysis' },
+    cta: { hi: 'डॉक्यूमेंट अपलोड करें →', en: 'Upload Document →' },
+    disclaimer: { hi: 'AI-असिस्टेड एनालिसिस। लीगल ओपिनियन शामिल नहीं है।', en: 'AI-assisted analysis. Legal opinion included nahi hai.' },
+    icon: '📄'
+  },
+  propertyCheck: {
+    id: 'propertyCheck',
+    name: { hi: 'Property Check', en: 'Property Check' },
+    price: 999,
+    priceLabel: { hi: 'प्रिलिमिनरी स्क्रीनिंग', en: 'Preliminary screening' },
+    headline: { hi: 'डील से पहले बेसिक रिस्क समझें', en: 'Deal se pehle basic risk samjhein' },
+    description: { hi: 'प्रॉपर्टी के अवेलेबल रिकॉर्ड्स और डॉक्यूमेंट्स के बेसिस पर इनिशियल रिस्क स्क्रीनिंग।', en: 'Property ke available records aur documents ke basis par initial risk screening.' },
+    features: {
+      hi: ['ओनरशिप इन्फॉर्मेशन', 'गाटा / खसरा और रकबा चेक', 'बेसिक लैंड-कैटेगरी इंडिकेटर्स', 'अवेलेबल लिटिगेशन इंडिकेटर्स', 'अप टू 2 डॉक्यूमेंट एनालिसिस', 'बेसिक रिस्क फाइंडिंग्स', 'शॉर्ट Property Check Report'],
+      en: ['Ownership information', 'Gata / Khasra & Rakba check', 'Basic land-category indicators', 'Available litigation indicators', 'Up to 2 document analysis', 'Basic risk findings', 'Short Property Check Report']
+    },
+    delivery: { hi: '24–48 घंटे', en: '24–48 hours' },
+    cta: { hi: 'मेरी प्रॉपर्टी चेक करें →', en: 'Check My Property →' },
+    disclaimer: '',
+    icon: '🏠'
+  },
+  verification: {
+    id: 'verification',
+    name: { hi: 'Property Verification', en: 'Property Verification' },
+    price: 1999,
+    priceLabel: { hi: 'कंप्लीट ऑनलाइन वेरिफिकेशन', en: 'Complete online verification' },
+    headline: { hi: 'प्रॉपर्टी खरीदने से पहले डिटेल्ड चेक', en: 'Property kharidne se pehle detailed check' },
+    description: { hi: 'सीरियस बायर्स के लिए डिटेल्ड प्रॉपर्टी वेरिफिकेशन और स्ट्रक्चर्ड रिपोर्ट।', en: 'Serious buyers ke liye detailed property verification aur structured report.' },
+    features: {
+      hi: ['Property Check की सब चीज़ें', 'अप टू 5 डॉक्यूमेंट्स', 'डॉक्यूमेंट कंपेरिजन', 'ओनरशिप / शेयर क्रॉस-चेक', 'नक्शा / गाटा इन्फॉर्मेशन चेक', 'RCCMS / कोर्ट सर्च (जहां अवेलेबल हो)', 'एनकम्ब्रेंस / चार्ज इंडिकेटर्स', 'डिटेल्ड रिस्क एनालिसिस', 'मिसिंग-डॉक्यूमेंट चेकलिस्ट', 'डिटेल्ड PDF रिपोर्ट', 'रिपोर्ट एक्सप्लेनेशन कॉल'],
+      en: ['Everything in Property Check', 'Up to 5 documents', 'Document comparison', 'Ownership / share cross-check', 'Naksha / Gata information check', 'RCCMS / court search where available', 'Encumbrance / charge indicators', 'Detailed risk analysis', 'Missing-document checklist', 'Detailed PDF report', 'Report explanation call']
+    },
+    delivery: { hi: '48–72 घंटे', en: '48–72 hours' },
+    cta: { hi: 'प्रॉपर्टी वेरिफाई करें →', en: 'Get Property Verified →' },
+    disclaimer: '',
+    icon: '🔍',
+    popular: true
+  },
+  fieldVerification: {
+    id: 'fieldVerification',
+    name: { hi: 'Field Verified', en: 'Field Verified' },
+    startingPrice: 4999,
+    priceLabel: { hi: 'शुरू', en: 'Starting' },
+    headline: { hi: 'ग्राउंड पर भी वेरिफिकेशन चाहिए?', en: 'Ground par bhi verification chahiye?' },
+    description: { hi: 'ऑनलाइन रिकॉर्ड्स के साथ फिजिकल वेरिफिकेशन सपोर्ट भी अवेलेबल है।', en: 'Online records ke saath physical verification support bhi available hai.' },
+    features: {
+      hi: ['प्रॉपर्टी साइट विज़िट', 'लोकेशन वेरिफिकेशन', 'बाउंड्री ऑब्ज़र्वेशंस', 'साइट फोटोग्राफ्स', 'फील्ड-लेवल ऑब्ज़र्वेशंस', 'अवेलेबल रिकॉर्ड / ऑफिस फॉलो-अप', 'डिटेल्ड एविडेंस-बेस्ड रिपोर्ट', 'डेडिकेटेड कोऑर्डिनेटर'],
+      en: ['Property site visit', 'Location verification', 'Boundary observations', 'Site photographs', 'Field-level observations', 'Available record / office follow-up where applicable', 'Detailed evidence-based report', 'Dedicated coordinator']
+    },
+    cta: { hi: 'फील्ड वेरिफिकेशन बुक करें →', en: 'Book Field Verification →' },
+    disclaimer: { hi: 'फील्ड वेरिफिकेशन सेलेक्टेड ज़िलों में अवेलेबल है। फाइनल स्कोप और अवेलेबिलिटी बुकिंग से पहले कन्फर्म होगी।', en: 'Field verification selected districts mein available hai. Final scope aur availability booking se pehle confirm hogi.' },
+    icon: '📍'
+  }
+};
+
+export const ADD_ONS: Array<{ name: { hi: string; en: string }; price: number; unit: { hi: string; en: string } }> = [
+  { name: { hi: 'Document Analysis', en: 'Document Analysis' }, price: 199, unit: { hi: '/ डॉक्यूमेंट', en: '/ document' } },
+  { name: { hi: 'Deep Document Review', en: 'Deep Document Review' }, price: 399, unit: { hi: '', en: '' } },
+  { name: { hi: '2-Document Comparison', en: '2-Document Comparison' }, price: 599, unit: { hi: '', en: '' } },
+  { name: { hi: '3–5 Document Comparison', en: '3–5 Document Comparison' }, price: 999, unit: { hi: '', en: '' } },
+  { name: { hi: 'Advocate Review', en: 'Advocate Review' }, price: 1499, unit: { hi: '+', en: '+' } },
+  { name: { hi: 'Physical Site Visit', en: 'Physical Site Visit' }, price: 3999, unit: { hi: '+', en: '+' } },
+  { name: { hi: 'Property Concierge', en: 'Property Concierge' }, price: 9999, unit: { hi: '+', en: '+' } }
+];
+
+export const COMPARISON_MATRIX = {
+  rows: [
+    { key: 'documentAnalysis', hi: 'डॉक्यूमेंट एनालिसिस', en: 'Document Analysis' },
+    { key: 'ownerInfo', hi: 'ओनर इन्फॉर्मेशन', en: 'Owner Information' },
+    { key: 'gataRakba', hi: 'गाटा / रकबा', en: 'Gata / Rakba' },
+    { key: 'riskIndicators', hi: 'रिस्क इंडिकेटर्स', en: 'Risk Indicators' },
+    { key: 'courtSearch', hi: 'कोर्ट सर्च', en: 'Court Search' },
+    { key: 'docComparison', hi: 'डॉक्यूमेंट कंपेरिजन', en: 'Document Comparison' },
+    { key: 'mapInfo', hi: 'मैप इन्फॉर्मेशन', en: 'Map Information' },
+    { key: 'detailedReport', hi: 'डिटेल्ड रिपोर्ट', en: 'Detailed Report' },
+    { key: 'physicalVerification', hi: 'फिजिकल वेरिफिकेशन', en: 'Physical Verification' },
+    { key: 'advocateReview', hi: 'एडवोकेट रिव्यू', en: 'Advocate Review' }
+  ],
+  document: { documentAnalysis: true, ownerInfo: true, gataRakba: true, riskIndicators: false, courtSearch: false, docComparison: false, mapInfo: false, detailedReport: false, physicalVerification: false, advocateReview: 'addon' },
+  propertyCheck: { documentAnalysis: true, ownerInfo: true, gataRakba: true, riskIndicators: true, courtSearch: false, docComparison: false, mapInfo: false, detailedReport: false, physicalVerification: false, advocateReview: 'addon' },
+  verification: { documentAnalysis: true, ownerInfo: true, gataRakba: true, riskIndicators: true, courtSearch: true, docComparison: true, mapInfo: true, detailedReport: true, physicalVerification: false, advocateReview: 'addon' },
+  fieldVerification: { documentAnalysis: true, ownerInfo: true, gataRakba: true, riskIndicators: true, courtSearch: true, docComparison: true, mapInfo: true, detailedReport: true, physicalVerification: true, advocateReview: 'addon' }
+};

@@ -5,7 +5,7 @@ import { BRAND, type Lang } from './config';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import { ProblemSection, HowItWorks, WhyUs, Testimonials } from './components/Sections';
-import Packages from './components/Packages';
+import Pricing from './components/Pricing';
 import SampleReport from './components/SampleReport';
 import FreeTools from './components/FreeTools';
 import { B2BSection, FAQ } from './components/B2BAndFAQ';
@@ -37,7 +37,7 @@ function HomePage({ lang }: { lang: Lang }) {
       <Hero lang={lang} />
       <ProblemSection lang={lang} />
       <HowItWorks lang={lang} />
-      <Packages lang={lang} />
+      <Pricing lang={lang} />
       <SampleReport lang={lang} />
       <FreeTools lang={lang} />
       <B2BSection lang={lang} />
