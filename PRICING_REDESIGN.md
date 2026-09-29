@@ -1,4 +1,4 @@
-# ZameenSaathi - Pricing Section Redesign
+# Bhumi Seva Kendra - Pricing Section Redesign
 
 ## Overview
 Complete redesign of the pricing/services section with a premium, conversion-focused experience that guides users through a clear decision funnel.

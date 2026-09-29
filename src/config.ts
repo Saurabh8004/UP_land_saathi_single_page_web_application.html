@@ -1,19 +1,25 @@
 // ============================================================
-// ZameenSaathi - Complete Configuration
+// Bhumi Seva Kendra - Complete Configuration
 // ============================================================
 
 // BRAND
 export const BRAND = {
-  name: 'ZameenSaathi',
-  taglineHi: 'ज़मीन खरीदने से पहले, सच जानिए',
-  taglineEn: 'Know the truth before buying land',
+  nameHi: 'भूमि सेवा केंद्र',
+  nameEn: 'Bhumi Seva Kendra',
+  taglineHi: 'ज़मीन से जुड़ी जानकारी, एक जगह',
+  taglineEn: 'Property information, explained simply',
+  taglineSecondaryHi: 'जमीन खरीदने से पहले, जानकारी पूरी रखें',
   phone: '+91-XXXXXXXXXX',
   whatsapp: '919XXXXXXXXX', // WhatsApp number without +
-  email: 'info@zameensaathi.in',
-  website: 'https://zameensaathi.in',
+  email: 'info@bhumisevakendra.in',
+  website: 'https://bhumisevakendra.in',
+  description: {
+    hi: 'भूमि सेवा केंद्र एक निजी property information और verification assistance platform है।',
+    en: 'Bhumi Seva Kendra is a private property information and verification assistance platform.'
+  },
   disclaimer: {
-    hi: 'ZameenSaathi एक प्राइवेट कंसल्टेंसी है, सरकारी पोर्टल नहीं। रिपोर्ट उपलब्ध रिकॉर्ड्स और दस्तावेज़ों पर आधारित एक प्रोफेशनल राय है, टाइटल की गारंटी नहीं।',
-    en: 'ZameenSaathi is a private consultancy, not a government portal. The report is a professional opinion based on available records and documents, not a title guarantee.'
+    hi: 'भूमि सेवा केंद्र एक निजी information-assistance platform है, सरकारी विभाग या सरकारी पोर्टल नहीं। उपलब्ध records और documents के आधार पर जानकारी/analysis प्रदान किया जाता है। यह title की guarantee या स्वतः legal opinion नहीं है।',
+    en: 'Bhumi Seva Kendra is a private information-assistance platform, not a government department or portal. Information/analysis is provided based on available records and documents. This is not a title guarantee or legal opinion.'
   }
 };
 
@@ -181,7 +187,7 @@ export const t = {
     faq: {
       title: 'अक्सर पूछे जाने वाले सवाल',
       questions: [
-        { q: 'क्या यह सरकारी साइट है?', a: 'नहीं, ZameenSaathi एक प्राइवेट कंसल्टेंसी है। हम सरकारी पोर्टल नहीं हैं।' },
+        { q: 'क्या यह सरकारी साइट है?', a: 'नहीं, भूमि सेवा केंद्र एक निजी information-assistance platform है। हम सरकारी पोर्टल नहीं हैं।' },
         { q: 'कौन से डॉक्यूमेंट्स चाहिए?', a: 'गाटा/खसरा नंबर, ज़िला, तहसील। अगर आपके पास खतौनी या बयानामा है तो वो भी भेज सकते हैं।' },
         { q: 'रिपोर्ट कितने दिन में मिलती है?', a: 'Quick Check 24 घंटे में, Verified Report 48-72 घंटे में, Deal Support कस्टम टाइमलाइन पर।' },
         { q: 'क्या आप टाइटल गारंटी करते हो?', a: 'नहीं। हमारी रिपोर्ट उपलब्ध रिकॉर्ड्स पर आधारित एक प्रोफेशनल राय है। टाइटल की गारंटी कोई नहीं दे सकता।' },
@@ -229,7 +235,7 @@ export const t = {
     },
     // Footer
     footer: {
-      about: 'ZameenSaathi उत्तर प्रदेश में ज़मीन की जाँच करने वाली एक प्राइवेट कंसल्टेंसी है।',
+      about: 'भूमि सेवा केंद्र एक निजी property information और verification assistance platform है।',
       quickLinks: 'क्विक लिंक्स',
       contact: 'संपर्क',
       legal: 'कानूनी',
@@ -237,7 +243,7 @@ export const t = {
       terms: 'Terms of Service',
       refund: 'Refund Policy',
       disclaimer: 'Disclaimer',
-      rights: '© 2024 ZameenSaathi. All rights reserved.'
+      rights: '© 2024 भूमि सेवा केंद्र. All rights reserved.'
     },
     // Guides
     guides: {
@@ -401,7 +407,7 @@ export const t = {
     faq: {
       title: 'Frequently Asked Questions',
       questions: [
-        { q: 'Is this a government site?', a: 'No, ZameenSaathi is a private consultancy. We are not a government portal.' },
+        { q: 'Is this a government site?', a: 'No, Bhumi Seva Kendra is a private information-assistance platform. We are not a government portal.' },
         { q: 'What documents are needed?', a: 'Gata/khasra number, district, tehsil. If you have khatauni or baiyanama, you can send those too.' },
         { q: 'How long does the report take?', a: 'Quick Check in 24 hrs, Verified Report in 48-72 hrs, Deal Support on custom timeline.' },
         { q: 'Do you guarantee title?', a: 'No. Our report is a professional opinion based on available records. No one can guarantee title.' },
@@ -446,7 +452,7 @@ export const t = {
       statuses: ['Received', 'In Verification', 'Field Visit Done', 'Advocate Review', 'Report Ready']
     },
     footer: {
-      about: 'ZameenSaathi is a private consultancy for land verification in Uttar Pradesh.',
+      about: 'Bhumi Seva Kendra is a private property information and verification assistance platform.',
       quickLinks: 'Quick Links',
       contact: 'Contact',
       legal: 'Legal',
@@ -454,7 +460,7 @@ export const t = {
       terms: 'Terms of Service',
       refund: 'Refund Policy',
       disclaimer: 'Disclaimer',
-      rights: '© 2024 ZameenSaathi. All rights reserved.'
+      rights: '© 2024 Bhumi Seva Kendra. All rights reserved.'
     },
     guides: {
       khatauni: 'How to get Khatauni',

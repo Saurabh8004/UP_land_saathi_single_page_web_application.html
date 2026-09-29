@@ -1,8 +1,8 @@
-# ZameenSaathi - Land Verification Service (Uttar Pradesh)
+# Bhumi Seva Kendra - Property Information & Verification Assistance (Uttar Pradesh)
 
-> ज़मीन खरीदने से पहले, सच जानिए
+> ज़मीन से जुड़ी जानकारी, एक जगह
 
-A private land/property verification service website for Uttar Pradesh, India.
+A private property information and verification assistance platform for Uttar Pradesh, India.
 
 ## 🏗️ Tech Stack
 

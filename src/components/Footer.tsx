@@ -44,9 +44,9 @@ export default function Footer({ lang }: FooterProps) {
           <div>
             <div className="flex items-center gap-2.5 mb-4">
               <div className="w-9 h-9 rounded-xl bg-white/10 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">ज़</span>
+                <span className="text-white font-bold text-lg">भ</span>
               </div>
-              <span className="font-bold text-lg">{BRAND.name}</span>
+              <span className="font-bold text-lg">{lang === 'hi' ? BRAND.nameHi : BRAND.nameEn}</span>
             </div>
             <p className="text-sm text-white/60 leading-relaxed">{tr.footer.about}</p>
           </div>

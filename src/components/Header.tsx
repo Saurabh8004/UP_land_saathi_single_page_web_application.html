@@ -53,9 +53,9 @@ export default function Header({ lang, setLang }: HeaderProps) {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2.5 group">
               <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center transition-transform group-hover:scale-105">
-                <span className="text-white font-bold text-lg">ज़</span>
+                <span className="text-white font-bold text-lg">भ</span>
               </div>
-              <span className="font-bold text-xl text-text">{BRAND.name}</span>
+              <span className="font-bold text-xl text-text">{lang === 'hi' ? BRAND.nameHi : BRAND.nameEn}</span>
             </Link>
 
             {/* Desktop Nav */}
