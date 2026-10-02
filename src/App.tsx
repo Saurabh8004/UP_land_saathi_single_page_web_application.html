@@ -19,6 +19,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Booking from './pages/Booking';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminRequestDetail from './pages/admin/AdminRequestDetail';
 import { MessageCircle, FileText } from 'lucide-react';
 import { useReducedMotion } from './hooks/useAnimations';
 
@@ -114,6 +116,8 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/requests/:id" element={<AdminRequestDetail />} />
                 <Route path="/privacy" element={<LegalPage lang={lang} type="privacy" />} />
                 <Route path="/terms" element={<LegalPage lang={lang} type="terms" />} />
                 <Route path="/refund" element={<LegalPage lang={lang} type="refund" />} />
