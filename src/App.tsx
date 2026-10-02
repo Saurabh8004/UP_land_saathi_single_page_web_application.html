@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BRAND, type Lang } from './config';
+import { AuthProvider } from './contexts/AuthContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import { ProblemSection, HowItWorks, WhyUs, Testimonials } from './components/Sections';
@@ -10,11 +11,16 @@ import SampleReport from './components/SampleReport';
 import FreeTools from './components/FreeTools';
 import { B2BSection, FAQ } from './components/B2BAndFAQ';
 import Footer from './components/Footer';
-import BookingFlow from './components/BookingFlow';
 import TrackStatus from './components/TrackStatus';
 import AdminPanel from './components/AdminPanel';
 import LegalPage from './components/LegalPage';
 import GuidePage from './components/GuidePage';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Dashboard from './pages/Dashboard';
+import Booking from './pages/Booking';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminRequestDetail from './pages/admin/AdminRequestDetail';
 import { MessageCircle, FileText } from 'lucide-react';
 import { useReducedMotion } from './hooks/useAnimations';
 
@@ -93,32 +99,40 @@ function App() {
   }, [lang]);
 
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div className="min-h-screen bg-bg">
-        <Header lang={lang} setLang={setLang} />
-        
-        <main>
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route path="/" element={<HomePage lang={lang} />} />
-              <Route path="/book" element={<BookingFlow lang={lang} />} />
-              <Route path="/track" element={<TrackStatus lang={lang} />} />
-              <Route path="/admin" element={<AdminPanel lang={lang} />} />
-              <Route path="/privacy" element={<LegalPage lang={lang} type="privacy" />} />
-              <Route path="/terms" element={<LegalPage lang={lang} type="terms" />} />
-              <Route path="/refund" element={<LegalPage lang={lang} type="refund" />} />
-              <Route path="/disclaimer" element={<LegalPage lang={lang} type="disclaimer" />} />
-              <Route path="/guides" element={<GuidePage lang={lang} />} />
-              <Route path="/guides/:slug" element={<GuidePageWrapper lang={lang} />} />
-            </Routes>
-          </AnimatePresence>
-        </main>
+    <AuthProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <div className="min-h-screen bg-bg">
+          <Header lang={lang} setLang={setLang} />
+          
+          <main>
+            <AnimatePresence mode="wait">
+              <Routes>
+                <Route path="/" element={<HomePage lang={lang} />} />
+                <Route path="/booking" element={<Booking />} />
+                <Route path="/book" element={<Booking />} />
+                <Route path="/track" element={<TrackStatus lang={lang} />} />
+                <Route path="/admin" element={<AdminPanel lang={lang} />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/requests/:id" element={<AdminRequestDetail />} />
+                <Route path="/privacy" element={<LegalPage lang={lang} type="privacy" />} />
+                <Route path="/terms" element={<LegalPage lang={lang} type="terms" />} />
+                <Route path="/refund" element={<LegalPage lang={lang} type="refund" />} />
+                <Route path="/disclaimer" element={<LegalPage lang={lang} type="disclaimer" />} />
+                <Route path="/guides" element={<GuidePage lang={lang} />} />
+                <Route path="/guides/:slug" element={<GuidePageWrapper lang={lang} />} />
+              </Routes>
+            </AnimatePresence>
+          </main>
 
-        <Footer lang={lang} />
-        <StickyBottomBar lang={lang} />
-      </div>
-    </BrowserRouter>
+          <Footer lang={lang} />
+          <StickyBottomBar lang={lang} />
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
