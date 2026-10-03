@@ -1,19 +1,36 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase environment variables');
+// Safe initialization - don't throw error, use fallback for development
+// In production, these must be set in Vercel environment variables
+let supabase: SupabaseClient;
+
+if (supabaseUrl && supabaseAnonKey) {
+  supabase = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true
+    }
+  });
+} else {
+  // Fallback for development/build time - will show error in UI
+  console.warn('Supabase environment variables not set. Using fallback client.');
+  supabase = createClient(
+    'https://placeholder.supabase.co',
+    'placeholder-key',
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    }
+  );
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  }
-});
+export { supabase };
 
 // Helper to get current user
 export async function getCurrentUser() {

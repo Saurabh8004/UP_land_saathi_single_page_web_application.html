@@ -23,6 +23,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminRequestDetail from './pages/admin/AdminRequestDetail';
 import { MessageCircle, FileText } from 'lucide-react';
 import { useReducedMotion } from './hooks/useAnimations';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -99,40 +100,41 @@ function App() {
   }, [lang]);
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <div className="min-h-screen bg-bg">
-          <Header lang={lang} setLang={setLang} />
-          
-          <main>
-            <AnimatePresence mode="wait">
-              <Routes>
-                <Route path="/" element={<HomePage lang={lang} />} />
-                <Route path="/booking" element={<Booking />} />
-                <Route path="/book" element={<Booking />} />
-                <Route path="/track" element={<TrackStatus lang={lang} />} />
-                <Route path="/admin" element={<AdminPanel lang={lang} />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-                <Route path="/admin/requests/:id" element={<AdminRequestDetail />} />
-                <Route path="/privacy" element={<LegalPage lang={lang} type="privacy" />} />
-                <Route path="/terms" element={<LegalPage lang={lang} type="terms" />} />
-                <Route path="/refund" element={<LegalPage lang={lang} type="refund" />} />
-                <Route path="/disclaimer" element={<LegalPage lang={lang} type="disclaimer" />} />
-                <Route path="/guides" element={<GuidePage lang={lang} />} />
-                <Route path="/guides/:slug" element={<GuidePageWrapper lang={lang} />} />
-              </Routes>
-            </AnimatePresence>
-          </main>
+    <ErrorBoundary>
+      <AuthProvider>
+        <BrowserRouter>
+          <ScrollToTop />
+          <div className="min-h-screen bg-bg">
+            <Header lang={lang} setLang={setLang} />
+            
+            <main>
+              <AnimatePresence mode="wait">
+                <Routes>
+                  <Route path="/" element={<HomePage lang={lang} />} />
+                  <Route path="/booking" element={<Booking />} />
+                  <Route path="/book" element={<Booking />} />
+                  <Route path="/track" element={<TrackStatus lang={lang} />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/admin/requests/:id" element={<AdminRequestDetail />} />
+                  <Route path="/privacy" element={<LegalPage lang={lang} type="privacy" />} />
+                  <Route path="/terms" element={<LegalPage lang={lang} type="terms" />} />
+                  <Route path="/refund" element={<LegalPage lang={lang} type="refund" />} />
+                  <Route path="/disclaimer" element={<LegalPage lang={lang} type="disclaimer" />} />
+                  <Route path="/guides" element={<GuidePage lang={lang} />} />
+                  <Route path="/guides/:slug" element={<GuidePageWrapper lang={lang} />} />
+                </Routes>
+              </AnimatePresence>
+            </main>
 
-          <Footer lang={lang} />
-          <StickyBottomBar lang={lang} />
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
+            <Footer lang={lang} />
+            <StickyBottomBar lang={lang} />
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 
