@@ -36,15 +36,15 @@ function Navbar({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      scrolled ? 'bg-white/95 backdrop-blur-md shadow-sm' : 'bg-transparent'
+      scrolled ? 'glass shadow-lg' : 'bg-transparent'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg bg-navy flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-royal-blue to-teal flex items-center justify-center shadow-lg">
               <MapPin className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-lg text-navy">{BRAND.name}</span>
+            <span className={`font-bold text-lg ${scrolled ? 'text-navy' : 'text-white'}`}>{BRAND.name}</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
@@ -52,7 +52,9 @@ function Navbar({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-slate-600 hover:text-navy transition-colors"
+                className={`text-sm font-medium transition-colors ${
+                  scrolled ? 'text-slate-600 hover:text-royal-blue' : 'text-white/80 hover:text-white'
+                }`}
               >
                 {link.label}
               </a>
@@ -62,17 +64,21 @@ function Navbar({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setLang(lang === 'hi' ? 'en' : 'hi')}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                scrolled ? 'text-slate-600 hover:bg-slate-100' : 'text-white/80 hover:bg-white/10'
+              }`}
             >
               <Globe className="w-4 h-4" />
               {lang === 'hi' ? 'EN' : 'हि'}
             </button>
-            <Link to="/login" className="hidden md:inline-flex text-sm font-medium text-slate-600 hover:text-navy transition-colors">
+            <Link to="/login" className={`hidden md:inline-flex text-sm font-medium transition-colors ${
+              scrolled ? 'text-slate-600 hover:text-royal-blue' : 'text-white/80 hover:text-white'
+            }`}>
               {tr.nav.login}
             </Link>
             <a
               href="#search"
-              className="hidden md:inline-flex items-center px-4 py-2 bg-navy text-white rounded-lg text-sm font-medium hover:bg-navy-light transition-colors"
+              className="hidden md:inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-royal-blue to-teal text-white rounded-lg text-sm font-semibold hover:shadow-lg hover:shadow-royal-blue/30 transition-all hover:scale-105"
             >
               {tr.nav.getStarted}
             </a>
@@ -126,12 +132,20 @@ function Hero({ lang }: { lang: Lang }) {
   const tr = t[lang];
 
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden gradient-subtle">
-      {/* Background grid */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{
-        backgroundImage: 'linear-gradient(#1a2332 1px, transparent 1px), linear-gradient(90deg, #1a2332 1px, transparent 1px)',
-        backgroundSize: '40px 40px'
-      }} />
+    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden gradient-hero animated-gradient">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        {/* Floating gradient orbs */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-royal-blue/20 rounded-full blur-3xl animate-float-slow" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal/20 rounded-full blur-3xl animate-float" />
+        <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-gold/10 rounded-full blur-3xl animate-float-slow" />
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-[0.05]" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)',
+          backgroundSize: '60px 60px'
+        }} />
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -141,9 +155,9 @@ function Hero({ lang }: { lang: Lang }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-50 rounded-full text-xs font-medium text-emerald-700 mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full text-xs font-medium text-white mb-6"
             >
-              <CheckCircle className="w-3.5 h-3.5" />
+              <CheckCircle className="w-3.5 h-3.5 text-emerald" />
               {lang === 'hi' ? 'प्रॉपर्टी इंटेलिजेंस प्लेटफॉर्म' : 'Property Intelligence Platform'}
             </motion.div>
 
@@ -151,16 +165,32 @@ function Hero({ lang }: { lang: Lang }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-navy leading-tight mb-6"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
             >
-              {tr.hero.headline}
+              {lang === 'hi' ? (
+                <>
+                  निवेश से पहले
+                  <br />
+                  <span className="bg-gradient-to-r from-gold to-orange bg-clip-text text-transparent">
+                    अपनी प्रॉपर्टी को समझें।
+                  </span>
+                </>
+              ) : (
+                <>
+                  Know Your Property.
+                  <br />
+                  <span className="bg-gradient-to-r from-gold to-orange bg-clip-text text-transparent">
+                    Before You Invest.
+                  </span>
+                </>
+              )}
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg text-slate-600 mb-8 max-w-xl leading-relaxed"
+              className="text-lg text-white/80 mb-8 max-w-xl leading-relaxed"
             >
               {tr.hero.sub}
             </motion.p>
@@ -173,37 +203,48 @@ function Hero({ lang }: { lang: Lang }) {
             >
               <a
                 href="#search"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors shadow-lg shadow-navy/20"
+                className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-royal-blue to-teal text-white rounded-xl font-semibold hover:shadow-2xl hover:shadow-royal-blue/50 transition-all hover:scale-105"
               >
                 {tr.hero.cta1}
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
                 href="#free-tools"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-slate-200 text-navy rounded-lg font-medium hover:bg-slate-50 transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-4 glass text-white rounded-xl font-semibold hover:bg-white/20 transition-all"
               >
                 {tr.hero.cta2}
               </a>
             </motion.div>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
-              className="text-xs text-slate-500"
+              className="flex items-center gap-6 text-sm text-white/70"
             >
-              {tr.hero.trust}
-            </motion.p>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-emerald animate-pulse" />
+                <span>{lang === 'hi' ? 'प्रॉपर्टी इंटेलिजेंस' : 'Property Intelligence'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-teal animate-pulse" />
+                <span>{lang === 'hi' ? 'फिजिकल वेरिफिकेशन' : 'Physical Verification'}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-gold animate-pulse" />
+                <span>{lang === 'hi' ? 'विशेषज्ञ' : 'Experts'}</span>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Right: Property Intelligence Visual */}
+          {/* Right: Animated Property Visual */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
             className="relative"
           >
-            <PropertyIntelligenceVisual lang={lang} />
+            <AnimatedPropertyMap lang={lang} />
           </motion.div>
         </div>
 
@@ -211,12 +252,177 @@ function Hero({ lang }: { lang: Lang }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="text-center text-xs text-slate-500 mt-12 pt-8 border-t border-slate-100"
+          className="text-center text-xs text-white/50 mt-12 pt-8 border-t border-white/10"
         >
           {tr.hero.disclaimer}
         </motion.p>
       </div>
     </section>
+  );
+}
+
+// ============================================================
+// ANIMATED PROPERTY MAP
+// ============================================================
+function AnimatedPropertyMap({ lang }: { lang: Lang }) {
+  return (
+    <div className="relative w-full h-[500px]">
+      {/* Map background */}
+      <div className="absolute inset-0 glass rounded-3xl overflow-hidden">
+        <svg className="w-full h-full" viewBox="0 0 500 500" fill="none">
+          {/* Grid pattern */}
+          <defs>
+            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(11,31,58,0.05)" strokeWidth="1"/>
+            </pattern>
+          </defs>
+          <rect width="500" height="500" fill="url(#grid)" />
+          
+          {/* Animated property boundary */}
+          <motion.path
+            d="M 150 150 L 350 150 L 350 350 L 150 350 Z"
+            stroke="#2563EB"
+            strokeWidth="3"
+            fill="rgba(37,99,235,0.1)"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{ duration: 2, delay: 0.5 }}
+          />
+          
+          {/* Location marker */}
+          <motion.g
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 1.5, type: "spring" }}
+          >
+            <circle cx="250" cy="250" r="30" fill="rgba(15,157,138,0.2)" />
+            <motion.circle
+              cx="250"
+              cy="250"
+              r="15"
+              fill="#0F9D8A"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+            <circle cx="250" cy="250" r="6" fill="white" />
+          </motion.g>
+          
+          {/* Connecting lines */}
+          <motion.path
+            d="M 250 250 L 100 100"
+            stroke="#D4A72C"
+            strokeWidth="2"
+            strokeDasharray="5,5"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ delay: 2, duration: 1 }}
+          />
+          <motion.path
+            d="M 250 250 L 400 100"
+            stroke="#F59E0B"
+            strokeWidth="2"
+            strokeDasharray="5,5"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ delay: 2.2, duration: 1 }}
+          />
+          <motion.path
+            d="M 250 250 L 400 400"
+            stroke="#16A34A"
+            strokeWidth="2"
+            strokeDasharray="5,5"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ delay: 2.4, duration: 1 }}
+          />
+        </svg>
+      </div>
+
+      {/* Floating data cards */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.8 }}
+        className="absolute top-10 left-10 glass rounded-xl p-4 shadow-xl animate-float"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-royal-blue/20 flex items-center justify-center">
+            <FileText className="w-5 h-5 text-royal-blue" />
+          </div>
+          <div>
+            <p className="text-xs text-muted">{lang === 'hi' ? 'लैंड रिकॉर्ड' : 'Land Record'}</p>
+            <p className="text-sm font-bold text-navy">{lang === 'hi' ? 'वेरिफाइड' : 'Verified'}</p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2 }}
+        className="absolute top-20 right-10 glass rounded-xl p-4 shadow-xl animate-float-slow"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-teal/20 flex items-center justify-center">
+            <MapPin className="w-5 h-5 text-teal" />
+          </div>
+          <div>
+            <p className="text-xs text-muted">{lang === 'hi' ? 'लोकेशन' : 'Location'}</p>
+            <p className="text-sm font-bold text-navy">Amroha, UP</p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2.2 }}
+        className="absolute bottom-20 left-20 glass rounded-xl p-4 shadow-xl animate-float"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-emerald/20 flex items-center justify-center">
+            <TrendingUp className="w-5 h-5 text-emerald" />
+          </div>
+          <div>
+            <p className="text-xs text-muted">{lang === 'hi' ? 'क्षमता' : 'Potential'}</p>
+            <p className="text-sm font-bold text-navy">{lang === 'hi' ? 'मध्यम' : 'Moderate'}</p>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2.4 }}
+        className="absolute bottom-10 right-20 glass rounded-xl p-4 shadow-xl animate-float-slow"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-warning/20 flex items-center justify-center">
+            <AlertCircle className="w-5 h-5 text-warning" />
+          </div>
+          <div>
+            <p className="text-xs text-muted">{lang === 'hi' ? 'रिस्क' : 'Risk'}</p>
+            <p className="text-sm font-bold text-navy">{lang === 'hi' ? 'समीक्षा' : 'Review'}</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Center property info */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1.5, type: "spring" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 glass-dark rounded-2xl p-6 shadow-2xl"
+      >
+        <div className="text-center text-white">
+          <p className="text-xs uppercase tracking-wider text-white/60 mb-2">
+            {lang === 'hi' ? 'प्रॉपर्टी' : 'Property'}
+          </p>
+          <p className="text-3xl font-bold mb-1">0.105</p>
+          <p className="text-sm text-white/70">{lang === 'hi' ? 'हेक्टेयर' : 'Hectare'}</p>
+        </div>
+      </motion.div>
+    </div>
   );
 }
 
