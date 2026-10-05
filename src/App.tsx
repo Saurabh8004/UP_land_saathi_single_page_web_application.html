@@ -225,79 +225,158 @@ function Hero({ lang }: { lang: Lang }) {
 // ============================================================
 function PropertyIntelligenceVisual({ lang }: { lang: Lang }) {
   return (
-    <div className="relative bg-white rounded-2xl shadow-2xl shadow-navy/10 border border-slate-100 p-6 overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+    <div className="relative">
+      {/* Floating animation wrapper */}
+      <motion.div
+        animate={{ y: [0, -10, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="relative bg-white rounded-2xl shadow-2xl shadow-navy/10 border border-slate-100 p-6 overflow-hidden"
+      >
+        {/* Animated background grid */}
+        <div className="absolute inset-0 opacity-[0.02]" style={{
+          backgroundImage: 'linear-gradient(#1a2332 1px, transparent 1px), linear-gradient(90deg, #1a2332 1px, transparent 1px)',
+          backgroundSize: '20px 20px'
+        }} />
+
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="relative flex items-center justify-between mb-6 pb-4 border-b border-slate-100"
+        >
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-navy/5 flex items-center justify-center">
+              <FileText className="w-4 h-4 text-navy" />
+            </div>
+            <div>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                {lang === 'hi' ? 'प्रॉपर्टी अवलोकन' : 'PROPERTY OVERVIEW'}
+              </p>
+            </div>
+          </div>
+          <motion.span 
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.5, type: "spring" }}
+            className="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-full flex items-center gap-1"
+          >
+            <CheckCircle className="w-3 h-3" />
+            {lang === 'hi' ? 'उपलब्ध' : 'Available'}
+          </motion.span>
+        </motion.div>
+
+        {/* Location */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.4 }}
+          className="relative mb-6"
+        >
+          <div className="flex items-center gap-2 text-sm text-slate-500 mb-2">
+            <MapPin className="w-4 h-4" />
+            <span>{lang === 'hi' ? 'स्थान' : 'Location'}</span>
+          </div>
+          <div className="space-y-1">
+            <p className="text-lg font-semibold text-navy">Amroha</p>
+            <p className="text-sm text-slate-600">Amroha Tehsil • Atairana Village</p>
+          </div>
+        </motion.div>
+
+        {/* Property Details Grid */}
+        <div className="relative grid grid-cols-2 gap-4 mb-6">
+          {[
+            { label: lang === 'hi' ? 'गाटा' : 'Gata', value: '123', delay: 0.5 },
+            { label: lang === 'hi' ? 'खाता' : 'Khata', value: '00040', delay: 0.6 },
+            { label: lang === 'hi' ? 'क्षेत्रफल' : 'Area', value: '0.105', sub: lang === 'hi' ? 'हेक्टेयर' : 'hectares', delay: 0.7 },
+            { label: lang === 'hi' ? 'स्थिति' : 'Status', isStatus: true, delay: 0.8 }
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: item.delay }}
+              className="bg-slate-50 rounded-lg p-3 hover:bg-slate-100 transition-colors"
+            >
+              <p className="text-xs text-slate-500 mb-1">{item.label}</p>
+              {item.isStatus ? (
+                <div className="flex items-center gap-1.5 mt-1">
+                  <motion.div 
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="w-2 h-2 rounded-full bg-emerald-500" 
+                  />
+                  <p className="text-sm font-medium text-emerald-700">
+                    {lang === 'hi' ? 'सत्यापन उपलब्ध' : 'Verification Available'}
+                  </p>
+                </div>
+              ) : (
+                <>
+                  <p className="text-lg font-bold text-navy">{item.value}</p>
+                  {item.sub && <p className="text-xs text-slate-500">{item.sub}</p>}
+                </>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Source */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9 }}
+          className="relative pt-4 border-t border-slate-100"
+        >
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-slate-400" />
+              <span className="text-xs text-slate-500">{lang === 'hi' ? 'स्रोत' : 'Source'}</span>
+            </div>
+            <span className="text-xs font-medium text-navy bg-navy/5 px-2 py-1 rounded">
+              {lang === 'hi' ? 'आधिकारिक स्रोत' : 'Official Source'}
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Decorative elements */}
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-navy/5 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-emerald-500/5 rounded-full blur-3xl" />
+      </motion.div>
+
+      {/* Floating badges */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1, type: "spring" }}
+        className="absolute -top-4 -right-4 bg-white rounded-lg shadow-lg p-3 border border-slate-100"
+      >
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-navy/5 flex items-center justify-center">
-            <FileText className="w-4 h-4 text-navy" />
+          <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center">
+            <CheckCircle className="w-4 h-4 text-emerald-600" />
           </div>
           <div>
-            <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-              {lang === 'hi' ? 'प्रॉपर्टी अवलोकन' : 'PROPERTY OVERVIEW'}
-            </p>
+            <p className="text-xs font-medium text-navy">{lang === 'hi' ? 'सत्यापित' : 'Verified'}</p>
+            <p className="text-[10px] text-slate-500">{lang === 'hi' ? 'आधिकारिक' : 'Official'}</p>
           </div>
         </div>
-        <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-full flex items-center gap-1">
-          <CheckCircle className="w-3 h-3" />
-          {lang === 'hi' ? 'उपलब्ध' : 'Available'}
-        </span>
-      </div>
+      </motion.div>
 
-      {/* Location */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 text-sm text-slate-500 mb-2">
-          <MapPin className="w-4 h-4" />
-          <span>{lang === 'hi' ? 'स्थान' : 'Location'}</span>
-        </div>
-        <div className="space-y-1">
-          <p className="text-lg font-semibold text-navy">Amroha</p>
-          <p className="text-sm text-slate-600">Amroha Tehsil • Atairana Village</p>
-        </div>
-      </div>
-
-      {/* Property Details Grid */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="bg-slate-50 rounded-lg p-3">
-          <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'गाटा' : 'Gata'}</p>
-          <p className="text-lg font-bold text-navy">123</p>
-        </div>
-        <div className="bg-slate-50 rounded-lg p-3">
-          <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'खाता' : 'Khata'}</p>
-          <p className="text-lg font-bold text-navy">00040</p>
-        </div>
-        <div className="bg-slate-50 rounded-lg p-3">
-          <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'क्षेत्रफल' : 'Area'}</p>
-          <p className="text-lg font-bold text-navy">0.105</p>
-          <p className="text-xs text-slate-500">{lang === 'hi' ? 'हेक्टेयर' : 'hectares'}</p>
-        </div>
-        <div className="bg-slate-50 rounded-lg p-3">
-          <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'स्थिति' : 'Status'}</p>
-          <div className="flex items-center gap-1.5 mt-1">
-            <div className="w-2 h-2 rounded-full bg-emerald-500" />
-            <p className="text-sm font-medium text-emerald-700">
-              {lang === 'hi' ? 'सत्यापन उपलब्ध' : 'Verification Available'}
-            </p>
+      <motion.div
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1.2, type: "spring" }}
+        className="absolute -bottom-4 -left-4 bg-white rounded-lg shadow-lg p-3 border border-slate-100"
+      >
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-navy/10 flex items-center justify-center">
+            <Shield className="w-4 h-4 text-navy" />
+          </div>
+          <div>
+            <p className="text-xs font-medium text-navy">{lang === 'hi' ? 'सुरक्षित' : 'Secure'}</p>
+            <p className="text-[10px] text-slate-500">{lang === 'hi' ? 'एन्क्रिप्टेड' : 'Encrypted'}</p>
           </div>
         </div>
-      </div>
-
-      {/* Source */}
-      <div className="pt-4 border-t border-slate-100">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-slate-400" />
-            <span className="text-xs text-slate-500">{lang === 'hi' ? 'स्रोत' : 'Source'}</span>
-          </div>
-          <span className="text-xs font-medium text-navy bg-navy/5 px-2 py-1 rounded">
-            {lang === 'hi' ? 'आधिकारिक स्रोत' : 'Official Source'}
-          </span>
-        </div>
-      </div>
-
-      {/* Decorative elements */}
-      <div className="absolute -top-20 -right-20 w-40 h-40 bg-navy/5 rounded-full blur-3xl" />
-      <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-emerald-500/5 rounded-full blur-3xl" />
+      </motion.div>
     </div>
   );
 }
@@ -329,9 +408,16 @@ function PropertySearch({ lang }: { lang: Lang }) {
     // Simulate search
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Demo: Show success state for test property
-    if (formData.district && formData.gata) {
+    // Demo: Show different states based on input
+    // For demo purposes, we'll show different states
+    const demoStates = ['success', 'partial', 'notfound', 'unavailable'] as const;
+    const randomState = demoStates[Math.floor(Math.random() * demoStates.length)];
+    
+    // For the test property (Amroha, Gata 123), always show success
+    if (formData.district === '137' && formData.gata === '123') {
       setSearchState('success');
+    } else if (formData.district && formData.gata) {
+      setSearchState(randomState);
     } else {
       setSearchState('notfound');
     }
@@ -587,16 +673,93 @@ function PropertySearch({ lang }: { lang: Lang }) {
                     <p className="text-xs text-slate-500 mb-1">{tr.search.gata}</p>
                     <p className="font-medium text-navy">{formData.gata}</p>
                   </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'खाता' : 'Khata'}</p>
+                    <p className="font-medium text-navy">00040</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'क्षेत्रफल' : 'Area'}</p>
+                    <p className="font-medium text-navy">0.105 {lang === 'hi' ? 'हेक्टेयर' : 'hectares'}</p>
+                  </div>
                 </div>
               </div>
 
-              {/* Source Badge */}
-              <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-100">
-                <div className="flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-emerald-600" />
+              {/* Owner Information */}
+              <div className="bg-white rounded-lg p-5 border border-slate-200">
+                <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{tr.result.owner}</h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'मालिक का नाम' : 'Owner Name'}</p>
+                      <p className="font-medium text-navy">Saurabh Awasthi</p>
+                    </div>
+                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded flex items-center gap-1">
+                      <Shield className="w-3 h-3" />
+                      {lang === 'hi' ? 'आधिकारिक स्रोत' : 'Official Source'}
+                    </span>
+                  </div>
                   <div>
-                    <p className="text-sm font-medium text-emerald-900">{lang === 'hi' ? 'आधिकारिक स्रोत से उपलब्ध' : 'Available from Official Source'}</p>
-                    <p className="text-xs text-emerald-700">{lang === 'hi' ? 'यह जानकारी आधिकारिक भूमि अभिलेख से प्राप्त की गई है' : 'This information is retrieved from official land records'}</p>
+                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'पिता/पति का नाम' : 'Father/Husband Name'}</p>
+                    <p className="font-medium text-navy">Ramesh Awasthi</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'हिस्सा' : 'Share'}</p>
+                    <p className="font-medium text-navy">100%</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Land Details */}
+              <div className="bg-white rounded-lg p-5 border border-slate-200">
+                <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{tr.result.land}</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'भूमि प्रकार' : 'Land Type'}</p>
+                    <p className="font-medium text-navy">{lang === 'hi' ? 'आबादी' : 'Abadi'}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'भूमि स्थिति' : 'Land Status'}</p>
+                    <p className="font-medium text-navy">{lang === 'hi' ? 'मुक्त' : 'Freehold'}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Record Status */}
+              <div className="bg-white rounded-lg p-5 border border-slate-200">
+                <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{tr.result.status}</h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'म्यूटेशन स्थिति' : 'Mutation Status'}</p>
+                      <p className="font-medium text-navy">{lang === 'hi' ? 'अपडेटेड' : 'Updated'}</p>
+                    </div>
+                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded">
+                      {lang === 'hi' ? 'स्पष्ट' : 'Clear'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'मुकदमा स्थिति' : 'Litigation Status'}</p>
+                      <p className="font-medium text-navy">{lang === 'hi' ? 'कोई मुकदमा नहीं' : 'No Litigation'}</p>
+                    </div>
+                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded">
+                      {lang === 'hi' ? 'स्पष्ट' : 'Clear'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Source Information */}
+              <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-100">
+                <div className="flex items-start gap-3">
+                  <Shield className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-emerald-900 mb-1">{lang === 'hi' ? 'आधिकारिक स्रोत से उपलब्ध' : 'Available from Official Source'}</p>
+                    <p className="text-xs text-emerald-700 mb-2">{lang === 'hi' ? 'यह जानकारी आधिकारिक भूमि अभिलेख से प्राप्त की गई है' : 'This information is retrieved from official land records'}</p>
+                    <div className="flex items-center gap-2 text-xs text-emerald-600">
+                      <Clock className="w-3 h-3" />
+                      <span>{lang === 'hi' ? 'अंतिम अपडेट: आज' : 'Last updated: Today'}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -608,6 +771,99 @@ function PropertySearch({ lang }: { lang: Lang }) {
                 <RefreshCw className="w-4 h-4" />
                 {lang === 'hi' ? 'नई खोज करें' : 'New Search'}
               </button>
+            </motion.div>
+          )}
+
+          {/* Partial Data State */}
+          {searchState === 'partial' && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-6"
+            >
+              <div className="flex items-center gap-3 pb-4 border-b border-slate-200">
+                <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
+                  <AlertCircle className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-navy">{tr.result.partial}</h3>
+                  <p className="text-sm text-slate-500">{lang === 'hi' ? 'कुछ जानकारी उपलब्ध है, लेकिन कुछ विवरणों को अतिरिक्त सत्यापन की आवश्यकता है' : 'Some information is available, but some details require additional verification'}</p>
+                </div>
+              </div>
+
+              {/* Available Information */}
+              <div className="bg-white rounded-lg p-5 border border-slate-200">
+                <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{tr.result.overview}</h4>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">{tr.search.district}</p>
+                    <p className="font-medium text-navy">{DISTRICTS.find(d => d.code === formData.district)?.[lang === 'hi' ? 'name_hi' : 'name_en']}</p>
+                    <span className="inline-block mt-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded">{lang === 'hi' ? 'उपलब्ध' : 'Available'}</span>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">{tr.search.gata}</p>
+                    <p className="font-medium text-navy">{formData.gata}</p>
+                    <span className="inline-block mt-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded">{lang === 'hi' ? 'उपलब्ध' : 'Available'}</span>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'मालिक' : 'Owner'}</p>
+                    <p className="font-medium text-slate-400">—</p>
+                    <span className="inline-block mt-1 px-2 py-0.5 bg-amber-50 text-amber-700 text-xs rounded">{lang === 'hi' ? 'सत्यापन लंबित' : 'Pending Verification'}</span>
+                  </div>
+                  <div>
+                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'क्षेत्रफल' : 'Area'}</p>
+                    <p className="font-medium text-slate-400">—</p>
+                    <span className="inline-block mt-1 px-2 py-0.5 bg-amber-50 text-amber-700 text-xs rounded">{lang === 'hi' ? 'अनुपलब्ध' : 'Unavailable'}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
+                <div className="flex items-start gap-2">
+                  <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium text-amber-900">{lang === 'hi' ? 'आंशिक जानकारी' : 'Partial Information'}</p>
+                    <p className="text-xs text-amber-700 mt-1">{lang === 'hi' ? 'कुछ रिकॉर्ड आधिकारिक स्रोतों से उपलब्ध नहीं हैं। पूर्ण सत्यापन के लिए अतिरिक्त दस्तावेज़ों की आवश्यकता हो सकती है।' : 'Some records are not available from official sources. Additional documents may be required for complete verification.'}</p>
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={resetSearch}
+                className="w-full px-6 py-3 border border-slate-200 text-navy rounded-lg font-medium hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
+              >
+                <RefreshCw className="w-4 h-4" />
+                {lang === 'hi' ? 'नई खोज करें' : 'New Search'}
+              </button>
+            </motion.div>
+          )}
+
+          {/* Unavailable State */}
+          {searchState === 'unavailable' && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="py-8 text-center"
+            >
+              <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
+                <Clock className="w-8 h-8 text-slate-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-navy mb-2">{tr.result.unavailable}</h3>
+              <p className="text-slate-600 mb-6">{lang === 'hi' ? 'आधिकारिक डेटा स्रोत वर्तमान में अनुपलब्ध है। आपकी प्रॉपर्टी जानकारी सत्यापित नहीं की गई है।' : 'The official data source is currently unavailable. Your property information has not been verified.'}</p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <button
+                  onClick={resetSearch}
+                  className="px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors"
+                >
+                  {lang === 'hi' ? 'पुनः प्रयास करें' : 'Try Again'}
+                </button>
+                <button
+                  onClick={resetSearch}
+                  className="px-6 py-3 border border-slate-200 text-navy rounded-lg font-medium hover:bg-slate-50 transition-colors"
+                >
+                  {lang === 'hi' ? 'बाद में सत्यापित करें' : 'Verify Later'}
+                </button>
+              </div>
             </motion.div>
           )}
 
@@ -736,6 +992,119 @@ function Features({ lang }: { lang: Lang }) {
               <p className="text-sm text-slate-600 leading-relaxed">{feature.desc}</p>
             </motion.div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// DOCUMENT VERIFICATION
+// ============================================================
+function DocumentVerification({ lang }: { lang: Lang }) {
+  return (
+    <section className="py-20 md:py-28 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+            {lang === 'hi' ? 'अपने दस्तावेज़ों को सिर्फ स्टोर न करें। उन्हें समझें।' : "Don't Just Store Your Documents. Understand Them."}
+          </h2>
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            {lang === 'hi' 
+              ? 'अपने प्रॉपर्टी दस्तावेज़ अपलोड करें और उन्हें उपलब्ध रिकॉर्ड जानकारी से तुलना करें।'
+              : 'Upload your property documents and compare them with available record information.'}
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          {/* Upload Area */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-xl p-8 border-2 border-dashed border-slate-200 hover:border-navy/30 transition-colors"
+          >
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full bg-navy/5 flex items-center justify-center mx-auto mb-4">
+                <FileCheck className="w-8 h-8 text-navy" />
+              </div>
+              <h3 className="text-lg font-semibold text-navy mb-2">
+                {lang === 'hi' ? 'दस्तावेज़ अपलोड करें' : 'Upload Document'}
+              </h3>
+              <p className="text-sm text-slate-600 mb-4">
+                {lang === 'hi' ? 'खतौनी, बयाना, रजिस्ट्री, म्यूटेशन दस्तावेज़' : 'Khatauni, Sale Deed, Registry, Mutation Documents'}
+              </p>
+              <button className="px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors">
+                {lang === 'hi' ? 'फाइल चुनें' : 'Choose File'}
+              </button>
+              <p className="text-xs text-slate-500 mt-3">
+                {lang === 'hi' ? 'PDF, JPG, PNG (अधिकतम 10 MB)' : 'PDF, JPG, PNG (Max 10 MB)'}
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Comparison Result */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="space-y-4"
+          >
+            <div className="bg-white rounded-xl p-6 border border-slate-200">
+              <div className="flex items-center gap-2 mb-4">
+                <FileText className="w-5 h-5 text-navy" />
+                <h4 className="font-semibold text-navy">Khatauni.pdf</h4>
+              </div>
+              
+              <div className="space-y-3">
+                <div>
+                  <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'निकाला गया' : 'Extracted'}</p>
+                  <div className="bg-slate-50 rounded-lg p-3 space-y-1">
+                    <p className="text-sm"><span className="text-slate-500">Gata:</span> <span className="font-medium text-navy">123</span></p>
+                    <p className="text-sm"><span className="text-slate-500">Khata:</span> <span className="font-medium text-navy">00040</span></p>
+                    <p className="text-sm"><span className="text-slate-500">Area:</span> <span className="font-medium text-navy">0.105000</span></p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'रिकॉर्ड' : 'Record'}</p>
+                  <div className="bg-slate-50 rounded-lg p-3 space-y-1">
+                    <p className="text-sm"><span className="text-slate-500">Gata:</span> <span className="font-medium text-navy">123</span></p>
+                    <p className="text-sm"><span className="text-slate-500">Khata:</span> <span className="font-medium text-navy">00040</span></p>
+                    <p className="text-sm"><span className="text-slate-500">Area:</span> <span className="font-medium text-navy">0.105000</span></p>
+                  </div>
+                </div>
+
+                <div className="pt-3 border-t border-slate-100">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-emerald-600" />
+                    <p className="text-sm font-medium text-emerald-700">
+                      {lang === 'hi' ? 'जानकारी मेल खाती है' : 'Information Matches'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-100">
+              <div className="flex items-start gap-2">
+                <Shield className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm font-medium text-emerald-900">
+                    {lang === 'hi' ? 'दस्तावेज़ सत्यापित' : 'Document Verified'}
+                  </p>
+                  <p className="text-xs text-emerald-700 mt-1">
+                    {lang === 'hi' ? 'आपका दस्तावेज़ आधिकारिक रिकॉर्ड से मेल खाता है' : 'Your document matches the official record'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -919,6 +1288,7 @@ function HomePage({ lang }: { lang: Lang }) {
       <PropertySearch lang={lang} />
       <HowItWorks lang={lang} />
       <Features lang={lang} />
+      <DocumentVerification lang={lang} />
       <TrustSection lang={lang} />
       <FAQ lang={lang} />
     </>
