@@ -6,13 +6,13 @@
 export const BRAND = {
   name: 'Bhumi Saathi',
   nameHi: 'भूमि साथी',
-  tagline: 'Your Land Records. Simplified.',
-  taglineHi: 'आपके भूमि अभिलेख। सरल।',
+  tagline: 'Know Your Property. Before You Invest.',
+  taglineHi: 'निवेश से पहले अपनी प्रॉपर्टी को समझें।',
   taglineAlt: 'From Gata to Clarity.',
-  description: 'Find, understand and verify property records from official sources — all in one place.',
-  descriptionHi: 'अपनी ज़मीन के रिकॉर्ड्स को एक जगह समझें, वेरिफाई करें और ट्रैक करें।',
-  disclaimer: 'Bhumi Saathi is an independent technology platform and is not a government website.',
-  disclaimerHi: 'भूमि साथी एक स्वतंत्र तकनीकी मंच है और सरकारी वेबसाइट नहीं है।',
+  description: 'Property intelligence platform that helps you understand land records, ownership, location potential, and risk indicators before making major property decisions.',
+  descriptionHi: 'प्रॉपर्टी इंटेलिजेंस प्लेटफॉर्म जो आपको बड़े प्रॉपर्टी फैसले लेने से पहले भूमि अभिलेख, मालिकाना हक, लोकेशन पोटेंशियल और रिस्क इंडिकेटर्स को समझने में मदद करता है।',
+  disclaimer: 'Bhumi Saathi is an independent technology platform and is not a government website. Information provided supports informed decision-making and does not constitute certified government documents or legal opinions.',
+  disclaimerHi: 'भूमि साथी एक स्वतंत्र तकनीकी मंच है और सरकारी वेबसाइट नहीं है। प्रदान की गई जानकारी सूचित निर्णय लेने में सहायता करती है और प्रमाणित सरकारी दस्तावेज़ या कानूनी राय का गठन नहीं करती।',
   phone: '+91-XXXXXXXXXX',
   whatsapp: '919XXXXXXXXX',
   email: 'hello@bhumisaathi.in',
@@ -36,14 +36,16 @@ export const t = {
       search: 'प्रॉपर्टी खोजें',
       about: 'हमारे बारे में',
       login: 'लॉगिन',
-      getStarted: 'शुरू करें'
+      getStarted: 'प्रॉपर्टी रिपोर्ट पाएं',
+      freeTools: 'मुफ्त टूल्स',
+      expertConsultation: 'विशेषज्ञ परामर्श'
     },
     hero: {
-      headline: 'आपके भूमि अभिलेख। सरल।',
-      sub: 'सरकारी स्रोतों से प्रॉपर्टी रिकॉर्ड्स खोजें, समझें और वेरिफाई करें — बिना जटिल सरकारी पोर्टल्स के।',
-      cta1: 'अपनी प्रॉपर्टी चेक करें',
-      cta2: 'कैसे काम करता है',
-      trust: 'उपलब्ध सरकारी भूमि-अभिलेख स्रोतों के आधार पर बनाया गया।',
+      headline: 'निवेश से पहले अपनी प्रॉपर्टी को समझें।',
+      sub: 'विस्तृत प्रॉपर्टी इनसाइट्स, भूमि अभिलेख, लोकेशन इंटेलिजेंस, रिस्क इंडिकेटर्स और भविष्य की सराहकरण क्षमता — सब एक जगह।',
+      cta1: 'प्रॉपर्टी रिपोर्ट पाएं',
+      cta2: 'मुफ्त टूल्स देखें',
+      trust: 'आपको अधिक सूचित प्रॉपर्टी फैसले लेने में मदद करने के लिए बनाया गया।',
       disclaimer: 'भूमि साथी एक स्वतंत्र तकनीकी मंच है और सरकारी वेबसाइट नहीं है।'
     },
     search: {
@@ -157,14 +159,16 @@ export const t = {
       search: 'Property Search',
       about: 'About',
       login: 'Login',
-      getStarted: 'Get Started'
+      getStarted: 'Get Property Report',
+      freeTools: 'Free Tools',
+      expertConsultation: 'Expert Consultation'
     },
     hero: {
-      headline: 'Your Land Records. Simplified.',
-      sub: 'Find, understand and verify property records from official sources — without navigating complicated government portals.',
-      cta1: 'Check Your Property',
-      cta2: 'How It Works',
-      trust: 'Built around available official land-record sources.',
+      headline: 'Know Your Property. Before You Invest.',
+      sub: 'Get detailed property insights, land records, location intelligence, risk indicators and future appreciation potential — all in one place.',
+      cta1: 'Get Property Report',
+      cta2: 'Explore Free Tools',
+      trust: 'Built to help you make more informed property decisions.',
       disclaimer: 'Bhumi Saathi is an independent technology platform and is not a government website.'
     },
     search: {
