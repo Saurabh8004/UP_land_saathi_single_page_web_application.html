@@ -1,20 +1,40 @@
-// Pricing configuration for Bhumi Saathi
-// This is a placeholder for future payment integration
+// Pricing configuration for Bhumi Seva Kendra
 
-export const PRICING = {
-  basic: {
-    name: 'Basic Search',
-    price: 0,
-    currency: 'INR'
+export interface PricingPlan {
+  name: { hi: string; en: string };
+  price: number;
+  currency: string;
+  delivery: { hi: string; en: string };
+}
+
+export const PRICING_PLANS: Record<string, PricingPlan> = {
+  DOCUMENT_INTELLIGENCE: {
+    name: { hi: 'Document Intelligence', en: 'Document Intelligence' },
+    price: 199,
+    currency: 'INR',
+    delivery: { hi: 'Same-day digital analysis', en: 'Same-day digital analysis' }
   },
-  premium: {
-    name: 'Premium Verification',
-    price: 499,
-    currency: 'INR'
+  PROPERTY_CHECK: {
+    name: { hi: 'Property Check', en: 'Property Check' },
+    price: 999,
+    currency: 'INR',
+    delivery: { hi: '24-48 hours', en: '24-48 hours' }
+  },
+  PROPERTY_VERIFICATION: {
+    name: { hi: 'Property Verification', en: 'Property Verification' },
+    price: 1999,
+    currency: 'INR',
+    delivery: { hi: '48-72 hours', en: '48-72 hours' }
+  },
+  FIELD_VERIFIED: {
+    name: { hi: 'Field Verified', en: 'Field Verified' },
+    price: 4999,
+    currency: 'INR',
+    delivery: { hi: '5-7 days', en: '5-7 days' }
   }
 };
 
 export function calculateAmount(packageCode: string): number {
-  const pkg = PRICING[packageCode as keyof typeof PRICING];
-  return pkg?.price || 0;
+  const plan = PRICING_PLANS[packageCode];
+  return plan?.price || 0;
 }

@@ -5,6 +5,7 @@ import { BRAND, DISTRICTS, t, type Lang } from './config';
 import { supabase } from './lib/supabase';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import Booking from './pages/Booking';
 import {
   Search, MapPin, FileText, Shield, CheckCircle, AlertCircle, Clock,
   ChevronDown, ChevronRight, Menu, X, ArrowRight, Globe, Loader2,
@@ -1324,6 +1325,7 @@ function App() {
             <Routes>
               <Route path="/" element={<HomePage lang={lang} />} />
               <Route path="/login" element={<SimpleLogin />} />
+              <Route path="/booking" element={<Booking />} />
             </Routes>
             <Footer lang={lang} />
           </div>
