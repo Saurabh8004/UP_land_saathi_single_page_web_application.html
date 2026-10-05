@@ -38,14 +38,15 @@ export const t = {
       login: 'लॉगिन',
       getStarted: 'प्रॉपर्टी रिपोर्ट पाएं',
       freeTools: 'मुफ्त टूल्स',
-      expertConsultation: 'विशेषज्ञ परामर्श'
+      expertConsultation: 'विशेषज्ञ',
+      servicePlans: 'सेवा योजनाएं'
     },
     hero: {
       headline: 'निवेश से पहले अपनी प्रॉपर्टी को समझें।',
-      sub: 'विस्तृत प्रॉपर्टी इनसाइट्स, भूमि अभिलेख, लोकेशन इंटेलिजेंस, रिस्क इंडिकेटर्स और भविष्य की सराहकरण क्षमता — सब एक जगह।',
+      sub: 'भूमि अभिलेख और प्रॉपर्टी इंटेलिजेंस से लेकर फिजिकल वेरिफिकेशन और डील सपोर्ट तक — भूमि साथी आपको सूचित प्रॉपर्टी फैसले लेने में मदद करता है।',
       cta1: 'प्रॉपर्टी रिपोर्ट पाएं',
       cta2: 'मुफ्त टूल्स देखें',
-      trust: 'आपको अधिक सूचित प्रॉपर्टी फैसले लेने में मदद करने के लिए बनाया गया।',
+      trust: 'प्रॉपर्टी इंटेलिजेंस • फिजिकल वेरिफिकेशन • इंडस्ट्री विशेषज्ञ',
       disclaimer: 'भूमि साथी एक स्वतंत्र तकनीकी मंच है और सरकारी वेबसाइट नहीं है।'
     },
     search: {
@@ -161,14 +162,15 @@ export const t = {
       login: 'Login',
       getStarted: 'Get Property Report',
       freeTools: 'Free Tools',
-      expertConsultation: 'Expert Consultation'
+      expertConsultation: 'Experts',
+      servicePlans: 'Service Plans'
     },
     hero: {
       headline: 'Know Your Property. Before You Invest.',
-      sub: 'Get detailed property insights, land records, location intelligence, risk indicators and future appreciation potential — all in one place.',
+      sub: 'From land records and property intelligence to physical verification and deal support — Bhumi Saathi helps you make informed property decisions.',
       cta1: 'Get Property Report',
       cta2: 'Explore Free Tools',
-      trust: 'Built to help you make more informed property decisions.',
+      trust: 'Property Intelligence • Physical Verification • Industry Experts',
       disclaimer: 'Bhumi Saathi is an independent technology platform and is not a government website.'
     },
     search: {

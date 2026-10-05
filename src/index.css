@@ -5,12 +5,17 @@
   --color-navy-light: #2a3441;
   --color-navy-dark: #0f1419;
   --color-accent: #10b981;
+  --color-accent-light: #34d399;
   --color-warning: #f59e0b;
+  --color-warning-light: #fbbf24;
   --color-error: #ef4444;
+  --color-error-light: #f87171;
   --color-bg: #f8fafc;
   --color-text: #1e293b;
   --color-muted: #64748b;
   --color-border: #e2e8f0;
+  --color-gold: #d4af37;
+  --color-gold-light: #f4d03f;
 }
 
 * {
@@ -36,6 +41,18 @@ body {
 
 .gradient-subtle {
   background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+.gradient-emerald {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+}
+
+.gradient-premium {
+  background: linear-gradient(135deg, #1a2332 0%, #2a3441 50%, #10b981 100%);
 }
 
 /* Animations */

@@ -31,9 +31,7 @@ function Navbar({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
     { label: tr.nav.home, href: '/' },
     { label: tr.nav.freeTools, href: '#free-tools' },
     { label: 'Property Report', href: '#property-report' },
-    { label: tr.nav.howItWorks, href: '#how-it-works' },
-    { label: tr.nav.expertConsultation, href: '#expert-consultation' },
-    { label: tr.nav.about, href: '#about' }
+    { label: tr.nav.expertConsultation, href: '#expert-consultation' }
   ];
 
   return (
@@ -1998,12 +1996,500 @@ function FinalCTA({ lang }: { lang: Lang }) {
 }
 
 // ============================================================
+// TRUST STRIP
+// ============================================================
+function TrustStrip({ lang }: { lang: Lang }) {
+  const items = [
+    { icon: FileText, text: lang === 'hi' ? 'प्रॉपर्टी इंटेलिजेंस' : 'Property Intelligence' },
+    { icon: MapPin, text: lang === 'hi' ? 'फिजिकल वेरिफिकेशन' : 'Physical Verification' },
+    { icon: Users, text: lang === 'hi' ? 'इंडस्ट्री विशेषज्ञ' : 'Industry Experts' },
+    { icon: Shield, text: lang === 'hi' ? 'डील सपोर्ट' : 'Deal Support' }
+  ];
+
+  return (
+    <section className="py-8 bg-navy/5 border-y border-navy/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {items.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="flex items-center gap-3 justify-center"
+            >
+              <item.icon className="w-5 h-5 text-emerald-600" />
+              <span className="text-sm font-medium text-navy">{item.text}</span>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// SERVICE PLANS
+// ============================================================
+function ServicePlans({ lang }: { lang: Lang }) {
+  const plans = [
+    {
+      name: lang === 'hi' ? 'मुफ्त टूल्स' : 'Free Tools',
+      price: '₹0',
+      badge: null,
+      tagline: lang === 'hi' ? 'खुद चेक करें' : 'Check it yourself',
+      features: lang === 'hi' ? [
+        'बुनियादी प्रॉपर्टी टूल्स',
+        'भूमि अभिलेख खोज',
+        'क्षेत्र जानकारी',
+        'लोकेशन एक्सप्लोरर',
+        'सराहकरण अनुमानक'
+      ] : [
+        'Basic property tools',
+        'Land record search',
+        'Area information',
+        'Location explorer',
+        'Appreciation estimator'
+      ],
+      cta: lang === 'hi' ? 'मुफ्त टूल्स देखें' : 'Explore Free Tools',
+      href: '#free-tools',
+      style: 'neutral'
+    },
+    {
+      name: lang === 'hi' ? 'प्रॉपर्टी इंटेलिजेंस' : 'Property Intelligence',
+      price: '₹999',
+      badge: lang === 'hi' ? 'सबसे लोकप्रिय' : 'MOST POPULAR',
+      tagline: lang === 'hi' ? 'समझें' : 'Understand it',
+      features: lang === 'hi' ? [
+        'विस्तृत रिपोर्ट',
+        'भूमि अभिलेख विश्लेषण',
+        'मालिकाना हक विश्लेषण',
+        'क्षेत्र विश्लेषण',
+        'दस्तावेज़ स्थिरता',
+        'लोकेशन इंटेलिजेंस',
+        'सराहकरण क्षमता',
+        'रिस्क इंडिकेटर्स',
+        'PDF रिपोर्ट'
+      ] : [
+        'Detailed report',
+        'Land record analysis',
+        'Ownership analysis',
+        'Area analysis',
+        'Document consistency',
+        'Location intelligence',
+        'Appreciation potential',
+        'Risk indicators',
+        'PDF report'
+      ],
+      cta: lang === 'hi' ? 'प्रॉपर्टी रिपोर्ट पाएं' : 'Get Property Report',
+      href: '#property-report',
+      style: 'primary'
+    },
+    {
+      name: lang === 'hi' ? 'फिजिकल वेरिफिकेशन' : 'Physical Verification',
+      price: '₹2,999',
+      badge: null,
+      tagline: lang === 'hi' ? 'वेरिफाई करें' : 'Verify it',
+      features: lang === 'hi' ? [
+        'प्रॉपर्टी इंटेलिजेंस की सब चीज़ें',
+        'फिजिकल साइट विज़िट',
+        'ग्राउंड ऑब्ज़र्वेशंस',
+        'फोटो (जहां लागू हो)',
+        'लोकेशन वेरिफिकेशन',
+        'फिजिकल वेरिफिकेशन रिपोर्ट',
+        'वेरिफिकेशन समरी'
+      ] : [
+        'Everything in Property Intelligence',
+        'Physical site visit',
+        'Ground observations',
+        'Photos where applicable',
+        'Location verification',
+        'Physical verification report',
+        'Verification summary'
+      ],
+      cta: lang === 'hi' ? 'वेरिफिकेशन रिक्वेस्ट करें' : 'Request Verification',
+      href: '#physical-verification',
+      style: 'secondary'
+    },
+    {
+      name: lang === 'hi' ? 'फुल डील सपोर्ट' : 'Full Deal Support',
+      price: '₹9,999+',
+      badge: 'END-TO-END',
+      tagline: lang === 'hi' ? 'डील पूरी करें' : 'Complete the deal',
+      features: lang === 'hi' ? [
+        'प्रॉपर्टी इंटेलिजेंस + फिजिकल वेरिफिकेशन',
+        'डेडिकेटेड रिप्रेजेंटेटिव',
+        'दस्तावेज़ कोऑर्डिनेशन',
+        'विशेषज्ञ कोऑर्डिनेशन',
+        'नेगोशिएशन सपोर्ट',
+        'ट्रांजेक्शन कोऑर्डिनेशन',
+        'रजिस्ट्रेशन-स्टेज असिस्टेंस',
+        'ऑन-ग्राउंड सपोर्ट',
+        'डील प्रोग्रेस सपोर्ट'
+      ] : [
+        'Property Intelligence + Physical Verification',
+        'Dedicated representative',
+        'Document coordination',
+        'Expert coordination',
+        'Negotiation support',
+        'Transaction coordination',
+        'Registration-stage assistance',
+        'On-ground support',
+        'Deal progress support'
+      ],
+      cta: lang === 'hi' ? 'फुल डील सपोर्ट पाएं' : 'Get Full Deal Support',
+      href: '#full-deal-support',
+      style: 'premium'
+    }
+  ];
+
+  const getCardStyle = (style: string) => {
+    switch (style) {
+      case 'primary':
+        return 'bg-navy text-white border-navy shadow-xl scale-105 z-10';
+      case 'secondary':
+        return 'bg-emerald-50 border-emerald-200';
+      case 'premium':
+        return 'bg-gradient-to-br from-navy to-navy-light text-white border-navy shadow-xl';
+      default:
+        return 'bg-white border-slate-200';
+    }
+  };
+
+  const getBadgeStyle = (style: string) => {
+    switch (style) {
+      case 'primary':
+        return 'bg-emerald-500 text-white';
+      case 'premium':
+        return 'bg-accent text-navy';
+      default:
+        return 'bg-slate-100 text-slate-700';
+    }
+  };
+
+  return (
+    <section id="service-plans" className="py-20 md:py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+            {lang === 'hi' ? 'अपनी ज़रूरत का सपोर्ट चुनें' : 'Choose the Support You Need'}
+          </h2>
+          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            {lang === 'hi'
+              ? 'खुद चेक करने से लेकर डील पूरी करने तक सपोर्ट।'
+              : 'From checking it yourself to having someone support you through the deal.'}
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {plans.map((plan, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`rounded-2xl p-6 border-2 ${getCardStyle(plan.style)} relative`}
+            >
+              {plan.badge && (
+                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold ${getBadgeStyle(plan.style)}`}>
+                  {plan.badge}
+                </div>
+              )}
+
+              <div className="mb-6">
+                <p className={`text-xs uppercase tracking-wider mb-2 ${plan.style === 'neutral' ? 'text-slate-500' : 'text-white/60'}`}>
+                  {plan.tagline}
+                </p>
+                <h3 className={`text-xl font-bold mb-2 ${plan.style === 'neutral' ? 'text-navy' : 'text-white'}`}>
+                  {plan.name}
+                </h3>
+                <p className={`text-3xl font-bold ${plan.style === 'neutral' ? 'text-navy' : 'text-white'}`}>
+                  {plan.price}
+                </p>
+              </div>
+
+              <ul className="space-y-3 mb-6">
+                {plan.features.map((feature, j) => (
+                  <li key={j} className="flex items-start gap-2 text-sm">
+                    <CheckCircle className={`w-4 h-4 flex-shrink-0 mt-0.5 ${plan.style === 'neutral' ? 'text-emerald-600' : 'text-emerald-400'}`} />
+                    <span className={plan.style === 'neutral' ? 'text-slate-700' : 'text-white/90'}>
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={plan.href}
+                className={`block w-full text-center px-6 py-3 rounded-lg font-medium transition-colors ${
+                  plan.style === 'neutral'
+                    ? 'bg-navy/5 text-navy hover:bg-navy/10'
+                    : plan.style === 'primary'
+                    ? 'bg-white text-navy hover:bg-slate-100'
+                    : 'bg-white/10 text-white hover:bg-white/20'
+                }`}
+              >
+                {plan.cta}
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// PHYSICAL VERIFICATION
+// ============================================================
+function PhysicalVerification({ lang }: { lang: Lang }) {
+  const checklist = [
+    lang === 'hi' ? 'लोकेशन' : 'Location',
+    lang === 'hi' ? 'एक्सेस रोड' : 'Access road',
+    lang === 'hi' ? 'दिखाई दे रही बाउंड्रीज' : 'Visible boundaries',
+    lang === 'hi' ? 'आस-पास का विकास' : 'Surrounding development',
+    lang === 'hi' ? 'फिजिकल कंडीशन' : 'Physical condition',
+    lang === 'hi' ? 'दिखाई दे रहा कब्ज़ा' : 'Visible occupancy',
+    lang === 'hi' ? 'पहचान चिन्ह/साइनेज' : 'Signage/identification',
+    lang === 'hi' ? 'बुनियादी प्रॉपर्टी विशेषताएं' : 'Basic property characteristics'
+  ];
+
+  return (
+    <section id="physical-verification" className="py-20 md:py-28 bg-gradient-to-br from-emerald-50 to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-100 rounded-full text-xs font-medium text-emerald-700 mb-4">
+              <MapPin className="w-3.5 h-3.5" />
+              {lang === 'hi' ? 'फिजिकल वेरिफिकेशन' : 'PHYSICAL VERIFICATION'}
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+              {lang === 'hi' ? 'जो लोग ग्राउंड पर किसी को चाहते हैं।' : 'For buyers who want someone on the ground.'}
+            </h2>
+            <p className="text-lg text-slate-600 mb-6">
+              {lang === 'hi'
+                ? 'डिजिटल इंटेलिजेंस और रियल-वर्ल्ड वेरिफिकेशन के बीच का पुल।'
+                : 'The bridge between digital intelligence and real-world verification.'}
+            </p>
+
+            <ul className="space-y-3 mb-6">
+              {[
+                lang === 'hi' ? 'प्रॉपर्टी इंटेलिजेंस रिपोर्ट' : 'Property Intelligence Report',
+                lang === 'hi' ? 'फिजिकल साइट विज़िट' : 'Physical site visit',
+                lang === 'hi' ? 'लोकेशन कन्फर्मेशन' : 'Location confirmation',
+                lang === 'hi' ? 'बुनियादी साइट ऑब्ज़र्वेशंस' : 'Basic site observations',
+                lang === 'hi' ? 'फोटोग्राफ्स (जहां लागू हो)' : 'Photographs where applicable',
+                lang === 'hi' ? 'ग्राउंड-लेवल ऑब्ज़र्वेशंस' : 'Ground-level observations',
+                lang === 'hi' ? 'बुनियादी प्रॉपर्टी डिटेल्स क्रॉस-चेक' : 'Basic property detail cross-check',
+                lang === 'hi' ? 'वेरिफिकेशन समरी' : 'Verification summary',
+                lang === 'hi' ? 'फिजिकल वेरिफिकेशन रिपोर्ट' : 'Physical verification report'
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
+                  <CheckCircle className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <a href="#service-plans" className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-lg font-medium hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-600/20">
+              {lang === 'hi' ? 'वेरिफिकेशन रिक्वेस्ट करें' : 'Request Verification'}
+              <ArrowRight className="w-4 h-4" />
+            </a>
+
+            <p className="text-xs text-slate-500 mt-4">
+              {lang === 'hi' 
+                ? 'वर्तमान में सेलेक्टेड लोकेशंस में उपलब्ध।'
+                : 'Currently available in selected locations.'}
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-2xl p-6 shadow-xl border border-slate-200"
+          >
+            <h3 className="text-lg font-bold text-navy mb-4">
+              {lang === 'hi' ? 'फील्ड चेकलिस्ट' : 'Field Checklist'}
+            </h3>
+            <div className="grid grid-cols-2 gap-3">
+              {checklist.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="flex items-center gap-2 p-3 bg-emerald-50 rounded-lg"
+                >
+                  <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="text-xs font-medium text-navy">{item}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-100">
+              <div className="flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-amber-700">
+                  {lang === 'hi'
+                    ? 'फिजिकल वेरिफिकेशन देखे जा सकने वाले साइट कंडीशंस की पुष्टि करता है और लीगल टाइटल वेरिफिकेशन का विकल्प नहीं है।'
+                    : 'Physical verification confirms observable site conditions and does not replace legal title verification.'}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// FULL DEAL SUPPORT
+// ============================================================
+function FullDealSupport({ lang }: { lang: Lang }) {
+  const journey = [
+    { icon: Search, title: lang === 'hi' ? 'प्रॉपर्टी सर्च' : 'Property Search', desc: lang === 'hi' ? 'सही प्रॉपर्टी खोजें' : 'Find the right property' },
+    { icon: FileText, title: lang === 'hi' ? 'प्रॉपर्टी शॉर्टलिस्ट' : 'Property Shortlist', desc: lang === 'hi' ? 'ऑप्शंस को कम करें' : 'Narrow down options' },
+    { icon: Shield, title: lang === 'hi' ? 'प्रॉपर्टी इंटेलिजेंस' : 'Property Intelligence', desc: lang === 'hi' ? 'प्रॉपर्टी को समझें' : 'Understand the property' },
+    { icon: MapPin, title: lang === 'hi' ? 'फिजिकल वेरिफिकेशन' : 'Physical Verification', desc: lang === 'hi' ? 'ग्राउंड पर वेरिफाई करें' : 'Verify on the ground' },
+    { icon: FileCheck, title: lang === 'hi' ? 'दस्तावेज़ रिव्यू' : 'Document Review', desc: lang === 'hi' ? 'दस्तावेज़ों की समीक्षा' : 'Review documents' },
+    { icon: Scale, title: lang === 'hi' ? 'लीगल कोऑर्डिनेशन' : 'Legal Coordination', desc: lang === 'hi' ? 'कानूनी पहलुओं को हैंडल करें' : 'Handle legal aspects' },
+    { icon: Users, title: lang === 'hi' ? 'नेगोशिएशन सपोर्ट' : 'Negotiation Support', desc: lang === 'hi' ? 'बेहतर डील पाएं' : 'Get better deal' },
+    { icon: BookOpen, title: lang === 'hi' ? 'एग्रीमेंट / डॉक्यूमेंटेशन' : 'Agreement / Documentation', desc: lang === 'hi' ? 'दस्तावेज़ तैयार करें' : 'Prepare documents' },
+    { icon: CheckCircle, title: lang === 'hi' ? 'रजिस्ट्रेशन प्रिपरेशन' : 'Registration Preparation', desc: lang === 'hi' ? 'रजिस्ट्रेशन के लिए तैयार' : 'Prepare for registration' },
+    { icon: Shield, title: lang === 'hi' ? 'रजिस्ट्रेशन-स्टेज असिस्टेंस' : 'Registration-Stage Assistance', desc: lang === 'hi' ? 'रजिस्ट्रेशन में सहायता' : 'Assistance at registration' },
+    { icon: CheckCircle, title: lang === 'hi' ? 'डील पूरी हुई' : 'Deal Completed', desc: lang === 'hi' ? 'सफलतापूर्वक पूरा हुआ' : 'Successfully completed' }
+  ];
+
+  return (
+    <section id="full-deal-support" className="py-20 md:py-28 bg-gradient-to-br from-navy to-navy-light text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-accent/20 rounded-full text-xs font-medium text-accent mb-4">
+            <span>END-TO-END</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            {lang === 'hi' ? 'फुल डील सपोर्ट' : 'Full Deal Support'}
+          </h2>
+          <p className="text-lg text-white/70 max-w-3xl mx-auto mb-2">
+            {lang === 'hi' ? 'प्रॉपर्टी सर्च से रजिस्ट्रेशन तक।' : 'From Property Search to Registration.'}
+          </p>
+          <p className="text-base text-white/60 max-w-2xl mx-auto">
+            {lang === 'hi'
+              ? 'प्रॉपर्टी ट्रांजेक्शन को अकेले नेविगेट नहीं करना चाहते? अपनी डील के प्रमुख चरणों में समर्पित सपोर्ट पाएं।'
+              : "Don't want to navigate the property transaction alone? Get dedicated support throughout the major stages of your deal."}
+          </p>
+        </motion.div>
+
+        {/* Journey Timeline */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12"
+        >
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-white/20 hidden md:block" />
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {journey.map((step, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  className="relative flex items-start gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                    <step.icon className="w-5 h-5 text-emerald-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs text-white/50 mb-1">Step {i + 1}</p>
+                    <h4 className="font-semibold text-white mb-1">{step.title}</h4>
+                    <p className="text-xs text-white/60">{step.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Dedicated Representative */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-white/10 rounded-2xl p-8 border border-white/20 backdrop-blur-sm mb-8"
+        >
+          <div className="text-center mb-6">
+            <h3 className="text-2xl font-bold mb-2">
+              {lang === 'hi' ? 'एक व्यक्ति। आपकी प्रॉपर्टी जर्नी।' : 'One Person. Your Property Journey.'}
+            </h3>
+            <p className="text-white/70 max-w-2xl mx-auto">
+              {lang === 'hi'
+                ? 'अपने आप को कई लोगों के साथ कोऑर्डिनेट करने के बजाय, एक समर्पित भूमि साथी रिप्रेजेंटेटिव आपकी प्रॉपर्टी ट्रांजेक्शन के प्रमुख चरणों को कोऑर्डिनेट करने में मदद करता है।'
+                : 'Instead of coordinating with multiple people yourself, a dedicated Bhumi Saathi representative helps coordinate the major stages of your property transaction.'}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              { icon: Users, title: lang === 'hi' ? 'आपका रिप्रेजेंटेटिव' : 'Your Representative' },
+              { icon: CheckCircle, title: lang === 'hi' ? 'कोऑर्डिनेट करता है' : 'Coordinates' },
+              { icon: Shield, title: lang === 'hi' ? 'सभी स्टेज पर' : 'All Stages' }
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3 p-4 bg-white/5 rounded-lg">
+                <item.icon className="w-6 h-6 text-emerald-400" />
+                <span className="font-medium">{item.title}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <a href="#service-plans" className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-navy rounded-lg font-bold hover:bg-accent/90 transition-colors shadow-lg shadow-accent/20">
+            {lang === 'hi' ? 'फुल डील सपोर्ट पाएं' : 'Get Full Deal Support'}
+            <ArrowRight className="w-5 h-5" />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
 // HOME PAGE
 // ============================================================
 function HomePage({ lang }: { lang: Lang }) {
   return (
     <>
       <Hero lang={lang} />
+      <TrustStrip lang={lang} />
       <WhyBhumiSaathi lang={lang} />
       <FreeTools lang={lang} />
       <PropertyIntelligenceReport lang={lang} />
@@ -2011,6 +2497,9 @@ function HomePage({ lang }: { lang: Lang }) {
       <PropertySearch lang={lang} />
       <HowItWorks lang={lang} />
       <AppreciationIntelligence lang={lang} />
+      <ServicePlans lang={lang} />
+      <PhysicalVerification lang={lang} />
+      <FullDealSupport lang={lang} />
       <ExpertConsultation lang={lang} />
       <Features lang={lang} />
       <DocumentVerification lang={lang} />
