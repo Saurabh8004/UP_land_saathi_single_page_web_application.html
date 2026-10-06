@@ -44,16 +44,30 @@ export const locationService = {
    * Get all districts
    */
   async getDistricts(): Promise<District[]> {
+    console.log('[LOCATION DEBUG] Fetching districts...');
+    
     if (cache.districts) {
+      console.log('[LOCATION DEBUG] Returning cached districts:', cache.districts.length);
       return cache.districts;
     }
 
     try {
-      // For now, use the static district data from config
-      // In production, this would come from Supabase or an API
-      const { DISTRICTS } = await import('../config/districts');
-      
-      const districts: District[] = DISTRICTS.map(d => ({
+      // Query from Supabase districts table
+      const { data, error } = await supabase
+        .from('districts')
+        .select('code, name_en, name_hi')
+        .eq('is_active', true)
+        .order('name_en');
+
+      if (error) {
+        console.error('[LOCATION ERROR] Failed to fetch districts:', error);
+        throw new Error('Failed to load districts');
+      }
+
+      console.log('[LOCATION DEBUG] Districts fetched:', data?.length || 0);
+      console.log('[LOCATION DEBUG] First 3 districts:', data?.slice(0, 3));
+
+      const districts: District[] = (data || []).map(d => ({
         code: d.code,
         name: d.name_en,
         nameHindi: d.name_hi
@@ -62,7 +76,7 @@ export const locationService = {
       cache.districts = districts;
       return districts;
     } catch (error) {
-      console.error('[LOCATION] Error fetching districts:', error);
+      console.error('[LOCATION ERROR] Error fetching districts:', error);
       throw new Error('Failed to load districts');
     }
   },
@@ -71,37 +85,60 @@ export const locationService = {
    * Get tehsils for a district
    */
   async getTehsils(districtCode: string): Promise<Tehsil[]> {
+    console.log('[TEHSIL DEBUG] ========================================');
+    console.log('[TEHSIL DEBUG] getTehsils called');
+    console.log('[TEHSIL DEBUG] districtCode:', districtCode);
+    console.log('[TEHSIL DEBUG] districtCode type:', typeof districtCode);
+    
     if (cache.tehsils[districtCode]) {
+      console.log('[TEHSIL DEBUG] Returning cached tehsils:', cache.tehsils[districtCode].length);
       return cache.tehsils[districtCode];
     }
 
     try {
-      // TODO: In production, fetch from Supabase or Edge Function
-      // For now, return mock data for Amroha (137)
-      if (districtCode === '137') {
-        const tehsils: Tehsil[] = [
-          {
-            code: '00730',
-            name: 'Amroha',
-            nameHindi: 'अमरोहा',
-            districtCode: '137'
-          },
-          {
-            code: '00731',
-            name: 'Hasanpur',
-            nameHindi: 'हसनपुर',
-            districtCode: '137'
-          }
-        ];
-        cache.tehsils[districtCode] = tehsils;
-        return tehsils;
+      console.log('[TEHSIL DEBUG] Querying Supabase for tehsils...');
+      
+      // Query from Supabase tehsils table
+      const { data, error } = await supabase
+        .from('tehsils')
+        .select('code, name_en, name_hi, district_code')
+        .eq('district_code', districtCode)
+        .eq('is_active', true)
+        .order('name_en');
+
+      console.log('[TEHSIL DEBUG] Supabase response received');
+      console.log('[TEHSIL DEBUG] Error:', error);
+      console.log('[TEHSIL DEBUG] Data:', data);
+      console.log('[TEHSIL DEBUG] Number of tehsils:', data?.length || 0);
+
+      if (error) {
+        console.error('[TEHSIL ERROR] Failed to fetch tehsils:', error);
+        throw new Error('Failed to load tehsils');
       }
 
-      // For other districts, return empty for now
-      // In production, this would be fetched from backend
-      return [];
+      if (!data || data.length === 0) {
+        console.warn('[TEHSIL DEBUG] No tehsils found for district:', districtCode);
+        console.warn('[TEHSIL DEBUG] This district may not have tehsil data in the database');
+      } else {
+        console.log('[TEHSIL DEBUG] First 3 tehsils:', data.slice(0, 3));
+      }
+
+      const tehsils: Tehsil[] = (data || []).map(t => ({
+        code: t.code,
+        name: t.name_en,
+        nameHindi: t.name_hi,
+        districtCode: t.district_code
+      }));
+
+      cache.tehsils[districtCode] = tehsils;
+      console.log('[TEHSIL DEBUG] Cached tehsils for district:', districtCode);
+      console.log('[TEHSIL DEBUG] ========================================');
+      
+      return tehsils;
     } catch (error) {
-      console.error('[LOCATION] Error fetching tehsils:', error);
+      console.error('[TEHSIL ERROR] Error fetching tehsils:', error);
+      console.error('[TEHSIL ERROR] districtCode:', districtCode);
+      console.log('[TEHSIL DEBUG] ========================================');
       throw new Error('Failed to load tehsils');
     }
   },
@@ -112,45 +149,63 @@ export const locationService = {
   async getVillages(districtCode: string, tehsilCode: string): Promise<Village[]> {
     const cacheKey = `${districtCode}_${tehsilCode}`;
     
+    console.log('[VILLAGE DEBUG] ========================================');
+    console.log('[VILLAGE DEBUG] getVillages called');
+    console.log('[VILLAGE DEBUG] districtCode:', districtCode);
+    console.log('[VILLAGE DEBUG] tehsilCode:', tehsilCode);
+    
     if (cache.villages[cacheKey]) {
+      console.log('[VILLAGE DEBUG] Returning cached villages:', cache.villages[cacheKey].length);
       return cache.villages[cacheKey];
     }
 
     try {
-      // TODO: In production, fetch from Supabase or Edge Function
-      // For now, return mock data for Amroha -> Amroha
-      if (districtCode === '137' && tehsilCode === '00730') {
-        const villages: Village[] = [
-          {
-            code: '117978',
-            name: 'Atairana',
-            nameHindi: 'अटेरना',
-            tehsilCode: '00730',
-            districtCode: '137'
-          },
-          {
-            code: '117979',
-            name: 'Bhikhpur',
-            nameHindi: 'भीखमपुर',
-            tehsilCode: '00730',
-            districtCode: '137'
-          },
-          {
-            code: '117980',
-            name: 'Chandpur',
-            nameHindi: 'चांदपुर',
-            tehsilCode: '00730',
-            districtCode: '137'
-          }
-        ];
-        cache.villages[cacheKey] = villages;
-        return villages;
+      console.log('[VILLAGE DEBUG] Querying Supabase for villages...');
+      
+      // Query from Supabase villages table
+      const { data, error } = await supabase
+        .from('villages')
+        .select('code, name_en, name_hi, tehsil_code, district_code')
+        .eq('district_code', districtCode)
+        .eq('tehsil_code', tehsilCode)
+        .eq('is_active', true)
+        .order('name_en');
+
+      console.log('[VILLAGE DEBUG] Supabase response received');
+      console.log('[VILLAGE DEBUG] Error:', error);
+      console.log('[VILLAGE DEBUG] Data:', data);
+      console.log('[VILLAGE DEBUG] Number of villages:', data?.length || 0);
+
+      if (error) {
+        console.error('[VILLAGE ERROR] Failed to fetch villages:', error);
+        throw new Error('Failed to load villages');
       }
 
-      // For other combinations, return empty for now
-      return [];
+      if (!data || data.length === 0) {
+        console.warn('[VILLAGE DEBUG] No villages found for tehsil:', tehsilCode);
+        console.warn('[VILLAGE DEBUG] This tehsil may not have village data in the database');
+      } else {
+        console.log('[VILLAGE DEBUG] First 3 villages:', data.slice(0, 3));
+      }
+
+      const villages: Village[] = (data || []).map(v => ({
+        code: v.code,
+        name: v.name_en,
+        nameHindi: v.name_hi,
+        tehsilCode: v.tehsil_code,
+        districtCode: v.district_code
+      }));
+
+      cache.villages[cacheKey] = villages;
+      console.log('[VILLAGE DEBUG] Cached villages for tehsil:', tehsilCode);
+      console.log('[VILLAGE DEBUG] ========================================');
+      
+      return villages;
     } catch (error) {
-      console.error('[LOCATION] Error fetching villages:', error);
+      console.error('[VILLAGE ERROR] Error fetching villages:', error);
+      console.error('[VILLAGE ERROR] districtCode:', districtCode);
+      console.error('[VILLAGE ERROR] tehsilCode:', tehsilCode);
+      console.log('[VILLAGE DEBUG] ========================================');
       throw new Error('Failed to load villages');
     }
   },
@@ -159,6 +214,7 @@ export const locationService = {
    * Clear cache
    */
   clearCache() {
+    console.log('[LOCATION DEBUG] Clearing cache...');
     cache.districts = null;
     cache.tehsils = {};
     cache.villages = {};
