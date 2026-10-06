@@ -2165,36 +2165,72 @@ function TrustTransparency({ lang }: { lang: Lang }) {
 // ============================================================
 function FinalCTA({ lang }: { lang: Lang }) {
   return (
-    <section className="py-20 md:py-28 bg-gradient-to-br from-navy to-navy-light text-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section className="py-20 md:py-28 bg-gradient-to-br from-navy via-royal-blue to-teal text-white relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-gold/10 rounded-full blur-3xl animate-float-slow" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-teal/20 rounded-full blur-3xl animate-float" />
+      </div>
+
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            {lang === 'hi' ? 'निवेश से पहले, अपनी प्रॉपर्टी को जानें।' : 'Before You Invest, Know Your Property.'}
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            {lang === 'hi' ? (
+              <>
+                Property खरीदने से पहले,
+                <br />
+                <span className="bg-gradient-to-r from-gold to-orange bg-clip-text text-transparent">
+                  एक बार पूरा picture देख लें।
+                </span>
+              </>
+            ) : (
+              <>
+                Before buying property,
+                <br />
+                <span className="bg-gradient-to-r from-gold to-orange bg-clip-text text-transparent">
+                  see the complete picture once.
+                </span>
+              </>
+            )}
           </h2>
-          <p className="text-lg text-white/70 mb-8">
+          <p className="text-lg text-white/80 mb-8 max-w-2xl mx-auto">
             {lang === 'hi'
-              ? 'हमारे मुफ्त टूल्स से शुरू करें या पूरी प्रॉपर्टी इंटेलिजेंस रिपोर्ट पाएं।'
-              : 'Start with our free tools or get a complete Property Intelligence Report.'}
+              ? 'Free tools से शुरुआत करें या अपनी property के लिए detailed Reality Report पाएं।'
+              : 'Start with free tools or get a detailed Reality Report for your property.'}
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-6">
-            <a href="#free-tools" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-navy rounded-lg font-medium hover:bg-slate-100 transition-colors">
-              {lang === 'hi' ? 'मुफ्त टूल्स देखें' : 'Explore Free Tools'}
+            <a href="#free-tools" className="group inline-flex items-center gap-2 px-8 py-4 glass text-white rounded-xl font-semibold hover:bg-white/20 transition-all">
+              {lang === 'hi' ? 'Free में Check करें' : 'Check for Free'}
             </a>
-            <a href="#search" className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition-colors">
-              {lang === 'hi' ? 'प्रॉपर्टी रिपोर्ट पाएं' : 'Get Property Report'}
-              <ArrowRight className="w-5 h-5" />
+            <a href="#service-plans" className="group inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gold to-orange text-navy rounded-xl font-bold hover:shadow-2xl hover:shadow-gold/30 transition-all hover:scale-105">
+              {lang === 'hi' ? 'Reality Report पाएं' : 'Get Reality Report'}
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a href="#expert-consultation" className="group inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white rounded-xl font-semibold hover:bg-white/20 transition-all">
+              {lang === 'hi' ? 'Expert से बात करें' : 'Talk to Expert'}
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
 
-          <a href="#expert-consultation" className="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
-            {lang === 'hi' ? 'उद्योग विशेषज्ञ से बात करें' : 'Talk to an Industry Expert'}
-            <ArrowRight className="w-4 h-4" />
-          </a>
+          <div className="flex items-center justify-center gap-6 text-sm text-white/60 mt-8">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald" />
+              <span>{lang === 'hi' ? 'Evidence First' : 'Evidence First'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald" />
+              <span>{lang === 'hi' ? 'Claims Second' : 'Claims Second'}</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-4 h-4 text-emerald" />
+              <span>{lang === 'hi' ? 'No Fear Selling' : 'No Fear Selling'}</span>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -2689,6 +2725,737 @@ function FullDealSupport({ lang }: { lang: Lang }) {
 }
 
 // ============================================================
+// PAIN POINTS SECTION
+// ============================================================
+function PainPoints({ lang }: { lang: Lang }) {
+  const problems = [
+    {
+      icon: Users,
+      color: 'bg-royal-blue',
+      title: lang === 'hi' ? 'जिससे खरीद रहे हैं, क्या उसके पास बेचने का अधिकार है?' : 'Does the seller actually have the right to sell?',
+      desc: lang === 'hi'
+        ? 'Seller identity, ownership information, co-ownership, previous documents, title-related questions.'
+        : 'Seller identity, ownership information, co-ownership, previous documents, title-related questions.',
+      note: lang === 'hi' ? 'Title-related concerns should be reviewed by a qualified property lawyer.' : 'Title-related concerns should be reviewed by a qualified property lawyer.'
+    },
+    {
+      icon: FileCheck,
+      color: 'bg-teal',
+      title: lang === 'hi' ? 'कागज़ों में छोटी mismatch बाद में बड़ी परेशानी बन सकती है।' : 'Small document mismatches can become major problems later.',
+      desc: lang === 'hi'
+        ? 'Owner name, Father/Husband name, Gata/Khasra, Area, Village, Khata, Property description.'
+        : 'Owner name, Father/Husband name, Gata/Khasra, Area, Village, Khata, Property description.',
+      comparison: true
+    },
+    {
+      icon: MapPin,
+      color: 'bg-emerald',
+      title: lang === 'hi' ? 'हर जमीन पर हर तरह का इस्तेमाल संभव नहीं होता।' : 'Not every type of use is possible on every piece of land.',
+      desc: lang === 'hi'
+        ? 'Agricultural classification, land category, government/common land indicators, usage restrictions.'
+        : 'Agricultural classification, land category, government/common land indicators, usage restrictions.',
+      note: lang === 'hi' ? 'Consult a qualified professional for definitive conclusions.' : 'Consult a qualified professional for definitive conclusions.'
+    },
+    {
+      icon: Lock,
+      color: 'bg-warning',
+      title: lang === 'hi' ? 'Property पर कोई भार या charge तो नहीं?' : 'Is there any charge or encumbrance on the property?',
+      desc: lang === 'hi'
+        ? 'Mortgage, charge, encumbrance, outstanding obligations, registered interests.'
+        : 'Mortgage, charge, encumbrance, outstanding obligations, registered interests.',
+      note: lang === 'hi' ? 'Absence of a finding is not automatically a universal legal guarantee.' : 'Absence of a finding is not automatically a universal legal guarantee.'
+    },
+    {
+      icon: Scale,
+      color: 'bg-error',
+      title: lang === 'hi' ? 'कोई विवाद, case या stay तो नहीं?' : 'Any dispute, case, or stay order?',
+      desc: lang === 'hi'
+        ? 'Available official records, customer-provided documents, professional review.'
+        : 'Available official records, customer-provided documents, professional review.',
+      note: lang === 'hi' ? 'If no evidence found: "No issue identified in the sources reviewed."' : 'If no evidence found: "No issue identified in the sources reviewed."'
+    },
+    {
+      icon: MapPin,
+      color: 'bg-royal-blue',
+      title: lang === 'hi' ? 'कागज़ में जितनी जमीन है, ground पर उतनी ही है?' : 'Is the ground area the same as what the documents show?',
+      desc: lang === 'hi'
+        ? 'Area mismatch, Gata/Khasra mismatch, boundary confusion, access road, encroachment indicators.'
+        : 'Area mismatch, Gata/Khasra mismatch, boundary confusion, access road, encroachment indicators.',
+      cta: lang === 'hi' ? 'Physical Verification कराएं' : 'Get Physical Verification'
+    },
+    {
+      icon: TrendingUp,
+      color: 'bg-gold',
+      title: lang === 'hi' ? 'Broker ने जो बताया, क्या उसका evidence भी है?' : 'Is there evidence for what the broker promised?',
+      desc: lang === 'hi'
+        ? '"2 साल में double", "Ring road आने वाली है", "Airport पास आने वाला है", "यह road sanctioned है"'
+        : '"2x in 2 years", "Ring road coming", "Airport coming", "This road is sanctioned"',
+      cta: lang === 'hi' ? 'Return Reality Check चलाएं' : 'Run a Return Reality Check',
+      highlight: true
+    },
+    {
+      icon: FileText,
+      color: 'bg-teal',
+      title: lang === 'hi' ? 'सही price क्या है?' : 'What is the right price?',
+      desc: lang === 'hi'
+        ? 'Seller asking price, Circle rate, Available transaction context, Local market inputs are not necessarily the same.'
+        : 'Seller asking price, Circle rate, Available transaction context, Local market inputs are not necessarily the same.',
+      note: lang === 'hi' ? 'Price Context ≠ Guaranteed Market Value' : 'Price Context ≠ Guaranteed Market Value'
+    },
+    {
+      icon: BookOpen,
+      color: 'bg-emerald',
+      title: lang === 'hi' ? 'इतने सारे documents — समझें क्या?' : 'So many documents — understand what?',
+      desc: lang === 'hi'
+        ? 'Khatauni, Khasra, Sale deed, Previous deed, Mutation documents, Tax records, Maps.'
+        : 'Khatauni, Khasra, Sale deed, Previous deed, Mutation documents, Tax records, Maps.',
+      flow: true
+    },
+    {
+      icon: HelpCircle,
+      color: 'bg-royal-blue',
+      title: lang === 'hi' ? 'Problem समझ आई — लेकिन पूछें किससे?' : 'Understood the problem — but who to ask?',
+      desc: lang === 'hi'
+        ? 'Property Lawyer, Surveyor / Verification Professional, Construction Expert, Investment Expert, Documentation Professional.'
+        : 'Property Lawyer, Surveyor / Verification Professional, Construction Expert, Investment Expert, Documentation Professional.',
+      cta: lang === 'hi' ? 'Industry Expert से बात करें' : 'Talk to an Industry Expert'
+    }
+  ];
+
+  return (
+    <section className="py-20 md:py-28 bg-gradient-to-b from-bg-secondary to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+            {lang === 'hi'
+              ? 'Property खरीदते समय सबसे बड़ी परेशानी क्या होती है?'
+              : 'What can go wrong when buying property?'}
+          </h2>
+          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            {lang === 'hi'
+              ? 'सिर्फ property देख लेना काफी नहीं है। असली सवाल है — जो बताया जा रहा है, क्या वह रिकॉर्ड, दस्तावेज़ और ground reality से match करता है?'
+              : 'Just seeing the property is not enough. The real question is — does what is being told match the records, documents, and ground reality?'}
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {problems.map((problem, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className={`relative bg-white rounded-2xl p-6 border-2 hover:shadow-xl transition-all ${
+                problem.highlight ? 'border-gold shadow-lg' : 'border-slate-200 hover:border-navy/20'
+              }`}
+            >
+              {problem.highlight && (
+                <div className="absolute -top-3 left-6 px-3 py-1 bg-gradient-to-r from-gold to-orange text-white text-xs font-bold rounded-full">
+                  {lang === 'hi' ? 'FLAGSHIP' : 'FLAGSHIP'}
+                </div>
+              )}
+
+              <div className="flex items-start gap-4">
+                <div className={`w-12 h-12 rounded-xl ${problem.color} flex items-center justify-center flex-shrink-0`}>
+                  <problem.icon className="w-6 h-6 text-white" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-bold text-navy mb-2 text-lg">{problem.title}</h3>
+                  <p className="text-sm text-slate-600 mb-3">{problem.desc}</p>
+
+                  {/* Document comparison demo */}
+                  {problem.comparison && (
+                    <div className="bg-slate-50 rounded-lg p-3 space-y-2 mb-3">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-medium text-navy">Owner Name</span>
+                        <span className="flex items-center gap-1 text-emerald-600">
+                          <CheckCircle className="w-3 h-3" /> {lang === 'hi' ? 'Match' : 'Match'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-medium text-navy">Gata Number</span>
+                        <span className="flex items-center gap-1 text-emerald-600">
+                          <CheckCircle className="w-3 h-3" /> {lang === 'hi' ? 'Match' : 'Match'}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-medium text-navy">Area</span>
+                        <span className="flex items-center gap-1 text-warning">
+                          <AlertCircle className="w-3 h-3" /> {lang === 'hi' ? 'Review Required' : 'Review Required'}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Document flow demo */}
+                  {problem.flow && (
+                    <div className="flex items-center gap-2 text-xs text-slate-600 mb-3">
+                      <span className="px-2 py-1 bg-royal-blue/10 text-royal-blue rounded">UPLOAD</span>
+                      <ArrowRight className="w-3 h-3" />
+                      <span className="px-2 py-1 bg-teal/10 text-teal rounded">EXTRACT</span>
+                      <ArrowRight className="w-3 h-3" />
+                      <span className="px-2 py-1 bg-emerald/10 text-emerald rounded">COMPARE</span>
+                      <ArrowRight className="w-3 h-3" />
+                      <span className="px-2 py-1 bg-warning/10 text-warning rounded">FLAG</span>
+                      <ArrowRight className="w-3 h-3" />
+                      <span className="px-2 py-1 bg-navy/10 text-navy rounded">REPORT</span>
+                    </div>
+                  )}
+
+                  {problem.note && (
+                    <p className="text-xs text-slate-500 italic mb-3">"{problem.note}"</p>
+                  )}
+
+                  {problem.cta && (
+                    <a href="#service-plans" className="inline-flex items-center gap-1 text-sm font-semibold text-royal-blue hover:text-navy transition-colors">
+                      {problem.cta}
+                      <ArrowRight className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// BHUMI SAATHI SOLUTION SECTION
+// ============================================================
+function BhumiSaathiSolution({ lang }: { lang: Lang }) {
+  const solutions = [
+    { problem: lang === 'hi' ? 'Ownership confusion' : 'Ownership confusion', solution: lang === 'hi' ? 'Ownership & document analysis' : 'Ownership & document analysis', icon: Users },
+    { problem: lang === 'hi' ? 'Document mismatch' : 'Document mismatch', solution: lang === 'hi' ? 'Cross-check' : 'Cross-check', icon: FileCheck },
+    { problem: lang === 'hi' ? 'Broker promise' : 'Broker promise', solution: lang === 'hi' ? 'Return Reality Check' : 'Return Reality Check', icon: TrendingUp },
+    { problem: lang === 'hi' ? 'Ground uncertainty' : 'Ground uncertainty', solution: lang === 'hi' ? 'Physical Verification' : 'Physical Verification', icon: MapPin },
+    { problem: lang === 'hi' ? 'Expert confusion' : 'Expert confusion', solution: lang === 'hi' ? 'Industry Expert Network' : 'Industry Expert Network', icon: HelpCircle },
+    { problem: lang === 'hi' ? 'Transaction complexity' : 'Transaction complexity', solution: lang === 'hi' ? 'Deal Assist' : 'Deal Assist', icon: Shield }
+  ];
+
+  return (
+    <section className="py-20 md:py-28 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+            {lang === 'hi' ? 'यही वजह है कि Bhumi Saathi बनाया गया।' : 'This is why Bhumi Saathi was built.'}
+          </h2>
+        </motion.div>
+
+        <div className="space-y-4 max-w-4xl mx-auto">
+          {solutions.map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="flex items-center gap-4 bg-gradient-to-r from-bg-secondary to-white rounded-xl p-5 border border-slate-200"
+            >
+              <div className="flex items-center gap-3 flex-1">
+                <div className="w-10 h-10 rounded-lg bg-error/10 flex items-center justify-center">
+                  <AlertCircle className="w-5 h-5 text-error" />
+                </div>
+                <span className="font-medium text-slate-700">{item.problem}</span>
+              </div>
+              <ArrowRight className="w-5 h-5 text-navy flex-shrink-0" />
+              <div className="flex items-center gap-3 flex-1">
+                <div className="w-10 h-10 rounded-lg bg-emerald/10 flex items-center justify-center">
+                  <item.icon className="w-5 h-5 text-emerald" />
+                </div>
+                <span className="font-semibold text-navy">{item.solution}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// RETURN REALITY CHECK SECTION
+// ============================================================
+function ReturnRealityCheck({ lang }: { lang: Lang }) {
+  return (
+    <section id="reality-check" className="py-20 md:py-28 bg-gradient-to-br from-navy via-navy-light to-navy text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gold/20 rounded-full text-xs font-bold text-gold mb-4">
+            <TrendingUp className="w-4 h-4" />
+            {lang === 'hi' ? 'FLAGSHIP FEATURE' : 'FLAGSHIP FEATURE'}
+          </div>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            {lang === 'hi' ? 'Return Reality Check' : 'Return Reality Check'}
+          </h2>
+          <p className="text-lg text-white/70 max-w-3xl mx-auto">
+            {lang === 'hi'
+              ? 'Broker के दावे को evidence से test करें। Implied CAGR calculate करें। Infrastructure claim verify करें।'
+              : 'Test a broker/seller investment claim against available evidence. Calculate implied CAGR. Verify infrastructure claims.'}
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Input side */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="glass-dark rounded-2xl p-6 border border-white/10"
+          >
+            <h3 className="text-xl font-bold mb-4">
+              {lang === 'hi' ? 'Broker/Seller ने क्या वादा किया?' : 'What did the broker/seller promise?'}
+            </h3>
+            <div className="space-y-3 mb-6">
+              {[
+                lang === 'hi' ? '2 साल में double' : '2x in 2 years',
+                lang === 'hi' ? 'Ring road आने वाली है' : 'Ring road coming',
+                lang === 'hi' ? 'Airport पास आने वाला है' : 'Airport coming',
+                lang === 'hi' ? '50% growth in 1 year' : '50% growth in 1 year'
+              ].map((claim, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                  className="flex items-center gap-3 p-3 bg-white/5 rounded-lg"
+                >
+                  <div className="w-2 h-2 rounded-full bg-gold" />
+                  <span className="text-sm">{claim}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="p-4 bg-gold/10 rounded-lg border border-gold/20">
+              <p className="text-xs text-gold uppercase tracking-wider mb-2">
+                {lang === 'hi' ? 'IMPLIED CAGR' : 'IMPLIED CAGR'}
+              </p>
+              <p className="text-3xl font-bold text-white">
+                {lang === 'hi' ? '41% प्रति वर्ष' : '41% per year'}
+              </p>
+              <p className="text-xs text-white/60 mt-1">
+                {lang === 'hi' ? '(2x in 2 years का mathematical interpretation)' : '(Mathematical interpretation of 2x in 2 years)'}
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Evidence side */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="space-y-4"
+          >
+            {/* Infrastructure Claim Ladder */}
+            <div className="glass-dark rounded-2xl p-6 border border-white/10">
+              <h4 className="font-bold mb-4">
+                {lang === 'hi' ? 'Infrastructure Claim Ladder' : 'Infrastructure Claim Ladder'}
+              </h4>
+              <div className="space-y-2">
+                {[
+                  { label: 'RUMOUR', status: 'passed' },
+                  { label: 'ANNOUNCED', status: 'passed' },
+                  { label: 'SANCTIONED', status: 'current' },
+                  { label: 'FUNDED', status: 'pending' },
+                  { label: 'LAND ACQUISITION', status: 'pending' },
+                  { label: 'CONSTRUCTION STARTED', status: 'pending' },
+                  { label: 'OPERATIONAL', status: 'pending' }
+                ].map((step, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 + i * 0.1 }}
+                    className={`flex items-center gap-3 p-2 rounded-lg ${
+                      step.status === 'current' ? 'bg-gold/20 border border-gold/40' :
+                      step.status === 'passed' ? 'bg-emerald/10' : 'bg-white/5'
+                    }`}
+                  >
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                      step.status === 'current' ? 'bg-gold text-navy' :
+                      step.status === 'passed' ? 'bg-emerald text-white' : 'bg-white/10 text-white/40'
+                    }`}>
+                      {step.status === 'passed' ? <CheckCircle className="w-4 h-4" /> :
+                       step.status === 'current' ? <span className="text-xs font-bold">→</span> :
+                       <span className="text-xs">○</span>}
+                    </div>
+                    <span className={`text-xs font-medium ${
+                      step.status === 'current' ? 'text-gold' :
+                      step.status === 'passed' ? 'text-emerald' : 'text-white/50'
+                    }`}>{step.label}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Confidence Label */}
+            <div className="glass-dark rounded-2xl p-6 border border-white/10">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs uppercase tracking-wider text-white/60">
+                  {lang === 'hi' ? 'Confidence Level' : 'Confidence Level'}
+                </span>
+                <span className="px-3 py-1 bg-warning/20 text-warning text-xs font-bold rounded-full">
+                  {lang === 'hi' ? 'MEDIUM' : 'MEDIUM'}
+                </span>
+              </div>
+              <div className="w-full bg-white/10 rounded-full h-2 mb-3">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: '60%' }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 1, duration: 1 }}
+                  className="bg-gradient-to-r from-warning to-gold h-2 rounded-full"
+                />
+              </div>
+              <p className="text-xs text-white/60">
+                {lang === 'hi'
+                  ? 'Based on available evidence, comparable data points, and infrastructure status.'
+                  : 'Based on available evidence, comparable data points, and infrastructure status.'}
+              </p>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Disclaimer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-8 p-4 bg-white/5 rounded-lg border border-white/10 text-center"
+        >
+          <p className="text-xs text-white/60">
+            {lang === 'hi'
+              ? 'Indicative analysis based on available information. It is not a guaranteed return, investment advice or formal valuation.'
+              : 'Indicative analysis based on available information. It is not a guaranteed return, investment advice or formal valuation.'}
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-8"
+        >
+          <a href="#service-plans" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-gold to-orange text-navy rounded-xl font-bold hover:shadow-2xl hover:shadow-gold/30 transition-all hover:scale-105">
+            {lang === 'hi' ? 'Reality Report पाएं' : 'Get Reality Report'}
+            <ArrowRight className="w-5 h-5" />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
+// NEW 5-TIER SERVICE PLANS
+// ============================================================
+function ServicePlansNew({ lang }: { lang: Lang }) {
+  const plans = [
+    {
+      name: 'FREE CHECK',
+      price: '₹0',
+      tagline: lang === 'hi' ? 'पहले खुद जांचें।' : 'Check it yourself first.',
+      features: lang === 'hi' ? [
+        'Government source links',
+        'Basic property information',
+        '5 useful government links',
+        'What-to-check guide',
+        'Broker Promise Red-Flag Checklist'
+      ] : [
+        'Government source links',
+        'Basic property information',
+        '5 useful government links',
+        'What-to-check guide',
+        'Broker Promise Red-Flag Checklist'
+      ],
+      cta: lang === 'hi' ? 'मुफ्त में जांचें' : 'Check for Free',
+      href: '#free-tools',
+      style: 'neutral',
+      badge: null
+    },
+    {
+      name: 'SMART REPORT',
+      price: '₹999',
+      tagline: lang === 'hi' ? 'Risk समझें।' : 'Understand the risk.',
+      features: lang === 'hi' ? [
+        'Land-record analysis',
+        'Ownership-related checks',
+        'Area/Gata cross-check',
+        'Document cross-check',
+        'Land-category risk indicators',
+        'Risk score',
+        'Proceed / Review / Expert recommendation',
+        'Advocate-ready 1-page brief',
+        'Detailed PDF'
+      ] : [
+        'Land-record analysis',
+        'Ownership-related checks',
+        'Area/Gata cross-check',
+        'Document cross-check',
+        'Land-category risk indicators',
+        'Risk score',
+        'Proceed / Review / Expert recommendation',
+        'Advocate-ready 1-page brief',
+        'Detailed PDF'
+      ],
+      cta: lang === 'hi' ? 'Smart Report पाएं' : 'Get Smart Report',
+      href: '#search',
+      style: 'blue',
+      badge: lang === 'hi' ? 'SMART CHOICE' : 'SMART CHOICE'
+    },
+    {
+      name: 'REALITY REPORT',
+      price: '₹1,999',
+      tagline: lang === 'hi' ? 'Broker के दावे को evidence से test करें।' : 'Test broker claims against evidence.',
+      features: lang === 'hi' ? [
+        'Everything in Smart Report',
+        'Return Reality Check',
+        'Broker claim analysis',
+        'Implied CAGR calculation',
+        'Infrastructure claim verification',
+        'Circle-rate context',
+        'Available comparable price context',
+        'Break-even analysis',
+        'Liquidity/exit analysis',
+        'Conservative/Base/Optimistic scenarios',
+        'Confidence label',
+        'Evidence-based conclusion'
+      ] : [
+        'Everything in Smart Report',
+        'Return Reality Check',
+        'Broker claim analysis',
+        'Implied CAGR calculation',
+        'Infrastructure claim verification',
+        'Circle-rate context',
+        'Available comparable price context',
+        'Break-even analysis',
+        'Liquidity/exit analysis',
+        'Conservative/Base/Optimistic scenarios',
+        'Confidence label',
+        'Evidence-based conclusion'
+      ],
+      cta: lang === 'hi' ? 'Reality Check पाएं' : 'Get Reality Check',
+      href: '#reality-check',
+      style: 'primary',
+      badge: lang === 'hi' ? 'MOST POPULAR' : 'MOST POPULAR'
+    },
+    {
+      name: 'GROUND-VERIFIED REALITY',
+      price: '₹3,999+',
+      tagline: lang === 'hi' ? 'Report से आगे — ground पर verify करें।' : 'Beyond report — verify on ground.',
+      features: lang === 'hi' ? [
+        'Everything in Reality Report',
+        'Physical site visit',
+        'Location confirmation',
+        'Site photographs where applicable',
+        'Ground observations',
+        'Basic property-detail cross-check',
+        'Local price verification where available',
+        'Physical Verification Report'
+      ] : [
+        'Everything in Reality Report',
+        'Physical site visit',
+        'Location confirmation',
+        'Site photographs where applicable',
+        'Ground observations',
+        'Basic property-detail cross-check',
+        'Local price verification where available',
+        'Physical Verification Report'
+      ],
+      cta: lang === 'hi' ? 'Physical Verification कराएं' : 'Get Physical Verification',
+      href: '#physical-verification',
+      style: 'teal',
+      badge: null
+    },
+    {
+      name: 'DEAL ASSIST',
+      price: '₹19,999+',
+      tagline: lang === 'hi' ? 'Property search से registration-stage support तक।' : 'From property search to registration-stage support.',
+      features: lang === 'hi' ? [
+        'Reality Report',
+        'Physical Verification',
+        'Dedicated representative',
+        'Document coordination',
+        'Advocate coordination',
+        'Expert coordination',
+        'Negotiation support where applicable',
+        'Transaction coordination',
+        'Registration-stage assistance',
+        'On-ground support',
+        'Deal progress support'
+      ] : [
+        'Reality Report',
+        'Physical Verification',
+        'Dedicated representative',
+        'Document coordination',
+        'Advocate coordination',
+        'Expert coordination',
+        'Negotiation support where applicable',
+        'Transaction coordination',
+        'Registration-stage assistance',
+        'On-ground support',
+        'Deal progress support'
+      ],
+      cta: lang === 'hi' ? 'Full Deal Support लें' : 'Get Full Deal Support',
+      href: '#full-deal-support',
+      style: 'premium',
+      badge: 'END-TO-END'
+    }
+  ];
+
+  const getCardStyle = (style: string) => {
+    switch (style) {
+      case 'primary':
+        return 'bg-gradient-to-br from-royal-blue to-teal text-white border-royal-blue shadow-2xl scale-105 z-10';
+      case 'blue':
+        return 'bg-gradient-to-br from-royal-blue/90 to-royal-blue text-white border-royal-blue shadow-xl';
+      case 'teal':
+        return 'bg-gradient-to-br from-teal to-emerald text-white border-teal shadow-xl';
+      case 'premium':
+        return 'bg-gradient-to-br from-navy via-navy-light to-navy text-white border-gold shadow-2xl';
+      default:
+        return 'bg-white text-navy border-slate-200';
+    }
+  };
+
+  const getBadgeStyle = (style: string) => {
+    switch (style) {
+      case 'primary':
+        return 'bg-gold text-navy';
+      case 'blue':
+        return 'bg-white text-royal-blue';
+      case 'premium':
+        return 'bg-gold text-navy';
+      default:
+        return 'bg-slate-100 text-slate-700';
+    }
+  };
+
+  return (
+    <section id="service-plans" className="py-20 md:py-28 bg-gradient-to-b from-white via-bg-secondary to-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+            {lang === 'hi' ? 'अपनी जरूरत के हिसाब से सही support चुनें' : 'Choose the right support for your needs'}
+          </h2>
+          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+            {lang === 'hi'
+              ? 'खुद check करने से लेकर पूरी property deal में support तक।'
+              : 'From checking it yourself to full support through the property deal.'}
+          </p>
+        </motion.div>
+
+        {/* Service Journey */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mb-12 text-sm"
+        >
+          {[
+            { label: lang === 'hi' ? 'CHECK IT' : 'CHECK IT', price: '₹0' },
+            { label: lang === 'hi' ? 'UNDERSTAND IT' : 'UNDERSTAND IT', price: '₹999' },
+            { label: lang === 'hi' ? 'CHALLENGE THE CLAIM' : 'CHALLENGE THE CLAIM', price: '₹1,999' },
+            { label: lang === 'hi' ? 'VERIFY IT' : 'VERIFY IT', price: '₹3,999+' },
+            { label: lang === 'hi' ? 'COMPLETE THE DEAL' : 'COMPLETE THE DEAL', price: '₹19,999+' }
+          ].map((step, i) => (
+            <div key={i} className="flex items-center gap-2 md:gap-4">
+              <div className="text-center">
+                <p className="font-bold text-navy">{step.label}</p>
+                <p className="text-xs text-slate-500">{step.price}</p>
+              </div>
+              {i < 4 && <ArrowRight className="w-4 h-4 text-navy/30 hidden md:block" />}
+            </div>
+          ))}
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+          {plans.map((plan, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className={`rounded-2xl p-5 border-2 ${getCardStyle(plan.style)} relative flex flex-col`}
+            >
+              {plan.badge && (
+                <div className={`absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${getBadgeStyle(plan.style)}`}>
+                  {plan.badge}
+                </div>
+              )}
+
+              <div className="mb-4">
+                <p className={`text-xs uppercase tracking-wider mb-2 ${plan.style === 'neutral' ? 'text-slate-500' : 'text-white/70'}`}>
+                  {plan.tagline}
+                </p>
+                <h3 className={`text-base font-bold mb-2 ${plan.style === 'neutral' ? 'text-navy' : 'text-white'}`}>
+                  {plan.name}
+                </h3>
+                <p className={`text-2xl font-bold ${plan.style === 'neutral' ? 'text-navy' : 'text-white'}`}>
+                  {plan.price}
+                </p>
+              </div>
+
+              <ul className="space-y-2 mb-5 flex-1">
+                {plan.features.map((feature, j) => (
+                  <li key={j} className="flex items-start gap-2 text-xs">
+                    <CheckCircle className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${plan.style === 'neutral' ? 'text-emerald' : 'text-emerald-300'}`} />
+                    <span className={plan.style === 'neutral' ? 'text-slate-700' : 'text-white/90'}>
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={plan.href}
+                className={`block w-full text-center px-4 py-2.5 rounded-lg font-semibold text-sm transition-all ${
+                  plan.style === 'neutral'
+                    ? 'bg-navy/5 text-navy hover:bg-navy/10'
+                    : plan.style === 'primary'
+                    ? 'bg-white text-navy hover:bg-slate-100 shadow-lg'
+                    : plan.style === 'premium'
+                    ? 'bg-gradient-to-r from-gold to-orange text-navy hover:shadow-lg'
+                    : 'bg-white/10 text-white hover:bg-white/20'
+                }`}
+              >
+                {plan.cta}
+              </a>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================================
 // HOME PAGE
 // ============================================================
 function HomePage({ lang }: { lang: Lang }) {
@@ -2696,17 +3463,19 @@ function HomePage({ lang }: { lang: Lang }) {
     <>
       <Hero lang={lang} />
       <TrustStrip lang={lang} />
-      <WhyBhumiSaathi lang={lang} />
+      <PainPoints lang={lang} />
+      <BhumiSaathiSolution lang={lang} />
       <FreeTools lang={lang} />
       <PropertyIntelligenceReport lang={lang} />
+      <ReturnRealityCheck lang={lang} />
       <ReportPreview lang={lang} />
       <PropertySearch lang={lang} />
-      <HowItWorks lang={lang} />
-      <AppreciationIntelligence lang={lang} />
-      <ServicePlans lang={lang} />
+      <ServicePlansNew lang={lang} />
       <PhysicalVerification lang={lang} />
       <FullDealSupport lang={lang} />
       <ExpertConsultation lang={lang} />
+      <HowItWorks lang={lang} />
+      <AppreciationIntelligence lang={lang} />
       <Features lang={lang} />
       <DocumentVerification lang={lang} />
       <TrustSection lang={lang} />
