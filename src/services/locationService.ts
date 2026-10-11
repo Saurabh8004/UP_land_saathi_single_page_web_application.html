@@ -61,7 +61,10 @@ export const locationService = {
 
       if (error) {
         console.error('[LOCATION ERROR] Failed to fetch districts:', error);
-        throw new Error('Failed to load districts');
+        // Show actual error details for debugging
+        const errorMessage = error.message || 'Unknown error';
+        const errorCode = error.code || 'NO_CODE';
+        throw new Error(`Failed to load districts: ${errorMessage} (Code: ${errorCode})`);
       }
 
       console.log('[LOCATION DEBUG] Districts fetched:', data?.length || 0);
@@ -77,7 +80,11 @@ export const locationService = {
       return districts;
     } catch (error) {
       console.error('[LOCATION ERROR] Error fetching districts:', error);
-      throw new Error('Failed to load districts');
+      // Preserve the original error message if it's already an Error
+      if (error instanceof Error) {
+        throw error;
+      }
+      throw new Error(`Failed to load districts: ${String(error)}`);
     }
   },
 

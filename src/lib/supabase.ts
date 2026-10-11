@@ -3,11 +3,12 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Safe initialization - don't throw error, use fallback for development
-// In production, these must be set in Vercel environment variables
+// Safe initialization with detailed error reporting
 let supabase: SupabaseClient;
 
 if (supabaseUrl && supabaseAnonKey) {
+  console.log('[SUPABASE] Initializing with environment variables');
+  console.log('[SUPABASE] URL:', supabaseUrl);
   supabase = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       autoRefreshToken: true,
@@ -16,11 +17,18 @@ if (supabaseUrl && supabaseAnonKey) {
     }
   });
 } else {
-  // Fallback for development/build time - will show error in UI
-  console.warn('Supabase environment variables not set. Using fallback client.');
+  // In production, this is a critical error
+  const missingVars = [];
+  if (!supabaseUrl) missingVars.push('VITE_SUPABASE_URL');
+  if (!supabaseAnonKey) missingVars.push('VITE_SUPABASE_ANON_KEY');
+  
+  console.error('[SUPABASE] CRITICAL: Missing environment variables:', missingVars.join(', '));
+  console.error('[SUPABASE] Please set these in Vercel Dashboard → Settings → Environment Variables');
+  
+  // Still create a client to avoid crashes, but it will fail on queries
   supabase = createClient(
-    'https://placeholder.supabase.co',
-    'placeholder-key',
+    supabaseUrl || 'https://placeholder.supabase.co',
+    supabaseAnonKey || 'placeholder-key',
     {
       auth: {
         autoRefreshToken: false,

@@ -637,7 +637,18 @@ function PropertySearch({ lang }: { lang: Lang }) {
       setDistricts(districtData);
     } catch (err) {
       console.error('Failed to load districts:', err);
-      setError(lang === 'hi' ? 'ज़िले लोड नहीं हो सके' : 'Failed to load districts');
+      // Show actual error message in development for debugging
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      console.error('[DISTRICT ERROR] Full error:', errorMessage);
+      
+      // In production, show user-friendly message
+      // In development, show actual error for debugging
+      const isDev = import.meta.env.DEV;
+      const displayMessage = isDev 
+        ? `Failed to load districts: ${errorMessage}`
+        : (lang === 'hi' ? 'ज़िले लोड नहीं हो सके' : 'Failed to load districts');
+      
+      setError(displayMessage);
     } finally {
       setLoadingDistricts(false);
     }
