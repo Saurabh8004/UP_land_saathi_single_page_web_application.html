@@ -57,15 +57,15 @@ export const locationService = {
       console.log('[LOCATION DEBUG] Supabase URL from env:', supabaseUrl);
       console.log('[LOCATION DEBUG] Testing Supabase connection...');
       
-      // Test Supabase connection first
-      const { data: testData, error: testError } = await supabase
+      // Test Supabase connection with a simple query
+      const { error: testError } = await supabase
         .from('districts')
-        .select('count')
+        .select('code')
         .limit(1);
       
       if (testError) {
-        console.error('[LOCATION ERROR] Supabase connection test failed:', testError);
-        console.error('[LOCATION ERROR] Full error object:', JSON.stringify(testError, null, 2));
+        console.error('[LOCATION ERROR] Supabase connection test failed:', testError.message);
+        console.error('[LOCATION ERROR] Error code:', testError.code || 'NO_CODE');
         
         // Check for specific error types
         if (testError.message === 'Failed to fetch') {
@@ -93,8 +93,9 @@ export const locationService = {
         .order('name_en');
 
       if (error) {
-        console.error('[LOCATION ERROR] Failed to fetch districts:', error);
-        console.error('[LOCATION ERROR] Full error object:', JSON.stringify(error, null, 2));
+        console.error('[LOCATION ERROR] Failed to fetch districts:', error.message);
+        console.error('[LOCATION ERROR] Error code:', error.code || 'NO_CODE');
+        
         // Show actual error details for debugging
         const errorMessage = error.message || 'Unknown error';
         const errorCode = error.code || 'NO_CODE';
