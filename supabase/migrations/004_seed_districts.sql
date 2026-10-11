@@ -1,6 +1,9 @@
 -- ============================================================
--- SEED DATA: 75 UTTAR PRADESH DISTRICTS
+-- SEED DATA: 74 UTTAR PRADESH DISTRICTS
 -- ============================================================
+-- NOTE: This migration contains 74 districts.
+-- Bhadohi (Sant Ravidas Nagar) is missing and must be added separately
+-- once a frontend code is assigned to it.
 
 CREATE TABLE IF NOT EXISTS districts (
   id SERIAL PRIMARY KEY,
@@ -12,37 +15,39 @@ CREATE TABLE IF NOT EXISTS districts (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Idempotent insert: updates names/division if they differ, preserves existing correct data
 INSERT INTO districts (code, name_hi, name_en, division) VALUES
   ('AGR', 'आगरा', 'Agra', 'Agra'),
   ('ALG', 'अलीगढ़', 'Aligarh', 'Aligarh'),
-  ('PRY', 'प्रयागराज', 'Prayagraj', 'Prayagraj'),
+  ('ALL', 'प्रयागराज', 'Prayagraj', 'Prayagraj'),
   ('ABN', 'अम्बेडकर नगर', 'Ambedkar Nagar', 'Ayodhya'),
-  ('AME', 'अमेठी', 'Amethi', 'Ayodhya'),
-  ('AMR', 'अमरोहा', 'Amroha', 'Moradabad'),
+  ('AMR', 'अमेठी', 'Amethi', 'Ayodhya'),
+  ('AMP', 'अमरोहा', 'Amroha', 'Moradabad'),
   ('AUR', 'औरैया', 'Auraiya', 'Kanpur'),
   ('AZM', 'आज़मगढ़', 'Azamgarh', 'Azamgarh'),
-  ('BGP', 'बागपत', 'Baghpat', 'Meerut'),
-  ('BRH', 'बहराइच', 'Bahraich', 'Devipatan'),
+  ('BAG', 'बागपत', 'Baghpat', 'Meerut'),
+  ('BHR', 'बहराइच', 'Bahraich', 'Devipatan'),
   ('BLI', 'बलिया', 'Ballia', 'Azamgarh'),
   ('BLP', 'बलरामपुर', 'Balrampur', 'Devipatan'),
-  ('BND', 'बांदा', 'Banda', 'Chitrakoot'),
-  ('BBI', 'बारابंकी', 'Barabanki', 'Lucknow'),
+  ('BAN', 'बांदा', 'Banda', 'Chitrakoot'),
+  ('BBI', 'بارابںکی', 'Barabanki', 'Lucknow'),
+ 'बारابंकी', 'Barabanki', 'Lucknow'),
   ('BRM', 'बरेली', 'Bareilly', 'Bareilly'),
   ('BST', 'बस्ती', 'Basti', 'Basti'),
   ('BJR', 'बिजनौर', 'Bijnor', 'Moradabad'),
   ('BDN', 'बदायूं', 'Budaun', 'Bareilly'),
-  ('BLS', 'बुलंदशहर', 'Bulandshahr', 'Aligarh'),
-  ('CDL', 'चंदौली', 'Chandauli', 'Varanasi'),
+  ('BUL', 'बुलंदशहर', 'Bulandshahr', 'Aligarh'),
+  ('CNM', 'चंदौली', 'Chandauli', 'Varanasi'),
   ('CTK', 'चित्रकूट', 'Chitrakoot', 'Chitrakoot'),
-  ('DRM', 'देवरिया', 'Deoria', 'Gorakhpur'),
-  ('ETA', 'इटावा', 'Etah', 'Agra'),
+  ('DEV', 'देवरिया', 'Deoria', 'Gorakhpur'),
+  ('ETA', 'एटा', 'Etah', 'Agra'),
   ('ETW', 'इटावा', 'Etawah', 'Agra'),
-  ('FBD', 'फरीदाबाद', 'Faizabad', 'Ayodhya'),
+  ('FBD', 'अयोध्या', 'Ayodhya', 'Ayodhya'),  -- Legacy code FBD (formerly Faizabad), do not change without coordinated migration
   ('FRK', 'फर्रुखाबाद', 'Farrukhabad', 'Kanpur'),
   ('FTP', 'फतेहपुर', 'Fatehpur', 'Kanpur'),
   ('FZR', 'फिरोजाबाद', 'Firozabad', 'Agra'),
   ('GBN', 'गौतम बुद्ध नगर', 'Gautam Buddha Nagar', 'Meerut'),
-  ('GZB', 'गाजियाबाद', 'Ghaziabad', 'Meerut'),
+  ('GZI', 'गाज़ियाबाद', 'Ghaziabad', 'Meerut'),
   ('GZP', 'गाजीपुर', 'Ghazipur', 'Varanasi'),
   ('GND', 'गोंडा', 'Gonda', 'Devipatan'),
   ('GKP', 'गोरखपुर', 'Gorakhpur', 'Gorakhpur'),
@@ -59,7 +64,7 @@ INSERT INTO districts (code, name_hi, name_en, division) VALUES
   ('KSG', 'कासगंज', 'Kasganj', 'Aligarh'),
   ('KSM', 'कौशाम्बी', 'Kaushambi', 'Prayagraj'),
   ('KSN', 'कुशीनगर', 'Kushinagar', 'Gorakhpur'),
-  ('LKK', 'लखीमपुर खीरी', 'Lakhimpur Kheri', 'Lucknow'),
+  ('LKP', 'लखीमपुर खीरी', 'Lakhimpur Kheri', 'Lucknow'),
   ('LTP', 'ललितपुर', 'Lalitpur', 'Jhansi'),
   ('LKO', 'लखनऊ', 'Lucknow', 'Lucknow'),
   ('MRG', 'महराजगंज', 'Maharajganj', 'Gorakhpur'),
@@ -86,9 +91,16 @@ INSERT INTO districts (code, name_hi, name_en, division) VALUES
   ('SNB', 'सोनभद्र', 'Sonbhadra', 'Varanasi'),
   ('SLP', 'सुल्तानपुर', 'Sultanpur', 'Ayodhya'),
   ('UNO', 'उन्नाव', 'Unnao', 'Lucknow'),
-  ('VNS', 'वाराणसी', 'Varanasi', 'Varanasi');
+  ('VNS', 'वाराणसी', 'Varanasi', 'Varanasi')
+ON CONFLICT (code) DO UPDATE SET
+  name_hi = EXCLUDED.name_hi,
+  name_en = EXCLUDED.name_en,
+  division = EXCLUDED.division
+WHERE districts.name_hi IS DISTINCT FROM EXCLUDED.name_hi
+   OR districts.name_en IS DISTINCT FROM EXCLUDED.name_en
+   OR districts.division IS DISTINCT FROM EXCLUDED.division;
 
--- Create index for faster lookups
-CREATE INDEX idx_districts_code ON districts(code);
-CREATE INDEX idx_districts_name_en ON districts(name_en);
-CREATE INDEX idx_districts_division ON districts(division);
+-- Create indexes (safe to rerun)
+CREATE INDEX IF NOT EXISTS idx_districts_code ON districts(code);
+CREATE INDEX IF NOT EXISTS idx_districts_name_en ON districts(name_en);
+CREATE INDEX IF NOT EXISTS idx_districts_division ON districts(division);

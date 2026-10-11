@@ -29,9 +29,9 @@ export const DISTRICTS: District[] = [
   { code: 'CNM', name_hi: 'चंदौली', name_en: 'Chandauli' },
   { code: 'CTK', name_hi: 'चित्रकूट', name_en: 'Chitrakoot' },
   { code: 'DEV', name_hi: 'देवरिया', name_en: 'Deoria' },
-  { code: 'ETA', name_hi: 'इटावा', name_en: 'Etah' },
+  { code: 'ETA', name_hi: 'एटा', name_en: 'Etah' },
   { code: 'ETW', name_hi: 'इटावा', name_en: 'Etawah' },
-  { code: 'FBD', name_hi: 'फरीदाबाद', name_en: 'Faridabad' },
+  { code: 'FBD', name_hi: 'अयोध्या', name_en: 'Ayodhya' },  // Legacy code FBD (formerly Faizabad)
   { code: 'FRK', name_hi: 'फर्रुखाबाद', name_en: 'Farrukhabad' },
   { code: 'FTP', name_hi: 'फतेहपुर', name_en: 'Fatehpur' },
   { code: 'FZR', name_hi: 'फिरोजाबाद', name_en: 'Firozabad' },
