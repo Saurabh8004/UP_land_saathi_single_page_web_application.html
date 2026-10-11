@@ -1,29 +1,27 @@
 // ============================================================
-// Bhumi Seva Kendra - Complete Configuration
+// BHUMI SAATHI - Brand Configuration
+// Land Record Intelligence Platform
 // ============================================================
 
-// BRAND
 export const BRAND = {
-  nameHi: 'भूमि सेवा केंद्र',
-  nameEn: 'Bhumi Seva Kendra',
-  taglineHi: 'ज़मीन से जुड़ी जानकारी, एक जगह',
-  taglineEn: 'Property information, explained simply',
-  taglineSecondaryHi: 'जमीन खरीदने से पहले, जानकारी पूरी रखें',
+  name: 'Bhumi Saathi',
+  nameHi: 'भूमि साथी',
+  tagline: 'Know Your Property. Before You Invest.',
+  taglineHi: 'निवेश से पहले अपनी प्रॉपर्टी को समझें।',
+  taglineAlt: 'From Gata to Clarity.',
+  description: 'Property intelligence platform that helps you understand land records, ownership, location potential, and risk indicators before making major property decisions.',
+  descriptionHi: 'प्रॉपर्टी इंटेलिजेंस प्लेटफॉर्म जो आपको बड़े प्रॉपर्टी फैसले लेने से पहले भूमि अभिलेख, मालिकाना हक, लोकेशन पोटेंशियल और रिस्क इंडिकेटर्स को समझने में मदद करता है।',
+  disclaimer: 'Bhumi Saathi is an independent technology platform and is not a government website. Information provided supports informed decision-making and does not constitute certified government documents or legal opinions.',
+  disclaimerHi: 'भूमि साथी एक स्वतंत्र तकनीकी मंच है और सरकारी वेबसाइट नहीं है। प्रदान की गई जानकारी सूचित निर्णय लेने में सहायता करती है और प्रमाणित सरकारी दस्तावेज़ या कानूनी राय का गठन नहीं करती।',
   phone: '+91-XXXXXXXXXX',
-  whatsapp: '919XXXXXXXXX', // WhatsApp number without +
-  email: 'info@bhumisevakendra.in',
-  website: 'https://bhumisevakendra.in',
-  description: {
-    hi: 'भूमि सेवा केंद्र एक निजी property information और verification assistance platform है।',
-    en: 'Bhumi Seva Kendra is a private property information and verification assistance platform.'
-  },
-  disclaimer: {
-    hi: 'भूमि सेवा केंद्र एक निजी information-assistance platform है, सरकारी विभाग या सरकारी पोर्टल नहीं। उपलब्ध records और documents के आधार पर जानकारी/analysis प्रदान किया जाता है। यह title की guarantee या स्वतः legal opinion नहीं है।',
-    en: 'Bhumi Seva Kendra is a private information-assistance platform, not a government department or portal. Information/analysis is provided based on available records and documents. This is not a title guarantee or legal opinion.'
-  }
+  whatsapp: '919XXXXXXXXX',
+  email: 'hello@bhumisaathi.in',
+  website: 'https://bhumisaathi.in'
 };
 
+// ============================================================
 // LANGUAGE
+// ============================================================
 export type Lang = 'hi' | 'en';
 
 // ============================================================
@@ -31,449 +29,251 @@ export type Lang = 'hi' | 'en';
 // ============================================================
 export const t = {
   hi: {
-    // Header
     nav: {
-      services: 'सेवाएं',
+      home: 'होम',
       howItWorks: 'कैसे काम करता है',
-      sampleReport: 'सैंपल रिपोर्ट',
+      features: 'विशेषताएं',
+      search: 'प्रॉपर्टी खोजें',
+      about: 'हमारे बारे में',
+      login: 'लॉगिन',
+      getStarted: 'प्रॉपर्टी रिपोर्ट पाएं',
       freeTools: 'मुफ्त टूल्स',
-      forBrokers: 'ब्रोकर और बिल्डर के लिए',
-      faq: 'FAQ',
-      bookReport: 'रिपोर्ट बुक करें',
-      track: 'स्टेटस देखें'
+      expertConsultation: 'विशेषज्ञ',
+      servicePlans: 'सेवा योजनाएं'
     },
-    // Hero
     hero: {
-      headline: 'ज़मीन का सौदा करने से पहले उसकी पूरी जाँच कराएँ',
-      sub: 'खतौनी, नक्शा, कोर्ट केस और भार की जाँच, आसान रिपोर्ट में। उत्तर प्रदेश के लिए।',
-      cta1: 'रिपोर्ट बुक करें',
-      cta2: 'सैंपल रिपोर्ट देखें',
-      formTitle: 'फ्री रिस्क चेक शुरू करें',
-      district: 'ज़िला चुनें',
-      tehsil: 'तहसील',
-      gata: 'गाटा/खसरा नंबर',
-      mobile: 'मोबाइल नंबर',
-      submit: 'फ्री रिस्क चेक शुरू करें'
+      headline: 'निवेश से पहले अपनी प्रॉपर्टी को समझें।',
+      sub: 'भूमि अभिलेख और प्रॉपर्टी इंटेलिजेंस से लेकर फिजिकल वेरिफिकेशन और डील सपोर्ट तक — भूमि साथी आपको सूचित प्रॉपर्टी फैसले लेने में मदद करता है।',
+      cta1: 'प्रॉपर्टी रिपोर्ट पाएं',
+      cta2: 'मुफ्त टूल्स देखें',
+      trust: 'प्रॉपर्टी इंटेलिजेंस • फिजिकल वेरिफिकेशन • इंडस्ट्री विशेषज्ञ',
+      disclaimer: 'भूमि साथी एक स्वतंत्र तकनीकी मंच है और सरकारी वेबसाइट नहीं है।'
     },
-    trust: ['एडवोकेट रिव्यू', 'फील्ड वेरिफिकेशन उपलब्ध', '24-48 घंटे में रिपोर्ट', 'सेक्योर पेमेंट'],
-    // Problem
-    problem: {
-      title: 'ये गलतियाँ महँगी पड़ती हैं',
-      cards: [
-        { title: 'नकली/डबल रजिस्ट्री', desc: 'एक ही ज़मीन दो-तीन लोगों के नाम बिक चुकी होती है। उदाहरण: लखनऊ में एक प्लॉट तीन लोगों को बेचा गया, खरीदार को बाद में पता चला।' },
-        { title: 'सरकारी/ग्राम सभा ज़मीन', desc: 'सरकारी या ग्राम सभा की ज़मीन का बिकना गैरकानूनी है। उदाहरण: कानपुर में ग्राम सभा की ज़मीन पर अवैध कब्ज़ा।' },
-        { title: 'खतौनी-बयाना में नाम/रकबा mismatch', desc: 'कागज़ में नाम या रकबा अलग-अलग लिखा हो। उदाहरण: बयाने में 500 वर्ग मीटर लिखा, खतौनी में 300।' },
-        { title: 'कोर्ट केस या स्टे ऑर्डर', desc: 'ज़मीन पर कोर्ट का केस या स्टे ऑर्डर चल रहा हो। उदाहरण: प्रयागराज में विरासत के केस में ज़मीन पर स्टे था, खरीदार को नहीं पता चला।' }
-      ]
-    },
-    // How it works
-    howItWorks: {
-      title: 'कैसे काम करता है',
-      steps: [
-        { title: 'डिटेल्स भेजें', desc: 'ज़िला, तहसील, गाटा नंबर और ज़रूरी दस्तावेज़ भेजें' },
-        { title: 'पैकेज चुनें और पेमेंट करें', desc: 'अपनी ज़रूरत के हिसाब से पैकेज चुनें, ऑनलाइन पेमेंट करें' },
-        { title: 'हमारी टीम वेरिफाई करती है', desc: 'ऑनलाइन रिकॉर्ड्स + फील्ड वेरिफिकेशन (पैकेज के हिसाब से)' },
-        { title: 'PDF रिपोर्ट + कॉल पर समझाया', desc: 'आसान भाषा में रिपोर्ट, कॉल पर पूरी समझाई' }
-      ]
-    },
-    // Packages
-    packages: {
-      title: 'पैकेज और कीमत',
-      fieldNote: 'फील्ड वेरिफिकेशन सिर्फ सेलेक्ट ज़िलों में। बुकिंग पर अवेलेबिलिटी कन्फर्म होगी।',
-      quickCheck: {
-        name: 'Quick Check',
-        price: '₹499',
-        desc: 'ऑनलाइन बेसिक चेक',
-        delivery: '24 घंटे में',
-        features: ['खतौनी ओनर/शेयर चेक', 'गाटा-रकबा मैच', 'बेसिक रेड फ्लैग्स']
-      },
-      verified: {
-        name: 'Verified Report',
-        price: '₹1,999',
-        badge: 'सबसे ज़्यादा चुना गया',
-        desc: 'पूरी जाँच + फील्ड वेरिफिकेशन',
-        delivery: '48-72 घंटे में',
-        features: ['Quick Check की सब चीज़ें', 'नक्शा/बाउंड्री चेक', 'कोर्ट केस सर्च (RCCMS)', 'बैंक चार्ज/एनकम्ब्रेंस पॉइंटर्स', 'सरकारी/ग्राम सभा कैटेगरी रिस्क', 'ऑन-ग्राउंड फील्ड वेरिफिकेशन', 'एडवोकेट रिव्यू नोट']
-      },
-      dealSupport: {
-        name: 'Deal Support',
-        price: '₹4,999 से',
-        desc: 'पूरी डील में साथ',
-        delivery: 'कस्टम टाइमलाइन',
-        features: ['Verified Report की सब चीज़ें', 'बयानामा ड्राफ्ट रिव्यू', 'रजिस्ट्री और स्टांप गाइडेंस', 'दाखिल-खारिज फॉलो-अप', 'डेडिकेटेड कोऑर्डिनेटर'],
-        cta: 'कोट पाएँ'
-      }
-    },
-    // Sample Report
-    sampleReport: {
-      title: 'सैंपल रिपोर्ट',
-      desc: 'एक अनोनाइम्ड रिपोर्ट का प्रीव्यू',
-      download: 'सैंपल PDF डाउनलोड करें',
-      sections: {
-        owner: 'ओनर और शेयर',
-        gata: 'गाटा/रकबा',
-        map: 'मैप समरी',
-        court: 'कोर्ट केसेस',
-        encumbrance: 'एनकम्ब्रेंस',
-        riskScore: 'रिस्क स्कोर',
-        advocateNote: 'एडवोकेट नोट',
-        nextSteps: 'आगे क्या करें'
-      },
-      riskLevels: { low: 'कम', medium: 'मध्यम', high: 'ज़्यादा' }
-    },
-    // Free Tools
-    freeTools: {
-      title: 'मुफ्त टूल्स और लिंक्स',
-      portals: 'सरकारी पोर्टल्स (Official govt site, हमारी साइट नहीं)',
-      stampDuty: 'स्टैंप ड्यूटी कैलकुलेटर',
-      checklist: 'दस्तावेज़ चेकलिस्ट',
-      calculator: {
-        title: 'स्टैंप ड्यूटी और रजिस्ट्रेशन फीस',
-        propertyValue: 'प्रॉपर्टी वैल्यू (₹)',
-        buyerType: 'खरीदार का प्रकार',
-        male: 'पुरुष',
-        female: 'महिला',
-        joint: 'जॉइंट',
-        areaType: 'एरिया टाइप',
-        urban: 'शहरी',
-        rural: 'ग्रामीण',
-        calculate: 'कैलकुलेट करें',
-        result: 'अनुमानित स्टैंप ड्यूटी',
-        regFee: 'रजिस्ट्रेशन फीस',
-        total: 'कुल',
-        note: 'अनुमानित। लेटेस्ट के लिए IGRSUP चेक करें।'
-      },
-      checklistTool: {
-        title: 'दस्तावेज़ चेकलिस्ट',
-        buy: 'खरीदने के लिए',
-        sell: 'बेचने के लिए',
-        inherit: 'विरासत के लिए',
-        print: 'प्रिंट करें'
-      }
-    },
-    // B2B
-    b2b: {
-      title: 'ब्रोकर, बिल्डर और फाइनेंसियर्स के लिए',
-      subtitle: 'Bulk verification for your deals',
-      benefits: ['वॉल्यूम प्राइसिंग', 'डेडिकेटेड मैनेजर', 'मंथली इनवॉइस', 'व्हाइट-लेबल रिपोर्ट'],
-      form: {
-        company: 'कंपनी का नाम',
-        contact: 'संपर्क व्यक्ति',
-        mobile: 'मोबाइल',
-        email: 'ईमेल',
-        volume: 'मंथली वॉल्यूम',
-        city: 'शहर',
-        submit: 'भेजें'
-      }
-    },
-    // Why Us
-    whyUs: {
-      title: 'हम पर भरोसा क्यों?',
-      points: ['एडवोकेट पैनल', 'लोकल फील्ड टीम', 'लिखित में क्लियर स्कोप', 'डेटा प्राइवेसी', 'रिफंड पॉलिसी'],
-      notDo: 'हम क्या नहीं करते',
-      notDoPoints: [
-        'हम टाइटल की गारंटी नहीं देते',
-        'हम सरकारी दफ्तर नहीं हैं',
-        'हमारी रिपोर्ट उपलब्ध रिकॉर्ड्स पर आधारित एक राय है'
-      ]
-    },
-    // Testimonials
-    testimonials: {
-      title: 'लोग क्या कहते हैं',
-      note: '⚠️ REPLACE WITH REAL REVIEWS ONLY',
-      placeholder: 'असली रिव्यू जल्द जोड़े जाएंगे'
-    },
-    // FAQ
-    faq: {
-      title: 'अक्सर पूछे जाने वाले सवाल',
-      questions: [
-        { q: 'क्या यह सरकारी साइट है?', a: 'नहीं, भूमि सेवा केंद्र एक निजी information-assistance platform है। हम सरकारी पोर्टल नहीं हैं।' },
-        { q: 'कौन से डॉक्यूमेंट्स चाहिए?', a: 'गाटा/खसरा नंबर, ज़िला, तहसील। अगर आपके पास खतौनी या बयानामा है तो वो भी भेज सकते हैं।' },
-        { q: 'रिपोर्ट कितने दिन में मिलती है?', a: 'Quick Check 24 घंटे में, Verified Report 48-72 घंटे में, Deal Support कस्टम टाइमलाइन पर।' },
-        { q: 'क्या आप टाइटल गारंटी करते हो?', a: 'नहीं। हमारी रिपोर्ट उपलब्ध रिकॉर्ड्स पर आधारित एक प्रोफेशनल राय है। टाइटल की गारंटी कोई नहीं दे सकता।' },
-        { q: 'फील्ड वेरिफिकेशन कहाँ होती है?', a: 'फील्ड वेरिफिकेशन सिर्फ सेलेक्ट ज़िलों में उपलब्ध है। बुकिंग पर कन्फर्म होगा।' },
-        { q: 'रिफंड कब मिलेगा?', a: 'अगर हम रिपोर्ट नहीं दे पाए तो फुल रिफंड। रिपोर्ट देने के बाद रिफंड नहीं। डिटेल रिफंड पॉलिसी में पढ़ें।' },
-        { q: 'मेरी जानकारी सेफ है?', a: 'हाँ। हम आपकी जानकारी DPDP Act 2023 के अनुसार सुरक्षित रखते हैं। आप कभी भी डेटा डिलीट करवा सकते हैं।' },
-        { q: 'क्या NRIs यूज़ कर सकते हैं?', a: 'हाँ, बिल्कुल। आप ऑनलाइन बुक कर सकते हैं, रिपोर्ट PDF में मिलेगी।' },
-        { q: 'रिपोर्ट में गलत निकली तो?', a: 'हमें बताएं, हम दोबारा चेक करेंगे। अगर हमारी गलती है तो फ्री री-चेक होगा।' },
-        { q: 'क्या एडवोकेट से बात हो सकती है?', a: 'Verified Report और Deal Support पैकेज में एडवोकेट रिव्यू शामिल है। आप अलग से भी एडवोकेट कंसल्टेशन बुक कर सकते हैं।' }
-      ]
-    },
-    // Booking
-    booking: {
-      title: 'रिपोर्ट बुक करें',
-      steps: ['पैकेज चुनें', 'प्रॉपर्टी डिटेल्स', 'दस्तावेज़ अपलोड', 'संपर्क जानकारी', 'पेमेंट'],
-      package: 'पैकेज',
+    search: {
+      title: 'अपनी प्रॉपर्टी खोजें',
+      sub: 'उपलब्ध भूमि-अभिलेख जानकारी चेक करने के लिए लोकेशन और प्रॉपर्टी विवरण दर्ज करें।',
+      step1: 'लोकेशन चुनें',
+      step2: 'प्रॉपर्टी विवरण',
+      step3: 'समीक्षा',
+      step4: 'खोजें',
       district: 'ज़िला',
       tehsil: 'तहसील',
       village: 'गाँव',
-      gata: 'गाटा/खसरा नंबर',
-      area: 'रकबा (वर्ग मीटर)',
-      ownerName: 'मालिक का नाम (अगर पता हो)',
-      uploadDocs: 'दस्तावेज़ अपलोड करें (वैकल्पिक)',
-      uploadNote: 'PDF या JPG, ज़्यादा से ज़्यादा 10 MB',
-      name: 'आपका नाम',
-      mobile: 'मोबाइल नंबर',
-      email: 'ईमेल (वैकल्पिक)',
-      whatsapp: 'WhatsApp पर अपडेट चाहते हैं',
-      consent: 'मैं Privacy Policy से सहमत हूं और अपनी जानकारी देने की अनुमति देता/देती हूं',
-      pay: 'पेमेंट करें',
-      next: 'आगे',
+      gata: 'गाटा / खसरा नंबर',
+      khata: 'खाता नंबर (वैकल्पिक)',
+      search: 'खोजें',
+      searching: 'खोज रहे हैं...',
+      review: 'समीक्षा करें',
       back: 'पीछे',
-      thankYou: 'धन्यवाद! आपकी बुकिंग हो गई है',
-      requestId: 'Request ID',
-      delivery: 'अनुमानित डिलीवरी',
-      whatsappBtn: 'WhatsApp पर बात करें'
+      next: 'आगे'
     },
-    // Track
-    track: {
-      title: 'रिपोर्ट स्टेटस देखें',
-      requestId: 'Request ID',
-      mobile: 'मोबाइल नंबर',
-      check: 'स्टेटस देखें',
-      statuses: ['Received', 'Verification में', 'फील्ड विज़िट हुआ', 'एडवोकेट रिव्यू', 'रिपोर्ट तैयार']
+    result: {
+      found: 'प्रॉपर्टी रिकॉर्ड मिला',
+      partial: 'कुछ प्रॉपर्टी जानकारी मिली',
+      notFound: 'हम यह प्रॉपर्टी नहीं ढूंढ पाए',
+      unavailable: 'स्रोत अस्थायी रूप से अनुपलब्ध',
+      overview: 'प्रॉपर्टी अवलोकन',
+      owner: 'मालिक जानकारी',
+      land: 'भूमि विवरण',
+      status: 'रिकॉर्ड स्थिति',
+      source: 'स्रोत'
     },
-    // Footer
+    howItWorks: {
+      title: 'गाटा से स्पष्टता तक',
+      step1Title: 'प्रॉपर्टी दर्ज करें',
+      step1Desc: 'चुनें: ज़िला → तहसील → गाँव → गाटा',
+      step2Title: 'समझें',
+      step2Desc: 'भूमि साथी उपलब्ध प्रॉपर्टी जानकारी को सरल सेक्शन में व्यवस्थित करता है।',
+      step3Title: 'वेरिफाई और ट्रैक करें',
+      step3Desc: 'स्रोत स्थिति चेक करें, दस्तावेज़ों की तुलना करें और महत्वपूर्ण प्रॉपर्टी जानकारी ट्रैक करें।'
+    },
+    features: {
+      title: 'अपनी प्रॉपर्टी समझने के लिए सब कुछ',
+      search: 'प्रॉपर्टी खोज',
+      searchDesc: 'लोकेशन और प्रॉपर्टी पहचानकर्ताओं का उपयोग करके अपनी प्रॉपर्टी खोजें।',
+      intelligence: 'रिकॉर्ड इंटेलिजेंस',
+      intelligenceDesc: 'जटिल भूमि-अभिलेख जानकारी को समझने में आसान विवरण में बदलें।',
+      ownership: 'मालिक जानकारी',
+      ownershipDesc: 'उपलब्ध मालिकाना हक और शेयर जानकारी समझें।',
+      land: 'भूमि विवरण',
+      landDesc: 'क्षेत्रफल, भूमि प्रकार और प्रॉपर्टी पहचानकर्ता देखें।',
+      mutation: 'म्यूटेशन ट्रैकिंग',
+      mutationDesc: 'उपलब्ध म्यूटेशन जानकारी ट्रैक करें।',
+      litigation: 'मुकदमा संकेतक',
+      litigationDesc: 'उपलब्ध मुकदमा/स्थिति जानकारी समझें।',
+      documents: 'दस्तावेज़ सत्यापन',
+      documentsDesc: 'प्रॉपर्टी दस्तावेज़ अपलोड करें और उन्हें उपलब्ध रिकॉर्ड जानकारी से तुलना करें।',
+      reports: 'स्मार्ट रिपोर्ट',
+      reportsDesc: 'एक सरल प्रॉपर्टी सारांश जनरेट करें जो समझने और शेयर करने में आसान हो।'
+    },
+    trust: {
+      title: 'सरकारी भूमि अभिलेखों के इर्द-गिर्द बनाया गया',
+      desc: 'भूमि साथी को सरकारी स्रोतों को प्रक्रिया के केंद्र में रखते हुए भूमि-अभिलेख जानकारी की पहुंच, व्याख्या और सत्यापन को सरल बनाने के लिए डिज़ाइन किया गया है।',
+      sources: 'सरकारी स्रोत',
+      sourcesDesc: 'आधिकारिक भूमि अभिलेख पोर्टल्स से जानकारी',
+      transparent: 'पारदर्शी स्थिति',
+      transparentDesc: 'हर जानकारी के लिए स्पष्ट स्रोत और सत्यापन स्थिति',
+      verification: 'स्पष्ट सत्यापन',
+      verificationDesc: 'जानिए कौन सी जानकारी वेरिफाई हुई है और कौन सी नहीं',
+      secure: 'सुरक्षित डेटा',
+      secureDesc: 'आपकी प्रॉपर्टी जानकारी सुरक्षित और निजी है'
+    },
+    faq: {
+      title: 'अक्सर पूछे जाने वाले प्रश्न',
+      q1: 'भूमि साथी क्या है?',
+      a1: 'भूमि साथी एक स्वतंत्र तकनीकी मंच है जो भूमि अभिलेख जानकारी को खोजने, समझने और वेरिफाई करने की प्रक्रिया को सरल बनाता है।',
+      q2: 'क्या भूमि साथी एक सरकारी वेबसाइट है?',
+      a2: 'नहीं, भूमि साथी एक निजी तकनीकी मंच है। हम सरकारी विभाग या पोर्टल नहीं हैं।',
+      q3: 'जानकारी कहां से आती है?',
+      a3: 'हम उपलब्ध सरकारी भूमि अभिलेख स्रोतों से जानकारी प्राप्त करते हैं और इसे समझने में आसान format में प्रस्तुत करते हैं।',
+      q4: 'क्या हर प्रॉपर्टी मिल सकती है?',
+      a4: 'सभी प्रॉपर्टी रिकॉर्ड ऑनलाइन उपलब्ध नहीं होते हैं। कुछ रिकॉर्ड्स के लिए अतिरिक्त सत्यापन की आवश्यकता हो सकती है।',
+      q5: 'रिकॉर्ड कभी-कभी अनुपलब्ध क्यों होता है?',
+      a5: 'सभी रिकॉर्ड डिजिटल नहीं हैं। कुछ रिकॉर्ड्स अभी भी मैन्युअल प्रक्रिया में हैं या तकनीकी समस्याओं के कारण अस्थायी रूप से अनुपलब्ध हो सकते हैं।',
+      q6: 'क्या मैं अपनी खतौनी अपलोड कर सकता हूं?',
+      a6: 'हाँ, आप अपने दस्तावेज़ अपलोड कर सकते हैं और उन्हें उपलब्ध रिकॉर्ड जानकारी से तुलना कर सकते हैं।',
+      q7: 'क्या भूमि साथी मालिकाना हक वेरिफाई कर सकता है?',
+      a7: 'हम उपलब्ध रिकॉर्ड जानकारी प्रदान करते हैं, लेकिन कानूनी सलाह या टाइटल गारंटी नहीं देते।',
+      q8: 'गाटा नंबर क्या है?',
+      a8: 'गाटा (या खसरा) ज़मीन के एक विशिष्ट प्लॉट की पहचान संख्या है।',
+      q9: 'खाता नंबर क्या है?',
+      a9: 'खाता नंबर भूमि अभिलेखों में मालिकाना हक का रिकॉर्ड है।',
+      q10: 'खाता और गाटा में क्या अंतर है?',
+      a10: 'गाटा ज़मीन के प्लॉट की पहचान है, जबकि खाता मालिकाना हक का रिकॉर्ड है।'
+    },
     footer: {
-      about: 'भूमि सेवा केंद्र एक निजी property information और verification assistance platform है।',
-      quickLinks: 'क्विक लिंक्स',
-      contact: 'संपर्क',
+      product: 'प्रोडक्ट',
+      resources: 'संसाधन',
       legal: 'कानूनी',
-      privacy: 'Privacy Policy',
-      terms: 'Terms of Service',
-      refund: 'Refund Policy',
-      disclaimer: 'Disclaimer',
-      rights: '© 2024 भूमि सेवा केंद्र. All rights reserved.'
-    },
-    // Guides
-    guides: {
-      khatauni: 'खतौनी कैसे निकालें',
-      beforeBuying: 'ज़मीन खरीदने से पहले क्या करें',
-      vairasat: 'विरासत प्रोसेस'
-    },
-    // Common
-    common: {
-      loading: 'लोड हो रहा है...',
-      error: 'कुछ गड़बड़ हो गई। दोबारा कोशिश करें।',
-      required: 'यह ज़रूरी है',
-      invalidMobile: 'सही मोबाइल नंबर डालें',
-      success: 'सफल!',
-      officialSite: 'Official govt site, हमारी साइट नहीं'
+      help: 'सहायता',
+      faqs: 'FAQs',
+      privacy: 'गोपनीयता',
+      terms: 'शर्तें',
+      disclaimer: 'भूमि साथी एक स्वतंत्र तकनीकी मंच है और उत्तर प्रदेश सरकार से संबद्ध या संचालित नहीं है।'
     }
   },
   en: {
     nav: {
-      services: 'Services',
-      howItWorks: 'How it works',
-      sampleReport: 'Sample Report',
+      home: 'Home',
+      howItWorks: 'How It Works',
+      features: 'Features',
+      search: 'Property Search',
+      about: 'About',
+      login: 'Login',
+      getStarted: 'Get Property Report',
       freeTools: 'Free Tools',
-      forBrokers: 'For Brokers & Builders',
-      faq: 'FAQ',
-      bookReport: 'Book Report',
-      track: 'Track Status'
+      expertConsultation: 'Experts',
+      servicePlans: 'Service Plans'
     },
     hero: {
-      headline: 'Get your land fully verified before making a deal',
-      sub: 'Khatauni, map, court case and encumbrance check — in a simple report. For Uttar Pradesh.',
-      cta1: 'Book Report',
-      cta2: 'View Sample Report',
-      formTitle: 'Start Free Risk Check',
-      district: 'Select District',
-      tehsil: 'Tehsil',
-      gata: 'Gata/Khasra Number',
-      mobile: 'Mobile Number',
-      submit: 'Start Free Risk Check'
+      headline: 'Know Your Property. Before You Invest.',
+      sub: 'From land records and property intelligence to physical verification and deal support — Bhumi Saathi helps you make informed property decisions.',
+      cta1: 'Get Property Report',
+      cta2: 'Explore Free Tools',
+      trust: 'Property Intelligence • Physical Verification • Industry Experts',
+      disclaimer: 'Bhumi Saathi is an independent technology platform and is not a government website.'
     },
-    trust: ['Advocate-reviewed', 'Field verification available', 'Report in 24-48 hrs', 'Secure payment'],
-    problem: {
-      title: 'Mistakes that cost dearly',
-      cards: [
-        { title: 'Fake/Double Registry', desc: 'Same land sold to multiple people. Example: A plot in Lucknow was sold to three buyers, discovered later.' },
-        { title: 'Government/Gram Sabha Land', desc: 'Selling government or gram sabha land is illegal. Example: Illegal occupation of gram sabha land in Kanpur.' },
-        { title: 'Name/Area Mismatch in Documents', desc: 'Different names or areas in different documents. Example: Baiyanama says 500 sqm, khatauni says 300.' },
-        { title: 'Hidden Court Case or Stay Order', desc: 'Court case or stay order on the land. Example: Stay order in inheritance case in Prayagraj, buyer was unaware.' }
-      ]
-    },
-    howItWorks: {
-      title: 'How it works',
-      steps: [
-        { title: 'Send Details', desc: 'District, tehsil, gata number and required documents' },
-        { title: 'Choose Package & Pay', desc: 'Select package as per your need, pay online' },
-        { title: 'Our Team Verifies', desc: 'Online records + field verification (as per package)' },
-        { title: 'PDF Report + Call Explanation', desc: 'Easy-to-understand report, explained on call' }
-      ]
-    },
-    packages: {
-      title: 'Packages & Pricing',
-      fieldNote: 'Field verification only in select districts. Availability confirmed on booking.',
-      quickCheck: {
-        name: 'Quick Check',
-        price: '₹499',
-        desc: 'Online basic check',
-        delivery: 'Within 24 hrs',
-        features: ['Khatauni owner/share check', 'Gata-rakba match', 'Basic red flags']
-      },
-      verified: {
-        name: 'Verified Report',
-        price: '₹1,999',
-        badge: 'Most Popular',
-        desc: 'Full check + field verification',
-        delivery: '48-72 hrs',
-        features: ['Everything in Quick Check', 'Naksha/boundary check', 'Court case search (RCCMS)', 'Bank charge/encumbrance pointers', 'Government/gram sabha category risk', 'On-ground field verification', 'Advocate review note']
-      },
-      dealSupport: {
-        name: 'Deal Support',
-        price: 'From ₹4,999',
-        desc: 'Full deal support',
-        delivery: 'Custom timeline',
-        features: ['Everything in Verified Report', 'Baiyanama draft review', 'Registry & stamp guidance', 'Dakhil-kharij (mutation) follow-up', 'Dedicated coordinator'],
-        cta: 'Get Quote'
-      }
-    },
-    sampleReport: {
-      title: 'Sample Report',
-      desc: 'Preview of an anonymised report',
-      download: 'Download Sample PDF',
-      sections: {
-        owner: 'Owner & Share',
-        gata: 'Gata/Rakba',
-        map: 'Map Summary',
-        court: 'Court Cases',
-        encumbrance: 'Encumbrance',
-        riskScore: 'Risk Score',
-        advocateNote: 'Advocate Note',
-        nextSteps: 'Next Steps'
-      },
-      riskLevels: { low: 'Low', medium: 'Medium', high: 'High' }
-    },
-    freeTools: {
-      title: 'Free Tools & Links',
-      portals: 'Government Portals (Official govt site, not ours)',
-      stampDuty: 'Stamp Duty Calculator',
-      checklist: 'Document Checklist',
-      calculator: {
-        title: 'Stamp Duty & Registration Fee',
-        propertyValue: 'Property Value (₹)',
-        buyerType: 'Buyer Type',
-        male: 'Male',
-        female: 'Female',
-        joint: 'Joint',
-        areaType: 'Area Type',
-        urban: 'Urban',
-        rural: 'Rural',
-        calculate: 'Calculate',
-        result: 'Estimated Stamp Duty',
-        regFee: 'Registration Fee',
-        total: 'Total',
-        note: 'Approximate. Check IGRSUP for latest rates.'
-      },
-      checklistTool: {
-        title: 'Document Checklist',
-        buy: 'For Buying',
-        sell: 'For Selling',
-        inherit: 'For Inheritance',
-        print: 'Print'
-      }
-    },
-    b2b: {
-      title: 'For Brokers, Builders & Financiers',
-      subtitle: 'Bulk verification for your deals',
-      benefits: ['Volume pricing', 'Dedicated manager', 'Monthly invoice', 'White-label report option'],
-      form: {
-        company: 'Company Name',
-        contact: 'Contact Person',
-        mobile: 'Mobile',
-        email: 'Email',
-        volume: 'Monthly Volume',
-        city: 'City',
-        submit: 'Submit'
-      }
-    },
-    whyUs: {
-      title: 'Why trust us?',
-      points: ['Advocate panel', 'Local field team', 'Clear scope in writing', 'Data privacy', 'Refund policy'],
-      notDo: 'What we do NOT do',
-      notDoPoints: [
-        'We don\'t guarantee title',
-        'We are not a government office',
-        'Our report is an opinion based on available records'
-      ]
-    },
-    testimonials: {
-      title: 'What people say',
-      note: '⚠️ REPLACE WITH REAL REVIEWS ONLY',
-      placeholder: 'Real reviews coming soon'
-    },
-    faq: {
-      title: 'Frequently Asked Questions',
-      questions: [
-        { q: 'Is this a government site?', a: 'No, Bhumi Seva Kendra is a private information-assistance platform. We are not a government portal.' },
-        { q: 'What documents are needed?', a: 'Gata/khasra number, district, tehsil. If you have khatauni or baiyanama, you can send those too.' },
-        { q: 'How long does the report take?', a: 'Quick Check in 24 hrs, Verified Report in 48-72 hrs, Deal Support on custom timeline.' },
-        { q: 'Do you guarantee title?', a: 'No. Our report is a professional opinion based on available records. No one can guarantee title.' },
-        { q: 'Where is field verification available?', a: 'Field verification is available only in select districts. Confirmed on booking.' },
-        { q: 'When will I get a refund?', a: 'Full refund if we cannot deliver the report. No refund after report delivery. See Refund Policy for details.' },
-        { q: 'Is my information safe?', a: 'Yes. We keep your information secure as per DPDP Act 2023. You can request data deletion anytime.' },
-        { q: 'Can NRIs use this?', a: 'Yes, absolutely. You can book online and receive the report as PDF.' },
-        { q: 'What if the report is wrong?', a: 'Tell us, we will re-check. If it is our mistake, re-check is free.' },
-        { q: 'Can I talk to an advocate?', a: 'Advocate review is included in Verified Report and Deal Support packages. You can also book separate advocate consultation.' }
-      ]
-    },
-    booking: {
-      title: 'Book Report',
-      steps: ['Choose Package', 'Property Details', 'Upload Documents', 'Contact Info', 'Payment'],
-      package: 'Package',
+    search: {
+      title: 'Find Your Property',
+      sub: 'Enter the location and property details to check available land-record information.',
+      step1: 'Select Location',
+      step2: 'Property Details',
+      step3: 'Review',
+      step4: 'Search',
       district: 'District',
       tehsil: 'Tehsil',
       village: 'Village',
-      gata: 'Gata/Khasra Number',
-      area: 'Area (sq meters)',
-      ownerName: 'Owner name (if known)',
-      uploadDocs: 'Upload Documents (optional)',
-      uploadNote: 'PDF or JPG, max 10 MB each',
-      name: 'Your Name',
-      mobile: 'Mobile Number',
-      email: 'Email (optional)',
-      whatsapp: 'Want updates on WhatsApp',
-      consent: 'I agree to the Privacy Policy and consent to sharing my information',
-      pay: 'Make Payment',
-      next: 'Next',
+      gata: 'Gata / Khasra Number',
+      khata: 'Khata Number (optional)',
+      search: 'Search',
+      searching: 'Searching...',
+      review: 'Review',
       back: 'Back',
-      thankYou: 'Thank you! Your booking is confirmed',
-      requestId: 'Request ID',
-      delivery: 'Expected Delivery',
-      whatsappBtn: 'Chat on WhatsApp'
+      next: 'Next'
     },
-    track: {
-      title: 'Track Report Status',
-      requestId: 'Request ID',
-      mobile: 'Mobile Number',
-      check: 'Check Status',
-      statuses: ['Received', 'In Verification', 'Field Visit Done', 'Advocate Review', 'Report Ready']
+    result: {
+      found: 'Property Record Found',
+      partial: 'Some Property Information Found',
+      notFound: "We Couldn't Find This Property",
+      unavailable: 'Source Temporarily Unavailable',
+      overview: 'Property Overview',
+      owner: 'Owner Information',
+      land: 'Land Details',
+      status: 'Record Status',
+      source: 'Source'
+    },
+    howItWorks: {
+      title: 'From Gata to Clarity',
+      step1Title: 'Enter Property',
+      step1Desc: 'Select: District → Tehsil → Village → Gata',
+      step2Title: 'Understand',
+      step2Desc: 'Bhumi Saathi organizes available property information into simple sections.',
+      step3Title: 'Verify & Track',
+      step3Desc: 'Check source status, compare documents and track important property information.'
+    },
+    features: {
+      title: 'Everything You Need to Understand Your Property',
+      search: 'Property Search',
+      searchDesc: 'Find your property using location and property identifiers.',
+      intelligence: 'Record Intelligence',
+      intelligenceDesc: 'Turn complicated land-record information into easy-to-understand details.',
+      ownership: 'Ownership Information',
+      ownershipDesc: 'Understand available ownership and share information.',
+      land: 'Land Details',
+      landDesc: 'View area, land type and property identifiers.',
+      mutation: 'Mutation Tracking',
+      mutationDesc: 'Track available mutation information.',
+      litigation: 'Litigation Indicators',
+      litigationDesc: 'Understand available litigation/status information.',
+      documents: 'Document Verification',
+      documentsDesc: 'Upload property documents and compare them with available record information.',
+      reports: 'Smart Reports',
+      reportsDesc: 'Generate a simple property summary that is easier to understand and share.'
+    },
+    trust: {
+      title: 'Built Around Official Land Records',
+      desc: 'Bhumi Saathi is designed to simplify access, interpretation and verification of land-record information while keeping official government sources at the centre of the process.',
+      sources: 'Official Sources',
+      sourcesDesc: 'Information from official land record portals',
+      transparent: 'Transparent Status',
+      transparentDesc: 'Clear source and verification status for every piece of information',
+      verification: 'Clear Verification',
+      verificationDesc: 'Know which information is verified and which is not',
+      secure: 'Secure Data',
+      secureDesc: 'Your property information is secure and private'
+    },
+    faq: {
+      title: 'Frequently Asked Questions',
+      q1: 'What is Bhumi Saathi?',
+      a1: 'Bhumi Saathi is an independent technology platform that simplifies the process of finding, understanding and verifying land-record information.',
+      q2: 'Is Bhumi Saathi a government website?',
+      a2: 'No, Bhumi Saathi is a private technology platform. We are not a government department or portal.',
+      q3: 'Where does the information come from?',
+      a3: 'We retrieve information from available official land-record sources and present it in an easy-to-understand format.',
+      q4: 'Can every property be found?',
+      a4: 'Not all property records are available online. Some records may require additional verification.',
+      q5: 'Why can a record sometimes be unavailable?',
+      a5: 'Not all records are digitized. Some records are still in manual processes or may be temporarily unavailable due to technical issues.',
+      q6: 'Can I upload my Khatauni?',
+      a6: 'Yes, you can upload your documents and compare them with available record information.',
+      q7: 'Can Bhumi Saathi verify ownership?',
+      a7: 'We provide available record information, but we do not provide legal advice or title guarantees.',
+      q8: 'What is a Gata number?',
+      a8: 'Gata (or Khasra) is the unique identification number of a specific plot of land.',
+      q9: 'What is a Khata number?',
+      a9: 'Khata number is the record of ownership in land records.',
+      q10: 'What is the difference between Khata and Gata?',
+      a10: 'Gata identifies the land plot, while Khata is the record of ownership.'
     },
     footer: {
-      about: 'Bhumi Seva Kendra is a private property information and verification assistance platform.',
-      quickLinks: 'Quick Links',
-      contact: 'Contact',
+      product: 'Product',
+      resources: 'Resources',
       legal: 'Legal',
-      privacy: 'Privacy Policy',
-      terms: 'Terms of Service',
-      refund: 'Refund Policy',
-      disclaimer: 'Disclaimer',
-      rights: '© 2024 Bhumi Seva Kendra. All rights reserved.'
-    },
-    guides: {
-      khatauni: 'How to get Khatauni',
-      beforeBuying: 'Before buying land',
-      vairasat: 'Vairasat (Inheritance) Process'
-    },
-    common: {
-      loading: 'Loading...',
-      error: 'Something went wrong. Please try again.',
-      required: 'This is required',
-      invalidMobile: 'Enter valid mobile number',
-      success: 'Success!',
-      officialSite: 'Official govt site, not ours'
+      help: 'Help',
+      faqs: 'FAQs',
+      privacy: 'Privacy',
+      terms: 'Terms',
+      disclaimer: 'Bhumi Saathi is an independent technology platform and is not affiliated with or operated by the Government of Uttar Pradesh.'
     }
   }
 };
@@ -482,282 +282,105 @@ export const t = {
 // 75 UTTAR PRADESH DISTRICTS
 // ============================================================
 export const DISTRICTS = [
-  'Agra', 'Aligarh', 'Prayagraj', 'Ambedkar Nagar', 'Amethi', 'Amroha', 'Auraiya',
-  'Azamgarh', 'Baghpat', 'Bahraich', 'Ballia', 'Balrampur', 'Banda', 'Barabanki',
-  'Bareilly', 'Basti', 'Bijnor', 'Budaun', 'Bulandshahr', 'Chandauli', 'Chitrakoot',
-  'Deoria', 'Etah', 'Etawah', 'Faizabad', 'Farrukhabad', 'Fatehpur', 'Firozabad',
-  'Gautam Buddha Nagar', 'Ghaziabad', 'Ghazipur', 'Gonda', 'Gorakhpur', 'Hamirpur',
-  'Hapur', 'Hardoi', 'Hathras', 'Jalaun', 'Jaunpur', 'Jhansi', 'Kannauj', 'Kanpur Dehat',
-  'Kanpur Nagar', 'Kasganj', 'Kaushambi', 'Kushinagar', 'Lakhimpur Kheri', 'Lalitpur',
-  'Lucknow', 'Maharajganj', 'Mahoba', 'Mainpuri', 'Mathura', 'Mau', 'Meerut', 'Mirzapur',
-  'Moradabad', 'Muzaffarnagar', 'Pilibhit', 'Pratapgarh', 'Rae Bareli', 'Rampur',
-  'Saharanpur', 'Sambhal', 'Sant Kabir Nagar', 'Shahjahanpur', 'Shamli', 'Shravasti',
-  'Siddharthnagar', 'Sitapur', 'Sonbhadra', 'Sultanpur', 'Unnao', 'Varanasi'
-].sort();
-
-// ============================================================
-// PACKAGE CONFIG
-// ============================================================
-export const PACKAGES = [
-  {
-    id: 'quick-check',
-    priceHi: '₹499',
-    priceEn: '₹499',
-    priceNum: 499,
-    delivery: '24 hrs'
-  },
-  {
-    id: 'verified-report',
-    priceHi: '₹1,999',
-    priceEn: '₹1,999',
-    priceNum: 1999,
-    delivery: '48-72 hrs',
-    popular: true
-  },
-  {
-    id: 'deal-support',
-    priceHi: '₹4,999 से',
-    priceEn: 'From ₹4,999',
-    priceNum: 4999,
-    delivery: 'Custom'
-  }
+  { code: '001', name_hi: 'आगरा', name_en: 'Agra' },
+  { code: '002', name_hi: 'अलीगढ़', name_en: 'Aligarh' },
+  { code: '003', name_hi: 'इलाहाबाद', name_en: 'Allahabad' },
+  { code: '004', name_hi: 'अम्बेडकर नगर', name_en: 'Ambedkar Nagar' },
+  { code: '005', name_hi: 'अमेठी', name_en: 'Amethi' },
+  { code: '006', name_hi: 'अमरोहा', name_en: 'Amroha' },
+  { code: '007', name_hi: 'औरैया', name_en: 'Auraiya' },
+  { code: '008', name_hi: 'आज़मगढ़', name_en: 'Azamgarh' },
+  { code: '009', name_hi: 'बागपत', name_en: 'Baghpat' },
+  { code: '010', name_hi: 'बहराइच', name_en: 'Bahraich' },
+  { code: '011', name_hi: 'बलिया', name_en: 'Ballia' },
+  { code: '012', name_hi: 'बलरामपुर', name_en: 'Balrampur' },
+  { code: '013', name_hi: 'बांदा', name_en: 'Banda' },
+  { code: '014', name_hi: 'बारबंकी', name_en: 'Barabanki' },
+  { code: '015', name_hi: 'बरेली', name_en: 'Bareilly' },
+  { code: '016', name_hi: 'बस्ती', name_en: 'Basti' },
+  { code: '017', name_hi: 'बिजनौर', name_en: 'Bijnor' },
+  { code: '018', name_hi: 'बदायूं', name_en: 'Budaun' },
+  { code: '019', name_hi: 'बुलंदशहर', name_en: 'Bulandshahr' },
+  { code: '020', name_hi: 'चंदौली', name_en: 'Chandauli' },
+  { code: '021', name_hi: 'चित्रकूट', name_en: 'Chitrakoot' },
+  { code: '022', name_hi: 'देवरिया', name_en: 'Deoria' },
+  { code: '023', name_hi: 'इटावा', name_en: 'Etawah' },
+  { code: '024', name_hi: 'फैजाबाद', name_en: 'Faizabad' },
+  { code: '025', name_hi: 'फर्रुखाबाद', name_en: 'Farrukhabad' },
+  { code: '026', name_hi: 'फतेहपुर', name_en: 'Fatehpur' },
+  { code: '027', name_hi: 'फिरोजाबाद', name_en: 'Firozabad' },
+  { code: '028', name_hi: 'गौतम बुद्ध नगर', name_en: 'Gautam Buddha Nagar' },
+  { code: '029', name_hi: 'गाजियाबाद', name_en: 'Ghaziabad' },
+  { code: '030', name_hi: 'गाजीपुर', name_en: 'Ghazipur' },
+  { code: '031', name_hi: 'गोंडा', name_en: 'Gonda' },
+  { code: '032', name_hi: 'गोरखपुर', name_en: 'Gorakhpur' },
+  { code: '033', name_hi: 'हमीरपुर', name_en: 'Hamirpur' },
+  { code: '034', name_hi: 'हापुर', name_en: 'Hapur' },
+  { code: '035', name_hi: 'हरदोई', name_en: 'Hardoi' },
+  { code: '036', name_hi: 'हाथरस', name_en: 'Hathras' },
+  { code: '037', name_hi: 'जालौन', name_en: 'Jalaun' },
+  { code: '038', name_hi: 'जौनपुर', name_en: 'Jaunpur' },
+  { code: '039', name_hi: 'झांसी', name_en: 'Jhansi' },
+  { code: '040', name_hi: 'कन्नौज', name_en: 'Kannauj' },
+  { code: '041', name_hi: 'कानपुर देहात', name_en: 'Kanpur Dehat' },
+  { code: '042', name_hi: 'कानपुर नगर', name_en: 'Kanpur Nagar' },
+  { code: '043', name_hi: 'कासगंज', name_en: 'Kasganj' },
+  { code: '044', name_hi: 'कौशाम्बी', name_en: 'Kaushambi' },
+  { code: '045', name_hi: 'कुशीनगर', name_en: 'Kushinagar' },
+  { code: '046', name_hi: 'लखीमपुर खीरी', name_en: 'Lakhimpur Kheri' },
+  { code: '047', name_hi: 'ललितपुर', name_en: 'Lalitpur' },
+  { code: '048', name_hi: 'लखनऊ', name_en: 'Lucknow' },
+  { code: '049', name_hi: 'महराजगंज', name_en: 'Maharajganj' },
+  { code: '050', name_hi: 'महोबा', name_en: 'Mahoba' },
+  { code: '051', name_hi: 'मैनपुरी', name_en: 'Mainpuri' },
+  { code: '052', name_hi: 'मथुरा', name_en: 'Mathura' },
+  { code: '053', name_hi: 'मऊ', name_en: 'Mau' },
+  { code: '054', name_hi: 'मेरठ', name_en: 'Meerut' },
+  { code: '055', name_hi: 'मिर्जापुर', name_en: 'Mirzapur' },
+  { code: '056', name_hi: 'मुरादाबाद', name_en: 'Moradabad' },
+  { code: '057', name_hi: 'मुजफ्फरनगर', name_en: 'Muzaffarnagar' },
+  { code: '058', name_hi: 'पीलीभीत', name_en: 'Pilibhit' },
+  { code: '059', name_hi: 'प्रतापगढ़', name_en: 'Pratapgarh' },
+  { code: '060', name_hi: 'रायबरेली', name_en: 'Raebareli' },
+  { code: '061', name_hi: 'रामपुर', name_en: 'Rampur' },
+  { code: '062', name_hi: 'सहारनपुर', name_en: 'Saharanpur' },
+  { code: '063', name_hi: 'सम्भल', name_en: 'Sambhal' },
+  { code: '064', name_hi: 'संत कबीर नगर', name_en: 'Sant Kabir Nagar' },
+  { code: '065', name_hi: 'शाहजहांपुर', name_en: 'Shahjahanpur' },
+  { code: '066', name_hi: 'शामली', name_en: 'Shamli' },
+  { code: '067', name_hi: 'श्रावस्ती', name_en: 'Shravasti' },
+  { code: '068', name_hi: 'सिद्धार्थनगर', name_en: 'Siddharthnagar' },
+  { code: '069', name_hi: 'सीतापुर', name_en: 'Sitapur' },
+  { code: '070', name_hi: 'सोनभद्र', name_en: 'Sonbhadra' },
+  { code: '071', name_hi: 'सुल्तानपुर', name_en: 'Sultanpur' },
+  { code: '072', name_hi: 'उन्नाव', name_en: 'Unnao' },
+  { code: '073', name_hi: 'वाराणसी', name_en: 'Varanasi' },
+  { code: '074', name_hi: 'बुलंदशहर', name_en: 'Bulandshahr' },
+  { code: '075', name_hi: 'हथरस', name_en: 'Hathras' }
 ];
 
 // ============================================================
-// STAMP DUTY RATES (UP - Approximate, for calculator)
+// LEGAL TERMS (with tooltips)
 // ============================================================
-export const STAMP_DUTY_RATES = {
-  // Rates as percentage of property value
-  male: { urban: 7, rural: 6 },
-  female: { urban: 6, rural: 5 },
-  joint: { urban: 6.5, rural: 5.5 }
-};
-
-export const REGISTRATION_FEE_RATE = 1; // 1% of property value (approximate)
-
-// ============================================================
-// EXTERNAL PORTAL LINKS
-// ============================================================
-export const PORTALS = [
-  {
-    name: { hi: 'UP भूलेख', en: 'UP Bhulekh' },
-    url: 'https://upbhulekh.gov.in',
-    desc: { hi: 'खतौनी और खतौनी की कॉपी देखें', en: 'View khatauni and records' }
+export const LEGAL_TERMS = {
+  gata: {
+    hi: 'गाटा/खसरा — ज़मीन के एक विशिष्ट प्लॉट की पहचान संख्या',
+    en: 'Gata/Khasra — Unique identification number of a specific plot of land'
   },
-  {
-    name: { hi: 'भू-नक्शा UP', en: 'Bhu-Naksha UP' },
-    url: 'https://upnmap.up.nic.in',
-    desc: { hi: 'ज़मीन का नक्शा देखें', en: 'View land maps' }
+  khata: {
+    hi: 'खाता — भूमि अभिलेखों में मालिकाना हक का रिकॉर्ड',
+    en: 'Khata — Record of ownership in land records'
   },
-  {
-    name: { hi: 'IGRSUP', en: 'IGRSUP' },
-    url: 'https://igrsup.gov.in',
-    desc: { hi: 'रजिस्ट्रेशन और स्टांप ड्यूटी', en: 'Registration & stamp duty' }
+  khatauni: {
+    hi: 'खतौनी — भूमि अभिलेख दस्तावेज़',
+    en: 'Khatauni — Land record document'
   },
-  {
-    name: { hi: 'RCCMS / वाद', en: 'RCCMS / Vaad' },
-    url: 'https://rccms.up.nic.in',
-    desc: { hi: 'कोर्ट केस की जानकारी', en: 'Court case information' }
+  mutation: {
+    hi: 'म्यूटेशन — मालिकाना हक में परिवर्तन का रिकॉर्ड',
+    en: 'Mutation — Record of change in ownership'
   },
-  {
-    name: { hi: 'निवेश मित्र', en: 'Nivesh Mitra' },
-    url: 'https://niveshmitra.up.nic.in',
-    desc: { hi: 'बизнес और निवेश संबंधी जानकारी', en: 'Business & investment info' }
+  litigation: {
+    hi: 'मुकदमा — कानूनी विवाद या मामले की स्थिति',
+    en: 'Litigation — Status of legal dispute or case'
   }
-];
-
-// ============================================================
-// DOCUMENT CHECKLISTS
-// ============================================================
-export const CHECKLISTS = {
-  buy: {
-    hi: [
-      'खतौनी की नकल',
-      'नक्शा / भू-नक्शा',
-      'पिछली रजिस्ट्री / बयानामा',
-      'दाखिल-खारिज की नकल',
-      'कोर्ट केस की जानकारी (RCCMS)',
-      'एनकम्ब्रेंस सर्टिफिकेट',
-      'आधार कार्ड (मालिक का)',
-      'पासपोर्ट साइज़ फोटो',
-      'NOC (अगर लागू हो)',
-      'टैक्स रसीद'
-    ],
-    en: [
-      'Khatauni copy',
-      'Map / Bhu-Naksha',
-      'Previous registry / baiyanama',
-      'Dakhil-kharij copy (mutation)',
-      'Court case info (RCCMS)',
-      'Encumbrance certificate',
-      'Aadhaar of owner',
-      'Passport size photo',
-      'NOC (if applicable)',
-      'Tax receipt'
-    ]
-  },
-  sell: {
-    hi: [
-      'खतौनी',
-      'रजिस्ट्री / बयानामा (जिससे आपने खरीदा)',
-      'दाखिल-खारिज',
-      'नक्शा',
-      'आधार कार्ड',
-      'PAN कार्ड',
-      'टैक्स रसीद',
-      'NOC (अगर लागू हो)',
-      'पासपोर्ट साइज़ फोटो',
-      'बैंक NOC (अगर लोन था)'
-    ],
-    en: [
-      'Khatauni',
-      'Registry / baiyanama (by which you bought)',
-      'Dakhil-kharij',
-      'Map',
-      'Aadhaar',
-      'PAN card',
-      'Tax receipt',
-      'NOC (if applicable)',
-      'Passport size photo',
-      'Bank NOC (if there was a loan)'
-    ]
-  },
-  inherit: {
-    hi: [
-      'मृत्यु प्रमाण पत्र',
-      'विरासत प्रमाण पत्र / वारिसाना',
-      'खतौनी (मृतक के नाम)',
-      'दाखिल-खारिज के लिए आवेदन',
-      'सभी वारिसों का आधार',
-      'सभी वारिसों का PAN',
-      'अगर वसीयत है तो वसीयत',
-      'कोर्ट ऑर्डर (अगर कोई केस हो)',
-      'NOC अन्य वारिसों से',
-      'पासपोर्ट साइज़ फोटो'
-    ],
-    en: [
-      'Death certificate',
-      'Succession certificate / varisan',
-      'Khatauni (in deceased name)',
-      'Application for dakhil-kharij',
-      'Aadhaar of all heirs',
-      'PAN of all heirs',
-      'Will (if exists)',
-      'Court order (if any case)',
-      'NOC from other heirs',
-      'Passport size photo'
-    ]
-  }
-};
-
-// ============================================================
-// TOOLTIPS FOR LEGAL TERMS
-// ============================================================
-export const LEGAL_TERMS: Record<string, { hi: string; en: string }> = {
-  khatauni: { hi: 'खतौनी — ज़मीन के मालिक और हिस्से की सरकारी रिकॉर्ड', en: 'Khatauni — Government record of land ownership and shares' },
-  gata: { hi: 'गाटा/खसरा — ज़मीन का यूनिक नंबर', en: 'Gata/Khasra — Unique number of a land parcel' },
-  baiyanama: { hi: 'बयानामा — बिक्री का ड्राफ्ट दस्तावेज़', en: 'Baiyanama — Draft sale document' },
-  vairasat: { hi: 'विरासत — मृत व्यक्ति की संपत्ति वारिसों में बांटना', en: 'Vairasat — Transfer of deceased person\'s property to heirs' },
-  'dakhil-kharij': { hi: 'दाखिल-खारिज — रिकॉर्ड में मालिक का नाम बदलना (म्यूटेशन)', en: 'Dakhil-kharij — Mutation, changing owner name in records' },
-  naksha: { hi: 'नक्शा — ज़मीन का मैप', en: 'Naksha — Map of the land' },
-  rccms: { hi: 'RCCMS — राजस्व कोर्ट केस मैनेजमेंट सिस्टम', en: 'RCCMS — Revenue Court Case Management System' }
-};
-
-// ============================================================
-// PRICING CONFIGURATION
-// ============================================================
-export const PRICING = {
-  document: {
-    id: 'document',
-    name: { hi: 'Document Intelligence', en: 'Document Intelligence' },
-    price: 199,
-    priceLabel: { hi: 'प्रति दस्तावेज़', en: 'Per document' },
-    headline: { hi: 'पुरानी रजिस्ट्री समझ नहीं आ रही?', en: 'Purani registry samajh nahi aa rahi?' },
-    description: { hi: 'एक प्रॉपर्टी डॉक्यूमेंट को सिंपल लैंग्वेज में समझें और इम्पॉर्टेंट डिटेल्स आइडेंटिफाई करें।', en: 'Ek property document ko simple language mein samjhein aur important details identify karein.' },
-    features: {
-      hi: ['OCR & डॉक्यूमेंट रीडिंग', 'ओनर / बायर / सेलर डिटेल्स', 'गाटा / खसरा / रकबा एक्सट्रैक्शन', 'रजिस्ट्रेशन डेट और डिटेल्स', 'इम्पॉर्टेंट इन्फॉर्मेशन / क्लॉज़ेस', 'बेसिक इनकंसिस्टेंसी फ्लैग्स', 'सिंपल हिंदी समरी'],
-      en: ['OCR & document reading', 'Owner / buyer / seller details', 'Gata / Khasra / Rakba extraction', 'Registration date & details', 'Important information / clauses', 'Basic inconsistency flags', 'Simple Hindi summary']
-    },
-    delivery: { hi: 'सेम-डे डिजिटल एनालिसिस', en: 'Same-day digital analysis' },
-    cta: { hi: 'डॉक्यूमेंट अपलोड करें →', en: 'Upload Document →' },
-    disclaimer: { hi: 'AI-असिस्टेड एनालिसिस। लीगल ओपिनियन शामिल नहीं है।', en: 'AI-assisted analysis. Legal opinion included nahi hai.' },
-    icon: '📄'
-  },
-  propertyCheck: {
-    id: 'propertyCheck',
-    name: { hi: 'Property Check', en: 'Property Check' },
-    price: 999,
-    priceLabel: { hi: 'प्रिलिमिनरी स्क्रीनिंग', en: 'Preliminary screening' },
-    headline: { hi: 'डील से पहले बेसिक रिस्क समझें', en: 'Deal se pehle basic risk samjhein' },
-    description: { hi: 'प्रॉपर्टी के अवेलेबल रिकॉर्ड्स और डॉक्यूमेंट्स के बेसिस पर इनिशियल रिस्क स्क्रीनिंग।', en: 'Property ke available records aur documents ke basis par initial risk screening.' },
-    features: {
-      hi: ['ओनरशिप इन्फॉर्मेशन', 'गाटा / खसरा और रकबा चेक', 'बेसिक लैंड-कैटेगरी इंडिकेटर्स', 'अवेलेबल लिटिगेशन इंडिकेटर्स', 'अप टू 2 डॉक्यूमेंट एनालिसिस', 'बेसिक रिस्क फाइंडिंग्स', 'शॉर्ट Property Check Report'],
-      en: ['Ownership information', 'Gata / Khasra & Rakba check', 'Basic land-category indicators', 'Available litigation indicators', 'Up to 2 document analysis', 'Basic risk findings', 'Short Property Check Report']
-    },
-    delivery: { hi: '24–48 घंटे', en: '24–48 hours' },
-    cta: { hi: 'मेरी प्रॉपर्टी चेक करें →', en: 'Check My Property →' },
-    disclaimer: '',
-    icon: '🏠'
-  },
-  verification: {
-    id: 'verification',
-    name: { hi: 'Property Verification', en: 'Property Verification' },
-    price: 1999,
-    priceLabel: { hi: 'कंप्लीट ऑनलाइन वेरिफिकेशन', en: 'Complete online verification' },
-    headline: { hi: 'प्रॉपर्टी खरीदने से पहले डिटेल्ड चेक', en: 'Property kharidne se pehle detailed check' },
-    description: { hi: 'सीरियस बायर्स के लिए डिटेल्ड प्रॉपर्टी वेरिफिकेशन और स्ट्रक्चर्ड रिपोर्ट।', en: 'Serious buyers ke liye detailed property verification aur structured report.' },
-    features: {
-      hi: ['Property Check की सब चीज़ें', 'अप टू 5 डॉक्यूमेंट्स', 'डॉक्यूमेंट कंपेरिजन', 'ओनरशिप / शेयर क्रॉस-चेक', 'नक्शा / गाटा इन्फॉर्मेशन चेक', 'RCCMS / कोर्ट सर्च (जहां अवेलेबल हो)', 'एनकम्ब्रेंस / चार्ज इंडिकेटर्स', 'डिटेल्ड रिस्क एनालिसिस', 'मिसिंग-डॉक्यूमेंट चेकलिस्ट', 'डिटेल्ड PDF रिपोर्ट', 'रिपोर्ट एक्सप्लेनेशन कॉल'],
-      en: ['Everything in Property Check', 'Up to 5 documents', 'Document comparison', 'Ownership / share cross-check', 'Naksha / Gata information check', 'RCCMS / court search where available', 'Encumbrance / charge indicators', 'Detailed risk analysis', 'Missing-document checklist', 'Detailed PDF report', 'Report explanation call']
-    },
-    delivery: { hi: '48–72 घंटे', en: '48–72 hours' },
-    cta: { hi: 'प्रॉपर्टी वेरिफाई करें →', en: 'Get Property Verified →' },
-    disclaimer: '',
-    icon: '🔍',
-    popular: true
-  },
-  fieldVerification: {
-    id: 'fieldVerification',
-    name: { hi: 'Field Verified', en: 'Field Verified' },
-    startingPrice: 4999,
-    priceLabel: { hi: 'शुरू', en: 'Starting' },
-    headline: { hi: 'ग्राउंड पर भी वेरिफिकेशन चाहिए?', en: 'Ground par bhi verification chahiye?' },
-    description: { hi: 'ऑनलाइन रिकॉर्ड्स के साथ फिजिकल वेरिफिकेशन सपोर्ट भी अवेलेबल है।', en: 'Online records ke saath physical verification support bhi available hai.' },
-    features: {
-      hi: ['प्रॉपर्टी साइट विज़िट', 'लोकेशन वेरिफिकेशन', 'बाउंड्री ऑब्ज़र्वेशंस', 'साइट फोटोग्राफ्स', 'फील्ड-लेवल ऑब्ज़र्वेशंस', 'अवेलेबल रिकॉर्ड / ऑफिस फॉलो-अप', 'डिटेल्ड एविडेंस-बेस्ड रिपोर्ट', 'डेडिकेटेड कोऑर्डिनेटर'],
-      en: ['Property site visit', 'Location verification', 'Boundary observations', 'Site photographs', 'Field-level observations', 'Available record / office follow-up where applicable', 'Detailed evidence-based report', 'Dedicated coordinator']
-    },
-    cta: { hi: 'फील्ड वेरिफिकेशन बुक करें →', en: 'Book Field Verification →' },
-    disclaimer: { hi: 'फील्ड वेरिफिकेशन सेलेक्टेड ज़िलों में अवेलेबल है। फाइनल स्कोप और अवेलेबिलिटी बुकिंग से पहले कन्फर्म होगी।', en: 'Field verification selected districts mein available hai. Final scope aur availability booking se pehle confirm hogi.' },
-    icon: '📍'
-  }
-};
-
-export const ADD_ONS: Array<{ name: { hi: string; en: string }; price: number; unit: { hi: string; en: string } }> = [
-  { name: { hi: 'Document Analysis', en: 'Document Analysis' }, price: 199, unit: { hi: '/ डॉक्यूमेंट', en: '/ document' } },
-  { name: { hi: 'Deep Document Review', en: 'Deep Document Review' }, price: 399, unit: { hi: '', en: '' } },
-  { name: { hi: '2-Document Comparison', en: '2-Document Comparison' }, price: 599, unit: { hi: '', en: '' } },
-  { name: { hi: '3–5 Document Comparison', en: '3–5 Document Comparison' }, price: 999, unit: { hi: '', en: '' } },
-  { name: { hi: 'Advocate Review', en: 'Advocate Review' }, price: 1499, unit: { hi: '+', en: '+' } },
-  { name: { hi: 'Physical Site Visit', en: 'Physical Site Visit' }, price: 3999, unit: { hi: '+', en: '+' } },
-  { name: { hi: 'Property Concierge', en: 'Property Concierge' }, price: 9999, unit: { hi: '+', en: '+' } }
-];
-
-export const COMPARISON_MATRIX = {
-  rows: [
-    { key: 'documentAnalysis', hi: 'डॉक्यूमेंट एनालिसिस', en: 'Document Analysis' },
-    { key: 'ownerInfo', hi: 'ओनर इन्फॉर्मेशन', en: 'Owner Information' },
-    { key: 'gataRakba', hi: 'गाटा / रकबा', en: 'Gata / Rakba' },
-    { key: 'riskIndicators', hi: 'रिस्क इंडिकेटर्स', en: 'Risk Indicators' },
-    { key: 'courtSearch', hi: 'कोर्ट सर्च', en: 'Court Search' },
-    { key: 'docComparison', hi: 'डॉक्यूमेंट कंपेरिजन', en: 'Document Comparison' },
-    { key: 'mapInfo', hi: 'मैप इन्फॉर्मेशन', en: 'Map Information' },
-    { key: 'detailedReport', hi: 'डिटेल्ड रिपोर्ट', en: 'Detailed Report' },
-    { key: 'physicalVerification', hi: 'फिजिकल वेरिफिकेशन', en: 'Physical Verification' },
-    { key: 'advocateReview', hi: 'एडवोकेट रिव्यू', en: 'Advocate Review' }
-  ],
-  document: { documentAnalysis: true, ownerInfo: true, gataRakba: true, riskIndicators: false, courtSearch: false, docComparison: false, mapInfo: false, detailedReport: false, physicalVerification: false, advocateReview: 'addon' },
-  propertyCheck: { documentAnalysis: true, ownerInfo: true, gataRakba: true, riskIndicators: true, courtSearch: false, docComparison: false, mapInfo: false, detailedReport: false, physicalVerification: false, advocateReview: 'addon' },
-  verification: { documentAnalysis: true, ownerInfo: true, gataRakba: true, riskIndicators: true, courtSearch: true, docComparison: true, mapInfo: true, detailedReport: true, physicalVerification: false, advocateReview: 'addon' },
-  fieldVerification: { documentAnalysis: true, ownerInfo: true, gataRakba: true, riskIndicators: true, courtSearch: true, docComparison: true, mapInfo: true, detailedReport: true, physicalVerification: true, advocateReview: 'addon' }
 };
