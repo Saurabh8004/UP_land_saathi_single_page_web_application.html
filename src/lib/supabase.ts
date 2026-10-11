@@ -19,6 +19,12 @@ if (supabaseUrl && supabaseAnonKey) {
     console.error('[SUPABASE] ERROR: Invalid URL format:', supabaseUrl);
   }
   
+  // Check for placeholder values
+  if (supabaseUrl === 'https://placeholder.supabase.co' || supabaseAnonKey === 'placeholder-key') {
+    console.error('[SUPABASE] ERROR: Using placeholder values! Environment variables not properly set at build time.');
+    console.error('[SUPABASE] This usually means the build was created without VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY');
+  }
+  
   supabase = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       autoRefreshToken: true,
@@ -34,11 +40,18 @@ if (supabaseUrl && supabaseAnonKey) {
   
   console.error('[SUPABASE] CRITICAL: Missing environment variables:', missingVars.join(', '));
   console.error('[SUPABASE] Please set these in Vercel Dashboard → Settings → Environment Variables');
+  console.error('[SUPABASE] IMPORTANT: After setting variables, you must REDEPLOY for them to take effect');
   
   // Still create a client to avoid crashes, but it will fail on queries
+  const fallbackUrl = supabaseUrl || 'https://placeholder.supabase.co';
+  const fallbackKey = supabaseAnonKey || 'placeholder-key';
+  
+  console.error('[SUPABASE] Using fallback URL:', fallbackUrl);
+  console.error('[SUPABASE] Using fallback key:', fallbackKey.substring(0, 20) + '...');
+  
   supabase = createClient(
-    supabaseUrl || 'https://placeholder.supabase.co',
-    supabaseAnonKey || 'placeholder-key',
+    fallbackUrl,
+    fallbackKey,
     {
       auth: {
         autoRefreshToken: false,

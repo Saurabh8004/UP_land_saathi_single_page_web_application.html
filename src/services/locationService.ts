@@ -52,8 +52,12 @@ export const locationService = {
     }
 
     try {
-      // Test Supabase connection first
+      // Get the Supabase URL for debugging
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      console.log('[LOCATION DEBUG] Supabase URL from env:', supabaseUrl);
       console.log('[LOCATION DEBUG] Testing Supabase connection...');
+      
+      // Test Supabase connection first
       const { data: testData, error: testError } = await supabase
         .from('districts')
         .select('count')
@@ -61,15 +65,27 @@ export const locationService = {
       
       if (testError) {
         console.error('[LOCATION ERROR] Supabase connection test failed:', testError);
+        console.error('[LOCATION ERROR] Full error object:', JSON.stringify(testError, null, 2));
+        
+        // Check for specific error types
         if (testError.message === 'Failed to fetch') {
-          throw new Error('Network error: Cannot connect to Supabase. Check VITE_SUPABASE_URL and CORS settings.');
+          console.error('[LOCATION ERROR] This is a network-level error. Possible causes:');
+          console.error('  1. VITE_SUPABASE_URL is not set or is using placeholder value');
+          console.error('  2. Supabase URL is incorrect or unreachable');
+          console.error('  3. CORS issue blocking the request');
+          console.error('  4. Network connectivity problem');
+          console.error('  5. Browser extension blocking the request');
+          console.error('[LOCATION ERROR] Current URL being used:', supabaseUrl || 'undefined/placeholder');
+          throw new Error(`Network error: Cannot connect to Supabase at ${supabaseUrl || 'undefined/placeholder'}. Check browser console for details.`);
         }
+        
         throw new Error(`Supabase connection failed: ${testError.message} (Code: ${testError.code || 'NO_CODE'})`);
       }
       
       console.log('[LOCATION DEBUG] Supabase connection successful');
 
       // Query from Supabase districts table
+      console.log('[LOCATION DEBUG] Querying districts table...');
       const { data, error } = await supabase
         .from('districts')
         .select('code, name_en, name_hi')
@@ -78,13 +94,14 @@ export const locationService = {
 
       if (error) {
         console.error('[LOCATION ERROR] Failed to fetch districts:', error);
+        console.error('[LOCATION ERROR] Full error object:', JSON.stringify(error, null, 2));
         // Show actual error details for debugging
         const errorMessage = error.message || 'Unknown error';
         const errorCode = error.code || 'NO_CODE';
         
         // Provide specific guidance for common errors
         if (errorMessage === 'Failed to fetch') {
-          throw new Error('Network error: Cannot connect to Supabase. Check VITE_SUPABASE_URL and CORS settings.');
+          throw new Error(`Network error: Cannot connect to Supabase at ${supabaseUrl || 'undefined/placeholder'}. Check VITE_SUPABASE_URL and CORS settings.`);
         } else if (errorCode === '42501') {
           throw new Error('Permission denied: Check database GRANT statements for anon/authenticated roles.');
         } else if (errorCode === '42P01') {
