@@ -1,9 +1,6 @@
 -- ============================================================
--- SEED DATA: 74 UTTAR PRADESH DISTRICTS
+-- SEED DATA: 75 UTTAR PRADESH DISTRICTS
 -- ============================================================
--- NOTE: This migration contains 74 districts.
--- Bhadohi (Sant Ravidas Nagar) is missing and must be added separately
--- once a frontend code is assigned to it.
 
 CREATE TABLE IF NOT EXISTS districts (
   id SERIAL PRIMARY KEY,
@@ -26,11 +23,12 @@ INSERT INTO districts (code, name_hi, name_en, division) VALUES
   ('AUR', 'औरैया', 'Auraiya', 'Kanpur'),
   ('AZM', 'आज़मगढ़', 'Azamgarh', 'Azamgarh'),
   ('BAG', 'बागपत', 'Baghpat', 'Meerut'),
+  ('BHD', 'भदोही', 'Bhadohi', 'Varanasi'),
   ('BHR', 'बहराइच', 'Bahraich', 'Devipatan'),
   ('BLI', 'बलिया', 'Ballia', 'Azamgarh'),
   ('BLP', 'बलरामपुर', 'Balrampur', 'Devipatan'),
   ('BAN', 'बांदा', 'Banda', 'Chitrakoot'),
-  ('BBI', 'बारابںکی', 'Barabanki', 'Lucknow'),
+  ('BBI', 'बाराबंकी', 'Barabanki', 'Lucknow'),
   ('BRM', 'बरेली', 'Bareilly', 'Bareilly'),
   ('BST', 'बस्ती', 'Basti', 'Basti'),
   ('BJR', 'बिजनौर', 'Bijnor', 'Moradabad'),
