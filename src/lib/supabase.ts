@@ -9,6 +9,16 @@ let supabase: SupabaseClient;
 if (supabaseUrl && supabaseAnonKey) {
   console.log('[SUPABASE] Initializing with environment variables');
   console.log('[SUPABASE] URL:', supabaseUrl);
+  console.log('[SUPABASE] Anon Key (first 20 chars):', supabaseAnonKey.substring(0, 20) + '...');
+  
+  // Validate URL format
+  try {
+    new URL(supabaseUrl);
+    console.log('[SUPABASE] URL format is valid');
+  } catch (e) {
+    console.error('[SUPABASE] ERROR: Invalid URL format:', supabaseUrl);
+  }
+  
   supabase = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       autoRefreshToken: true,

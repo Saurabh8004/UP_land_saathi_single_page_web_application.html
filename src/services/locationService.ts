@@ -52,6 +52,23 @@ export const locationService = {
     }
 
     try {
+      // Test Supabase connection first
+      console.log('[LOCATION DEBUG] Testing Supabase connection...');
+      const { data: testData, error: testError } = await supabase
+        .from('districts')
+        .select('count')
+        .limit(1);
+      
+      if (testError) {
+        console.error('[LOCATION ERROR] Supabase connection test failed:', testError);
+        if (testError.message === 'Failed to fetch') {
+          throw new Error('Network error: Cannot connect to Supabase. Check VITE_SUPABASE_URL and CORS settings.');
+        }
+        throw new Error(`Supabase connection failed: ${testError.message} (Code: ${testError.code || 'NO_CODE'})`);
+      }
+      
+      console.log('[LOCATION DEBUG] Supabase connection successful');
+
       // Query from Supabase districts table
       const { data, error } = await supabase
         .from('districts')
@@ -64,6 +81,16 @@ export const locationService = {
         // Show actual error details for debugging
         const errorMessage = error.message || 'Unknown error';
         const errorCode = error.code || 'NO_CODE';
+        
+        // Provide specific guidance for common errors
+        if (errorMessage === 'Failed to fetch') {
+          throw new Error('Network error: Cannot connect to Supabase. Check VITE_SUPABASE_URL and CORS settings.');
+        } else if (errorCode === '42501') {
+          throw new Error('Permission denied: Check database GRANT statements for anon/authenticated roles.');
+        } else if (errorCode === '42P01') {
+          throw new Error('Table not found: Run migrations to create districts table.');
+        }
+        
         throw new Error(`Failed to load districts: ${errorMessage} (Code: ${errorCode})`);
       }
 
