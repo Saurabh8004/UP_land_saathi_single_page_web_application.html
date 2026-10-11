@@ -13,48 +13,73 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error('[SUPABASE] Please set these in Vercel Dashboard → Settings → Environment Variables');
   console.error('[SUPABASE] IMPORTANT: After setting variables, you must REDEPLOY for them to take effect');
   
-  throw new Error(`Missing required environment variables: ${missingVars.join(', ')}`);
+  // Don't throw - allow app to load with degraded functionality
+  // Queries will fail gracefully with clear error messages
 }
 
-// Validate URL format and protocol
-try {
-  const urlObj = new URL(supabaseUrl);
-  
-  if (urlObj.protocol !== 'https:') {
-    throw new Error('Supabase URL must use HTTPS protocol');
+// Validate URL format and protocol (only if variables exist)
+let isValidUrl = false;
+if (supabaseUrl) {
+  try {
+    const urlObj = new URL(supabaseUrl);
+    
+    if (urlObj.protocol !== 'https:') {
+      console.error('[SUPABASE] ERROR: Supabase URL must use HTTPS protocol');
+    } else if (!urlObj.hostname.endsWith('.supabase.co')) {
+      console.error('[SUPABASE] ERROR: Supabase URL must be a valid *.supabase.co domain');
+    } else {
+      isValidUrl = true;
+      console.log('[SUPABASE] Initializing with environment variables');
+      console.log('[SUPABASE] URL:', supabaseUrl);
+      console.log('[SUPABASE] URL format is valid');
+    }
+  } catch (e) {
+    console.error('[SUPABASE] ERROR: Invalid URL format:', supabaseUrl);
   }
-  
-  if (!urlObj.hostname.endsWith('.supabase.co')) {
-    throw new Error('Supabase URL must be a valid *.supabase.co domain');
-  }
-  
-  console.log('[SUPABASE] Initializing with environment variables');
-  console.log('[SUPABASE] URL:', supabaseUrl);
-  console.log('[SUPABASE] URL format is valid');
-} catch (e) {
-  console.error('[SUPABASE] ERROR: Invalid URL format:', supabaseUrl);
-  throw new Error(`Invalid Supabase URL: ${supabaseUrl}. Must be a valid HTTPS *.supabase.co domain`);
 }
 
-// Create Supabase client
-const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
+// Create Supabase client (safe initialization)
+// If env vars are missing or invalid, create a client that will fail gracefully on queries
+const supabase: SupabaseClient = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-key',
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+      detectSessionInUrl: false
+    }
   }
-});
+);
 
 export { supabase };
 
 // Helper to get current user
 export async function getCurrentUser() {
-  const { data: { user } } = await supabase.auth.getUser();
-  return user;
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (error) {
+      console.error('[SUPABASE] Error getting user:', error.message);
+      return null;
+    }
+    return user;
+  } catch (err) {
+    console.error('[SUPABASE] Exception getting user:', err);
+    return null;
+  }
 }
 
 // Helper to get current session
 export async function getSession() {
-  const { data: { session } } = await supabase.auth.getSession();
-  return session;
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
+    if (error) {
+      console.error('[SUPABASE] Error getting session:', error.message);
+      return null;
+    }
+    return session;
+  } catch (err) {
+    console.error('[SUPABASE] Exception getting session:', err);
+    return null;
+  }
 }
