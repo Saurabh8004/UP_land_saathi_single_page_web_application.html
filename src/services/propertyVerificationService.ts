@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { supabase, supabaseAnon } from '../lib/supabase';
 
 export interface PropertyVerificationRequest {
   user_id?: string | null; // Optional for anonymous submissions
@@ -64,11 +64,21 @@ export async function savePropertyVerificationRequest(
     console.log('[PROPERTY_VERIFICATION] Table: requests');
     console.log('[PROPERTY_VERIFICATION] Request ID:', requestId);
 
+    // CRITICAL: Use the appropriate Supabase client based on authentication status
+    // - Anonymous submissions (user_id is null): Use supabaseAnon client with persistSession: false
+    //   This ensures the request uses the 'anon' role and matches the anonymous RLS policy
+    // - Authenticated submissions (user_id is set): Use regular supabase client with session
+    //   This ensures the request uses the 'authenticated' role and matches the user's RLS policy
+    const isAnonymous = !data.user_id;
+    const client = isAnonymous ? supabaseAnon : supabase;
+    
+    console.log('[PROPERTY_VERIFICATION] Using client:', isAnonymous ? 'anon (no session)' : 'authenticated (with session)');
+
     // Insert into requests table
     // Using 'whatsapp_verification' as service_type and 'free' as package_code
     // since this is a free WhatsApp-based verification request
     // user_id can be null for anonymous Property Verification requests
-    const { data: insertData, error: insertError } = await supabase
+    const { data: insertData, error: insertError } = await client
       .from('requests')
       .insert({
         request_id: requestId,

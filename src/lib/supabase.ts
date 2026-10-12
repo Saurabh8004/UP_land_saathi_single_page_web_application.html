@@ -93,6 +93,23 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.log('[SUPABASE] ════════════════════════════════════════════════════════');
 }
 
+// Create a separate client for anonymous operations (no session persistence)
+// This ensures anonymous requests always use the 'anon' role without session interference
+let supabaseAnon: SupabaseClient;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  // Use dummy client if env vars are missing
+  supabaseAnon = supabase;
+} else {
+  supabaseAnon = createClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+      detectSessionInUrl: false
+    }
+  });
+}
+
 // Export diagnostic function
 export function getSupabaseDiagnostics() {
   return {
@@ -104,7 +121,7 @@ export function getSupabaseDiagnostics() {
   };
 }
 
-export { supabase };
+export { supabase, supabaseAnon };
 
 // Helper to get current user
 export async function getCurrentUser() {
