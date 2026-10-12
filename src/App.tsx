@@ -659,7 +659,9 @@ function PropertySearch({ lang }: { lang: Lang }) {
       const { savePropertyVerificationRequest } = await import('./services/propertyVerificationService');
 
       // Save to database first
-      // user_id is optional - null for anonymous submissions, user.id for authenticated users
+      // The service will automatically use the appropriate Supabase client:
+      // - Anonymous submissions (user_id is null): Uses supabaseAnon client with persistSession: false
+      // - Authenticated submissions (user_id is set): Uses regular supabase client with session
       const result = await savePropertyVerificationRequest({
         user_id: user?.id || null,
         full_name: formData.fullName,
