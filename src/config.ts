@@ -13,8 +13,8 @@ export const BRAND = {
   descriptionHi: 'प्रॉपर्टी इंटेलिजेंस प्लेटफॉर्म जो आपको बड़े प्रॉपर्टी फैसले लेने से पहले भूमि अभिलेख, मालिकाना हक, लोकेशन पोटेंशियल और रिस्क इंडिकेटर्स को समझने में मदद करता है।',
   disclaimer: 'Bhumi Saathi is an independent technology platform and is not a government website. Information provided supports informed decision-making and does not constitute certified government documents or legal opinions.',
   disclaimerHi: 'भूमि साथी एक स्वतंत्र तकनीकी मंच है और सरकारी वेबसाइट नहीं है। प्रदान की गई जानकारी सूचित निर्णय लेने में सहायता करती है और प्रमाणित सरकारी दस्तावेज़ या कानूनी राय का गठन नहीं करती।',
-  phone: '+91-XXXXXXXXXX',
-  whatsapp: '919XXXXXXXXX',
+  phone: '+91-8004719823',
+  whatsapp: '918004719823',
   email: 'hello@bhumisaathi.in',
   website: 'https://bhumisaathi.in'
 };
