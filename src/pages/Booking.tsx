@@ -68,23 +68,46 @@ export default function Booking() {
     setLoading(true);
     setError(null);
 
+    const startTime = Date.now();
+
     try {
+      // Import diagnostics
+      const { getSupabaseDiagnostics } = await import('../lib/supabase');
+      const diagnostics = getSupabaseDiagnostics();
+      
+      console.log('[BOOKING] ════════════════════════════════════════════════════════');
+      console.log('[BOOKING] Starting request submission...');
+      console.log('[BOOKING] Supabase client status:', {
+        isUsingDummyClient: diagnostics.isUsingDummyClient,
+        hasUrl: diagnostics.hasUrl,
+        hasAnonKey: diagnostics.hasAnonKey,
+        urlHostname: diagnostics.urlHostname
+      });
+      
+      if (diagnostics.isUsingDummyClient) {
+        console.error('[BOOKING] ⚠️  WARNING: Using dummy client - request will fail!');
+        throw new Error('Supabase client not properly initialized. Please redeploy the application.');
+      }
+
       // Generate request ID
       const year = new Date().getFullYear();
       const randomNum = Math.floor(100000 + Math.random() * 900000);
       const newRequestId = `BSK-${year}-${randomNum}`;
 
-      // Create request in database
+      console.log('[BOOKING] Request ID:', newRequestId);
+      console.log('[BOOKING] Attempting to insert request into database...');
+
+      // Create request in database (removed customer_email field)
       const { data: request, error: requestError } = await supabase
         .from('requests')
         .insert({
           request_id: newRequestId,
           user_id: user.id,
+          service_type: 'property_verification',
           package_code: formData.packageCode,
           status: 'received',
           customer_name: formData.customerName,
-          customer_mobile: formData.customerMobile,
-          customer_email: formData.customerEmail || null,
+          mobile: formData.customerMobile,
           district: formData.district,
           tehsil: formData.tehsil || null,
           village: formData.village || null,
@@ -100,7 +123,26 @@ export default function Booking() {
         .select()
         .single();
 
-      if (requestError) throw requestError;
+      const duration = Date.now() - startTime;
+      console.log('[BOOKING] Request completed in', duration, 'ms');
+
+      if (requestError) {
+        console.error('[BOOKING] ════════════════════════════════════════════════════════');
+        console.error('[BOOKING] ❌ Database insert error:');
+        console.error('[BOOKING] Error message:', requestError.message);
+        console.error('[BOOKING] Error code:', requestError.code);
+        console.error('[BOOKING] Error details:', requestError.details);
+        console.error('[BOOKING] Error hint:', requestError.hint);
+        console.error('[BOOKING] ════════════════════════════════════════════════════════');
+        
+        // Check for network errors
+        if (requestError.message === 'Failed to fetch' || requestError.code === 'NETWORK_ERROR') {
+          console.error('[BOOKING] ⚠️  NETWORK ERROR DETECTED');
+          throw new Error('Network error: Cannot connect to database. Please check your internet connection and try again.');
+        }
+        
+        throw requestError;
+      }
 
       // Create audit log
       await supabase.from('audit_logs').insert({
@@ -116,11 +158,24 @@ export default function Booking() {
         }
       });
 
+      console.log('[BOOKING] ════════════════════════════════════════════════════════');
+      console.log('[BOOKING] ✓ Request saved successfully!');
+      console.log('[BOOKING] Request ID:', newRequestId);
+      console.log('[BOOKING] Duration:', duration, 'ms');
+      console.log('[BOOKING] ════════════════════════════════════════════════════════');
+
       setRequestId(newRequestId);
       setStep(4); // Success step
 
     } catch (err) {
-      console.error('Booking error:', err);
+      const duration = Date.now() - startTime;
+      console.error('[BOOKING] ════════════════════════════════════════════════════════');
+      console.error('[BOOKING] ❌ ERROR:');
+      console.error('[BOOKING] Error type:', err instanceof Error ? err.constructor.name : typeof err);
+      console.error('[BOOKING] Error message:', err instanceof Error ? err.message : String(err));
+      console.error('[BOOKING] Duration:', duration, 'ms');
+      console.error('[BOOKING] ════════════════════════════════════════════════════════');
+      
       setError(err instanceof Error ? err.message : 'Failed to create request. Please try again.');
       requestCreationRef.current = false; // Allow retry
     } finally {
