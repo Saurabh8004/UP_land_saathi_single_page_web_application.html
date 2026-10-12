@@ -86,12 +86,12 @@ export { supabase };
 // Helper to get current user
 export async function getCurrentUser() {
   try {
-    const { data: { user }, error } = await supabase.auth.getUser();
+    const { data, error } = await supabase.auth.getUser();
     if (error) {
       console.error('[SUPABASE] Error getting user:', error.message);
       return null;
     }
-    return user;
+    return data?.user ?? null;
   } catch (err) {
     console.error('[SUPABASE] Exception getting user:', err);
     return null;
@@ -101,12 +101,12 @@ export async function getCurrentUser() {
 // Helper to get current session
 export async function getSession() {
   try {
-    const { data: { session }, error } = await supabase.auth.getSession();
+    const { data, error } = await supabase.auth.getSession();
     if (error) {
       console.error('[SUPABASE] Error getting session:', error.message);
       return null;
     }
-    return session;
+    return data?.session ?? null;
   } catch (err) {
     console.error('[SUPABASE] Exception getting session:', err);
     return null;
