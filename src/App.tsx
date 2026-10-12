@@ -588,848 +588,262 @@ function PropertyIntelligenceVisual({ lang }: { lang: Lang }) {
 }
 
 // ============================================================
-// PROPERTY SEARCH WIZARD
+// PROPERTY VERIFICATION REQUEST FORM
 // ============================================================
 function PropertySearch({ lang }: { lang: Lang }) {
-  const tr = t[lang];
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [searchState, setSearchState] = useState<'idle' | 'searching' | 'success' | 'partial' | 'notfound' | 'unavailable'>('idle');
-  const [requestId, setRequestId] = useState<string | null>(null);
-  
-  // Location data
-  const [districts, setDistricts] = useState<Array<{ code: string; name: string; nameHindi?: string }>>([]);
-  const [tehsils, setTehsils] = useState<Array<{ code: string; name: string; nameHindi?: string }>>([]);
-  const [villages, setVillages] = useState<Array<{ code: string; name: string; nameHindi?: string }>>([]);
-  
-  // Loading states for dropdowns
-  const [loadingDistricts, setLoadingDistricts] = useState(false);
-  const [loadingTehsils, setLoadingTehsils] = useState(false);
-  const [loadingVillages, setLoadingVillages] = useState(false);
-  
-  // Form data with codes
   const [formData, setFormData] = useState({
-    districtCode: '',
-    districtName: '',
-    tehsilCode: '',
-    tehsilName: '',
-    villageCode: '',
-    villageName: '',
-    gata: '',
-    khata: ''
+    fullName: '',
+    mobile: '',
+    district: '',
+    tehsil: '',
+    gataNumber: '',
+    additionalInfo: ''
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
 
-  // Error state
-  const [error, setError] = useState<string | null>(null);
-
-  // Load districts on mount
-  useEffect(() => {
-    loadDistricts();
-  }, []);
-
-  const loadDistricts = async () => {
-    setLoadingDistricts(true);
-    try {
-      const { locationService } = await import('./services/locationService');
-      const districtData = await locationService.getDistricts();
-      setDistricts(districtData);
-    } catch (err) {
-      console.error('Failed to load districts:', err);
-      // Show actual error message in development for debugging
-      const errorMessage = err instanceof Error ? err.message : String(err);
-      console.error('[DISTRICT ERROR] Full error:', errorMessage);
-      
-      // In production, show user-friendly message
-      // In development, show actual error for debugging
-      const isDev = import.meta.env.DEV;
-      const displayMessage = isDev 
-        ? `Failed to load districts: ${errorMessage}`
-        : (lang === 'hi' ? 'ज़िले लोड नहीं हो सके' : 'Failed to load districts');
-      
-      setError(displayMessage);
-    } finally {
-      setLoadingDistricts(false);
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = lang === 'hi' ? 'कृपया अपना नाम दर्ज करें' : 'Please enter your name';
     }
+    
+    if (!formData.mobile.trim()) {
+      newErrors.mobile = lang === 'hi' ? 'कृपया मोबाइल नंबर दर्ज करें' : 'Please enter mobile number';
+    } else if (!/^[6-9]\d{9}$/.test(formData.mobile.trim())) {
+      newErrors.mobile = lang === 'hi' ? 'कृपया वैध 10 अंकों का मोबाइल नंबर दर्ज करें' : 'Please enter a valid 10-digit mobile number';
+    }
+    
+    if (!formData.district.trim()) {
+      newErrors.district = lang === 'hi' ? 'कृपया ज़िला दर्ज करें' : 'Please enter district';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const loadTehsils = async (districtCode: string) => {
-    if (!districtCode) {
-      setTehsils([]);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
       return;
     }
 
-    setLoadingTehsils(true);
-    try {
-      const { locationService } = await import('./services/locationService');
-      const tehsilData = await locationService.getTehsils(districtCode);
-      setTehsils(tehsilData);
-    } catch (err) {
-      console.error('Failed to load tehsils:', err);
-      setError(lang === 'hi' ? 'तहसील लोड नहीं हो सकीं' : 'Failed to load tehsils');
-    } finally {
-      setLoadingTehsils(false);
-    }
-  };
-
-  const loadVillages = async (districtCode: string, tehsilCode: string) => {
-    if (!districtCode || !tehsilCode) {
-      setVillages([]);
+    // Check if WhatsApp number is configured
+    const whatsappNumber = BRAND.whatsapp;
+    if (!whatsappNumber || whatsappNumber === '919XXXXXXXXX' || whatsappNumber.includes('XXX')) {
+      alert(lang === 'hi' 
+        ? 'WhatsApp नंबर कॉन्फ़िगर नहीं है। कृपया सेवा प्रदाता से संपर्क करें।'
+        : 'WhatsApp number is not configured. Please contact the service provider.');
       return;
     }
 
-    setLoadingVillages(true);
-    try {
-      const { locationService } = await import('./services/locationService');
-      const villageData = await locationService.getVillages(districtCode, tehsilCode);
-      setVillages(villageData);
-    } catch (err) {
-      console.error('Failed to load villages:', err);
-      setError(lang === 'hi' ? 'गाँव लोड नहीं हो सके' : 'Failed to load villages');
-    } finally {
-      setLoadingVillages(false);
-    }
+    // Create WhatsApp message
+    const message = lang === 'hi'
+      ? `*प्रॉपर्टी वेरिफिकेशन अनुरोध*%0A%0A*नाम:* ${formData.fullName}%0A*मोबाइल:* ${formData.mobile}%0A*ज़िला:* ${formData.district}%0A*तहसील:* ${formData.tehsil || 'N/A'}%0A*गाटा/खसरा:* ${formData.gataNumber || 'N/A'}%0A*अतिरिक्त जानकारी:* ${formData.additionalInfo || 'N/A'}`
+      : `*Property Verification Request*%0A%0A*Name:* ${formData.fullName}%0A*Mobile:* ${formData.mobile}%0A*District:* ${formData.district}%0A*Tehsil:* ${formData.tehsil || 'N/A'}%0A*Gata/Khasra:* ${formData.gataNumber || 'N/A'}%0A*Additional Info:* ${formData.additionalInfo || 'N/A'}`;
+
+    // Open WhatsApp with pre-filled message
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+    
+    setSubmitted(true);
   };
 
-  const handleDistrictChange = async (districtCode: string) => {
-    const district = districts.find(d => d.code === districtCode);
-    
-    setFormData(prev => ({
-      ...prev,
-      districtCode: districtCode,
-      districtName: district?.name || '',
-      tehsilCode: '',
-      tehsilName: '',
-      villageCode: '',
-      villageName: ''
-    }));
-    
-    setTehsils([]);
-    setVillages([]);
-    
-    if (districtCode) {
-      await loadTehsils(districtCode);
-    }
-  };
-
-  const handleTehsilChange = async (tehsilCode: string) => {
-    const tehsil = tehsils.find(t => t.code === tehsilCode);
-    
-    setFormData(prev => ({
-      ...prev,
-      tehsilCode: tehsilCode,
-      tehsilName: tehsil?.name || '',
-      villageCode: '',
-      villageName: ''
-    }));
-    
-    setVillages([]);
-    
-    if (tehsilCode && formData.districtCode) {
-      await loadVillages(formData.districtCode, tehsilCode);
-    }
-  };
-
-  const handleVillageChange = (villageCode: string) => {
-    const village = villages.find(v => v.code === villageCode);
-    
-    setFormData(prev => ({
-      ...prev,
-      villageCode: villageCode,
-      villageName: village?.name || ''
-    }));
-  };
-
-  const updateField = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleNext = async () => {
-    setError(null);
-
-    // Validate Step 1
-    if (step === 1) {
-      if (!formData.districtCode || !formData.tehsilCode || !formData.villageCode) {
-        setError(lang === 'hi' ? 'कृपया सभी फ़ील्ड भरें' : 'Please fill all fields');
-        return;
-      }
-
-      setLoading(true);
-      try {
-        // Create property request
-        const { propertyRequestService } = await import('./services/propertyRequestService');
-        const request = await propertyRequestService.createPropertyRequest({
-          districtCode: formData.districtCode,
-          districtName: formData.districtName,
-          tehsilCode: formData.tehsilCode,
-          tehsilName: formData.tehsilName,
-          villageCode: formData.villageCode,
-          villageName: formData.villageName,
-          userId: user?.id
-        });
-
-        setRequestId(request.id);
-        console.log('[PROPERTY_SEARCH] Request created:', request.id);
-        setStep(2);
-      } catch (err) {
-        console.error('Failed to create property request:', err);
-        setError(lang === 'hi' ? 'अनुरोध बनाने में विफल' : 'Failed to create request');
-      } finally {
-        setLoading(false);
-      }
-    } else if (step === 2) {
-      if (!formData.gata) {
-        setError(lang === 'hi' ? 'कृपया गाटा नंबर दर्ज करें' : 'Please enter Gata number');
-        return;
-      }
-
-      setLoading(true);
-      try {
-        // Update property request with Gata/Khata
-        if (requestId) {
-          const { propertyRequestService } = await import('./services/propertyRequestService');
-          await propertyRequestService.updatePropertyRequest(requestId, {
-            gataNumber: formData.gata,
-            khataNumber: formData.khata || undefined,
-            status: 'searching'
-          });
-        }
-        setStep(3);
-      } catch (err) {
-        console.error('Failed to update property request:', err);
-        setError(lang === 'hi' ? 'अनुरोध अपडेट करने में विफल' : 'Failed to update request');
-      } finally {
-        setLoading(false);
-      }
-    }
-  };
-
-  const handleSearch = async () => {
-    if (!requestId) {
-      setError(lang === 'hi' ? 'अनुरोध नहीं मिला' : 'Request not found');
-      return;
-    }
-
-    setLoading(true);
-    setSearchState('searching');
-    setError(null);
-    
-    try {
-      // Simulate search for now
-      // In production, this would call the Bhulekh API via Edge Function
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // For the test property (Amroha, Gata 123), always show success
-      if (formData.districtCode === '137' && formData.gata === '123') {
-        setSearchState('success');
-        
-        // Update request status
-        if (requestId) {
-          const { propertyRequestService } = await import('./services/propertyRequestService');
-          await propertyRequestService.updatePropertyRequest(requestId, {
-            status: 'found'
-          });
-        }
-      } else if (formData.districtCode && formData.gata) {
-        // Demo: Show different states
-        const demoStates = ['success', 'partial', 'notfound', 'unavailable'] as const;
-        const randomState = demoStates[Math.floor(Math.random() * demoStates.length)];
-        setSearchState(randomState);
-        
-        if (requestId) {
-          const { propertyRequestService } = await import('./services/propertyRequestService');
-          await propertyRequestService.updatePropertyRequest(requestId, {
-            status: randomState === 'success' ? 'found' : randomState === 'notfound' ? 'not_found' : 'error'
-          });
-        }
-      } else {
-        setSearchState('notfound');
-        
-        if (requestId) {
-          const { propertyRequestService } = await import('./services/propertyRequestService');
-          await propertyRequestService.updatePropertyRequest(requestId, {
-            status: 'not_found'
-          });
-        }
-      }
-    } catch (err) {
-      console.error('Search failed:', err);
-      setError(lang === 'hi' ? 'खोज विफल रही' : 'Search failed');
-      setSearchState('unavailable');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const resetSearch = () => {
-    setSearchState('idle');
-    setStep(1);
-    setRequestId(null);
+  const handleReset = () => {
     setFormData({
-      districtCode: '',
-      districtName: '',
-      tehsilCode: '',
-      tehsilName: '',
-      villageCode: '',
-      villageName: '',
-      gata: '',
-      khata: ''
+      fullName: '',
+      mobile: '',
+      district: '',
+      tehsil: '',
+      gataNumber: '',
+      additionalInfo: ''
     });
-    setTehsils([]);
-    setVillages([]);
-    setError(null);
+    setErrors({});
+    setSubmitted(false);
   };
+
+  if (submitted) {
+    return (
+      <section id="search" className="py-20 md:py-28 bg-white">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 text-center"
+          >
+            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="w-8 h-8 text-emerald-600" />
+            </div>
+            <h3 className="text-2xl font-bold text-navy mb-2">
+              {lang === 'hi' ? 'अनुरोध भेजा गया!' : 'Request Sent!'}
+            </h3>
+            <p className="text-slate-600 mb-6">
+              {lang === 'hi' 
+                ? 'अनुरोध भेजने के उपरांत हमारे सेवा प्रतिनिधि 15 मिनट में आपसे संपर्क करेंगे।'
+                : 'After sending the request, our service representative will contact you within 15 minutes.'}
+            </p>
+            <button
+              onClick={handleReset}
+              className="px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors"
+            >
+              {lang === 'hi' ? 'नया अनुरोध भेजें' : 'Send New Request'}
+            </button>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="search" className="py-20 md:py-28 bg-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">{tr.search.title}</h2>
-          <p className="text-lg text-slate-600">{tr.search.sub}</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-navy mb-4">
+            {lang === 'hi' ? 'प्रॉपर्टी वेरिफिकेशन अनुरोध' : 'Property Verification Request'}
+          </h2>
+          <p className="text-lg text-slate-600">
+            {lang === 'hi' 
+              ? 'अपनी ज़मीन की जाँच के लिए नीचे दिए गए फॉर्म को भरें'
+              : 'Fill the form below to get your property verified'}
+          </p>
         </motion.div>
 
-        <div className="bg-slate-50 rounded-2xl p-6 md:p-8 border border-slate-100">
-          {searchState === 'idle' && (
-            <>
-              {/* Step indicators */}
-              <div className="flex items-center justify-center gap-2 mb-8">
-                {[1, 2, 3].map((s) => (
-                  <div key={s} className="flex items-center">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                      s <= step ? 'bg-navy text-white' : 'bg-white text-slate-400 border border-slate-200'
-                    }`}>
-                      {s < step ? <CheckCircle className="w-4 h-4" /> : s}
-                    </div>
-                    {s < 3 && <div className={`w-12 h-0.5 ${s < step ? 'bg-navy' : 'bg-slate-200'}`} />}
-                  </div>
-                ))}
-              </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-slate-100"
+        >
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {/* Full Name */}
+            <div>
+              <label className="block text-sm font-medium text-navy mb-2">
+                {lang === 'hi' ? 'आपका नाम' : 'Full Name'} <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.fullName}
+                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                placeholder={lang === 'hi' ? 'उदा. राम कुमार' : 'e.g. Ram Kumar'}
+                className={`w-full px-4 py-3 bg-white border rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all ${
+                  errors.fullName ? 'border-red-500' : 'border-slate-200'
+                }`}
+              />
+              {errors.fullName && (
+                <p className="mt-1 text-sm text-red-600">{errors.fullName}</p>
+              )}
+            </div>
 
-              <AnimatePresence mode="wait">
-                {/* Step 1: Location */}
-                {step === 1 && (
-                  <motion.div
-                    key="step1"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="text-lg font-semibold text-navy mb-4">{tr.search.step1}</h3>
-                    
-                    {/* District Dropdown */}
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
-                        {tr.search.district} *
-                        {loadingDistricts && <span className="ml-2 text-xs text-slate-500">({lang === 'hi' ? 'लोड हो रहा है...' : 'Loading...'})</span>}
-                      </label>
-                      <select
-                        value={formData.districtCode}
-                        onChange={(e) => handleDistrictChange(e.target.value)}
-                        disabled={loadingDistricts}
-                        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy disabled:bg-slate-50 disabled:cursor-not-allowed"
-                      >
-                        <option value="">{lang === 'hi' ? 'ज़िला चुनें' : 'Select District'}</option>
-                        {districts.map((d) => (
-                          <option key={d.code} value={d.code}>
-                            {lang === 'hi' ? (d.nameHindi || d.name) : d.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+            {/* Mobile Number */}
+            <div>
+              <label className="block text-sm font-medium text-navy mb-2">
+                {lang === 'hi' ? 'मोबाइल / व्हाट्सएप नंबर' : 'Mobile / WhatsApp Number'} <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="tel"
+                value={formData.mobile}
+                onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                placeholder="9876543210"
+                maxLength={10}
+                className={`w-full px-4 py-3 bg-white border rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all ${
+                  errors.mobile ? 'border-red-500' : 'border-slate-200'
+                }`}
+              />
+              {errors.mobile && (
+                <p className="mt-1 text-sm text-red-600">{errors.mobile}</p>
+              )}
+            </div>
 
-                    {/* Tehsil Dropdown */}
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
-                        {tr.search.tehsil} *
-                        {loadingTehsils && <span className="ml-2 text-xs text-slate-500">({lang === 'hi' ? 'लोड हो रहा है...' : 'Loading...'})</span>}
-                      </label>
-                      <select
-                        value={formData.tehsilCode}
-                        onChange={(e) => handleTehsilChange(e.target.value)}
-                        disabled={!formData.districtCode || loadingTehsils}
-                        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy disabled:bg-slate-50 disabled:cursor-not-allowed"
-                      >
-                        <option value="">{lang === 'hi' ? 'तहसील चुनें' : 'Select Tehsil'}</option>
-                        {tehsils.map((t) => (
-                          <option key={t.code} value={t.code}>
-                            {lang === 'hi' ? (t.nameHindi || t.name) : t.name}
-                          </option>
-                        ))}
-                      </select>
-                      {!formData.districtCode && (
-                        <p className="text-xs text-slate-500 mt-1">
-                          {lang === 'hi' ? 'पहले ज़िला चुनें' : 'Please select a district first'}
-                        </p>
-                      )}
-                    </div>
+            {/* District */}
+            <div>
+              <label className="block text-sm font-medium text-navy mb-2">
+                {lang === 'hi' ? 'ज़िला' : 'District'} <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.district}
+                onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                placeholder={lang === 'hi' ? 'उदा. लखनऊ' : 'e.g. Lucknow'}
+                className={`w-full px-4 py-3 bg-white border rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all ${
+                  errors.district ? 'border-red-500' : 'border-slate-200'
+                }`}
+              />
+              {errors.district && (
+                <p className="mt-1 text-sm text-red-600">{errors.district}</p>
+              )}
+            </div>
 
-                    {/* Village Dropdown */}
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">
-                        {tr.search.village} *
-                        {loadingVillages && <span className="ml-2 text-xs text-slate-500">({lang === 'hi' ? 'लोड हो रहा है...' : 'Loading...'})</span>}
-                      </label>
-                      <select
-                        value={formData.villageCode}
-                        onChange={(e) => handleVillageChange(e.target.value)}
-                        disabled={!formData.tehsilCode || loadingVillages}
-                        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy disabled:bg-slate-50 disabled:cursor-not-allowed"
-                      >
-                        <option value="">{lang === 'hi' ? 'गाँव चुनें' : 'Select Village'}</option>
-                        {villages.map((v) => (
-                          <option key={v.code} value={v.code}>
-                            {lang === 'hi' ? (v.nameHindi || v.name) : v.name} ({v.code})
-                          </option>
-                        ))}
-                      </select>
-                      {!formData.tehsilCode && (
-                        <p className="text-xs text-slate-500 mt-1">
-                          {lang === 'hi' ? 'पहले तहसील चुनें' : 'Please select a tehsil first'}
-                        </p>
-                      )}
-                    </div>
+            {/* Tehsil */}
+            <div>
+              <label className="block text-sm font-medium text-navy mb-2">
+                {lang === 'hi' ? 'तहसील' : 'Tehsil'}
+              </label>
+              <input
+                type="text"
+                value={formData.tehsil}
+                onChange={(e) => setFormData({ ...formData, tehsil: e.target.value })}
+                placeholder={lang === 'hi' ? 'उदा. सदर' : 'e.g. Sadar'}
+                className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
+              />
+            </div>
 
-                    {/* Error Message */}
-                    {error && (
-                      <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-sm text-red-600">{error}</p>
-                      </div>
-                    )}
+            {/* Gata/Khasra Number */}
+            <div>
+              <label className="block text-sm font-medium text-navy mb-2">
+                {lang === 'hi' ? 'गाटा / खसरा संख्या' : 'Gata / Khasra Number'}
+              </label>
+              <input
+                type="text"
+                value={formData.gataNumber}
+                onChange={(e) => setFormData({ ...formData, gataNumber: e.target.value })}
+                placeholder={lang === 'hi' ? 'उदा. 312/1' : 'e.g. 312/1'}
+                className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all"
+              />
+            </div>
 
-                    <button
-                      onClick={handleNext}
-                      disabled={!formData.districtCode || !formData.tehsilCode || !formData.villageCode || loading}
-                      className="w-full mt-6 px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                    >
-                      {loading ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          {lang === 'hi' ? 'अनुरोध बनाया जा रहा है...' : 'Creating Request...'}
-                        </>
-                      ) : (
-                        <>
-                          {tr.search.next}
-                          <ChevronRight className="w-4 h-4" />
-                        </>
-                      )}
-                    </button>
-                  </motion.div>
-                )}
+            {/* Additional Information */}
+            <div>
+              <label className="block text-sm font-medium text-navy mb-2">
+                {lang === 'hi' ? 'अतिरिक्त जानकारी या सवाल' : 'Additional Information or Questions'}
+              </label>
+              <textarea
+                value={formData.additionalInfo}
+                onChange={(e) => setFormData({ ...formData, additionalInfo: e.target.value })}
+                placeholder={lang === 'hi' 
+                  ? 'अपनी ज़मीन से जुड़ी समस्या या निर्देश लिखें...'
+                  : 'Write your land-related issue or instructions...'}
+                rows={4}
+                className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy transition-all resize-none"
+              />
+            </div>
 
-                {/* Step 2: Property Details */}
-                {step === 2 && (
-                  <motion.div
-                    key="step2"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="text-lg font-semibold text-navy mb-4">{tr.search.step2}</h3>
-                    
-                    {/* Show selected location */}
-                    <div className="bg-blue-50 rounded-lg p-3 mb-4">
-                      <p className="text-xs text-slate-600 mb-1">{lang === 'hi' ? 'चयनित स्थान:' : 'Selected Location:'}</p>
-                      <p className="text-sm font-medium text-navy">
-                        {formData.districtName} → {formData.tehsilName} → {formData.villageName}
-                      </p>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">{tr.search.gata} *</label>
-                      <input
-                        type="text"
-                        value={formData.gata}
-                        onChange={(e) => updateField('gata', e.target.value)}
-                        placeholder={lang === 'hi' ? 'गाटा नंबर दर्ज करें' : 'Enter Gata Number'}
-                        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-2">{tr.search.khata}</label>
-                      <input
-                        type="text"
-                        value={formData.khata}
-                        onChange={(e) => updateField('khata', e.target.value)}
-                        placeholder={lang === 'hi' ? 'खाता नंबर (वैकल्पिक)' : 'Enter Khata Number (optional)'}
-                        className="w-full px-4 py-3 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-navy/20 focus:border-navy"
-                      />
-                    </div>
-
-                    {/* Error Message */}
-                    {error && (
-                      <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-sm text-red-600">{error}</p>
-                      </div>
-                    )}
-
-                    <div className="flex gap-3 mt-6">
-                      <button
-                        onClick={() => setStep(1)}
-                        disabled={loading}
-                        className="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition-colors disabled:opacity-50"
-                      >
-                        {tr.search.back}
-                      </button>
-                      <button
-                        onClick={handleNext}
-                        disabled={!formData.gata || loading}
-                        className="flex-1 px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                      >
-                        {loading ? (
-                          <>
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                            {lang === 'hi' ? 'अपडेट हो रहा है...' : 'Updating...'}
-                          </>
-                        ) : (
-                          <>
-                            {tr.search.next}
-                            <ChevronRight className="w-4 h-4" />
-                          </>
-                        )}
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Step 3: Review */}
-                {step === 3 && (
-                  <motion.div
-                    key="step3"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    className="space-y-4"
-                  >
-                    <h3 className="text-lg font-semibold text-navy mb-4">{tr.search.step3}</h3>
-                    
-                    {/* Request ID */}
-                    {requestId && (
-                      <div className="bg-blue-50 rounded-lg p-3 mb-4">
-                        <p className="text-xs text-slate-600 mb-1">{lang === 'hi' ? 'अनुरोध आईडी:' : 'Request ID:'}</p>
-                        <p className="text-sm font-mono font-medium text-navy">{requestId}</p>
-                      </div>
-                    )}
-
-                    <div className="bg-white rounded-lg p-4 border border-slate-200 space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-slate-500">{tr.search.district}:</span>
-                        <span className="text-sm font-medium text-navy">{formData.districtName}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-slate-500">{tr.search.tehsil}:</span>
-                        <span className="text-sm font-medium text-navy">{formData.tehsilName}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-slate-500">{tr.search.village}:</span>
-                        <span className="text-sm font-medium text-navy">{formData.villageName}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-slate-500">{tr.search.gata}:</span>
-                        <span className="text-sm font-medium text-navy">{formData.gata}</span>
-                      </div>
-                      {formData.khata && (
-                        <div className="flex justify-between">
-                          <span className="text-sm text-slate-500">{tr.search.khata}:</span>
-                          <span className="text-sm font-medium text-navy">{formData.khata}</span>
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex gap-3 mt-6">
-                      <button
-                        onClick={() => setStep(2)}
-                        className="flex-1 px-6 py-3 border border-slate-200 text-slate-700 rounded-lg font-medium hover:bg-slate-50 transition-colors"
-                      >
-                        {tr.search.back}
-                      </button>
-                      <button
-                        onClick={handleSearch}
-                        className="flex-1 px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors flex items-center justify-center gap-2"
-                      >
-                        <Search className="w-4 h-4" />
-                        {tr.search.search}
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </>
-          )}
-
-          {/* Searching State */}
-          {searchState === 'searching' && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="py-12 text-center"
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-all shadow-lg hover:shadow-xl"
             >
-              <Loader2 className="w-12 h-12 text-navy animate-spin mx-auto mb-4" />
-              <p className="text-lg font-medium text-navy">{tr.search.searching}</p>
-              <p className="text-sm text-slate-500 mt-2">{lang === 'hi' ? 'कृपया प्रतीक्षा करें...' : 'Please wait...'}</p>
-            </motion.div>
-          )}
+              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+              </svg>
+              {lang === 'hi' ? 'व्हाट्सएप पर रिक्वेस्ट भेजें' : 'Send Request on WhatsApp'}
+            </button>
 
-          {/* Success State */}
-          {searchState === 'success' && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-6"
-            >
-              <div className="flex items-center gap-3 pb-4 border-b border-slate-200">
-                <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center">
-                  <CheckCircle className="w-5 h-5 text-emerald-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-navy">{tr.result.found}</h3>
-                  <p className="text-sm text-slate-500">{lang === 'hi' ? 'प्रॉपर्टी रिकॉर्ड उपलब्ध है' : 'Property record is available'}</p>
-                </div>
-              </div>
-
-              {/* Property Overview */}
-              <div className="bg-white rounded-lg p-5 border border-slate-200">
-                <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{tr.result.overview}</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{tr.search.district}</p>
-                    <p className="font-medium text-navy">{formData.districtName}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{tr.search.tehsil}</p>
-                    <p className="font-medium text-navy">{formData.tehsilName}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{tr.search.village}</p>
-                    <p className="font-medium text-navy">{formData.villageName}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{tr.search.gata}</p>
-                    <p className="font-medium text-navy">{formData.gata}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'खाता' : 'Khata'}</p>
-                    <p className="font-medium text-navy">00040</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'क्षेत्रफल' : 'Area'}</p>
-                    <p className="font-medium text-navy">0.105 {lang === 'hi' ? 'हेक्टेयर' : 'hectares'}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Owner Information */}
-              <div className="bg-white rounded-lg p-5 border border-slate-200">
-                <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{tr.result.owner}</h4>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'मालिक का नाम' : 'Owner Name'}</p>
-                      <p className="font-medium text-navy">Saurabh Awasthi</p>
-                    </div>
-                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded flex items-center gap-1">
-                      <Shield className="w-3 h-3" />
-                      {lang === 'hi' ? 'आधिकारिक स्रोत' : 'Official Source'}
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'पिता/पति का नाम' : 'Father/Husband Name'}</p>
-                    <p className="font-medium text-navy">Ramesh Awasthi</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'हिस्सा' : 'Share'}</p>
-                    <p className="font-medium text-navy">100%</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Land Details */}
-              <div className="bg-white rounded-lg p-5 border border-slate-200">
-                <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{tr.result.land}</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'भूमि प्रकार' : 'Land Type'}</p>
-                    <p className="font-medium text-navy">{lang === 'hi' ? 'आबादी' : 'Abadi'}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'भूमि स्थिति' : 'Land Status'}</p>
-                    <p className="font-medium text-navy">{lang === 'hi' ? 'मुक्त' : 'Freehold'}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Record Status */}
-              <div className="bg-white rounded-lg p-5 border border-slate-200">
-                <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{tr.result.status}</h4>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'म्यूटेशन स्थिति' : 'Mutation Status'}</p>
-                      <p className="font-medium text-navy">{lang === 'hi' ? 'अपडेटेड' : 'Updated'}</p>
-                    </div>
-                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded">
-                      {lang === 'hi' ? 'स्पष्ट' : 'Clear'}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'मुकदमा स्थिति' : 'Litigation Status'}</p>
-                      <p className="font-medium text-navy">{lang === 'hi' ? 'कोई मुकदमा नहीं' : 'No Litigation'}</p>
-                    </div>
-                    <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded">
-                      {lang === 'hi' ? 'स्पष्ट' : 'Clear'}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Source Information */}
-              <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-100">
-                <div className="flex items-start gap-3">
-                  <Shield className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-emerald-900 mb-1">{lang === 'hi' ? 'आधिकारिक स्रोत से उपलब्ध' : 'Available from Official Source'}</p>
-                    <p className="text-xs text-emerald-700 mb-2">{lang === 'hi' ? 'यह जानकारी आधिकारिक भूमि अभिलेख से प्राप्त की गई है' : 'This information is retrieved from official land records'}</p>
-                    <div className="flex items-center gap-2 text-xs text-emerald-600">
-                      <Clock className="w-3 h-3" />
-                      <span>{lang === 'hi' ? 'अंतिम अपडेट: आज' : 'Last updated: Today'}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                onClick={resetSearch}
-                className="w-full px-6 py-3 border border-slate-200 text-navy rounded-lg font-medium hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
-              >
-                <RefreshCw className="w-4 h-4" />
-                {lang === 'hi' ? 'नई खोज करें' : 'New Search'}
-              </button>
-            </motion.div>
-          )}
-
-          {/* Partial Data State */}
-          {searchState === 'partial' && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-6"
-            >
-              <div className="flex items-center gap-3 pb-4 border-b border-slate-200">
-                <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center">
-                  <AlertCircle className="w-5 h-5 text-amber-600" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-navy">{tr.result.partial}</h3>
-                  <p className="text-sm text-slate-500">{lang === 'hi' ? 'कुछ जानकारी उपलब्ध है, लेकिन कुछ विवरणों को अतिरिक्त सत्यापन की आवश्यकता है' : 'Some information is available, but some details require additional verification'}</p>
-                </div>
-              </div>
-
-              {/* Available Information */}
-              <div className="bg-white rounded-lg p-5 border border-slate-200">
-                <h4 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">{tr.result.overview}</h4>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{tr.search.district}</p>
-                    <p className="font-medium text-navy">{formData.districtName}</p>
-                    <span className="inline-block mt-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded">{lang === 'hi' ? 'उपलब्ध' : 'Available'}</span>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{tr.search.gata}</p>
-                    <p className="font-medium text-navy">{formData.gata}</p>
-                    <span className="inline-block mt-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs rounded">{lang === 'hi' ? 'उपलब्ध' : 'Available'}</span>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'मालिक' : 'Owner'}</p>
-                    <p className="font-medium text-slate-400">—</p>
-                    <span className="inline-block mt-1 px-2 py-0.5 bg-amber-50 text-amber-700 text-xs rounded">{lang === 'hi' ? 'सत्यापन लंबित' : 'Pending Verification'}</span>
-                  </div>
-                  <div>
-                    <p className="text-xs text-slate-500 mb-1">{lang === 'hi' ? 'क्षेत्रफल' : 'Area'}</p>
-                    <p className="font-medium text-slate-400">—</p>
-                    <span className="inline-block mt-1 px-2 py-0.5 bg-amber-50 text-amber-700 text-xs rounded">{lang === 'hi' ? 'अनुपलब्ध' : 'Unavailable'}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
-                <div className="flex items-start gap-2">
-                  <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-medium text-amber-900">{lang === 'hi' ? 'आंशिक जानकारी' : 'Partial Information'}</p>
-                    <p className="text-xs text-amber-700 mt-1">{lang === 'hi' ? 'कुछ रिकॉर्ड आधिकारिक स्रोतों से उपलब्ध नहीं हैं। पूर्ण सत्यापन के लिए अतिरिक्त दस्तावेज़ों की आवश्यकता हो सकती है।' : 'Some records are not available from official sources. Additional documents may be required for complete verification.'}</p>
-                  </div>
-                </div>
-              </div>
-
-              <button
-                onClick={resetSearch}
-                className="w-full px-6 py-3 border border-slate-200 text-navy rounded-lg font-medium hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
-              >
-                <RefreshCw className="w-4 h-4" />
-                {lang === 'hi' ? 'नई खोज करें' : 'New Search'}
-              </button>
-            </motion.div>
-          )}
-
-          {/* Unavailable State */}
-          {searchState === 'unavailable' && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="py-8 text-center"
-            >
-              <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center mx-auto mb-4">
-                <Clock className="w-8 h-8 text-slate-400" />
-              </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">{tr.result.unavailable}</h3>
-              <p className="text-slate-600 mb-6">{lang === 'hi' ? 'आधिकारिक डेटा स्रोत वर्तमान में अनुपलब्ध है। आपकी प्रॉपर्टी जानकारी सत्यापित नहीं की गई है।' : 'The official data source is currently unavailable. Your property information has not been verified.'}</p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <button
-                  onClick={resetSearch}
-                  className="px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors"
-                >
-                  {lang === 'hi' ? 'पुनः प्रयास करें' : 'Try Again'}
-                </button>
-                <button
-                  onClick={resetSearch}
-                  className="px-6 py-3 border border-slate-200 text-navy rounded-lg font-medium hover:bg-slate-50 transition-colors"
-                >
-                  {lang === 'hi' ? 'बाद में सत्यापित करें' : 'Verify Later'}
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Not Found State */}
-          {searchState === 'notfound' && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="py-8 text-center"
-            >
-              <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center mx-auto mb-4">
-                <AlertCircle className="w-8 h-8 text-amber-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-navy mb-2">{tr.result.notFound}</h3>
-              <p className="text-slate-600 mb-6">{lang === 'hi' ? 'दर्ज की गई जानकारी के लिए कोई रिकॉर्ड नहीं मिला।' : 'No matching record was returned for the information provided.'}</p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <button
-                  onClick={resetSearch}
-                  className="px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors"
-                >
-                  {lang === 'hi' ? 'पुनः प्रयास करें' : 'Try Again'}
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </div>
+            {/* Note */}
+            <p className="text-center text-sm text-slate-500 mt-4">
+              {lang === 'hi' 
+                ? 'अनुरोध भेजने के उपरांत हमारे सेवा प्रतिनिधि 15 मिनट में आपसे संपर्क करेंगे।'
+                : 'After sending the request, our service representative will contact you within 15 minutes.'}
+            </p>
+          </form>
+        </motion.div>
       </div>
     </section>
   );
