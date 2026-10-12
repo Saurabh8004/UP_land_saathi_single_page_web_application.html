@@ -52,9 +52,28 @@ export const locationService = {
     }
 
     try {
-      // Get the Supabase URL for debugging
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      console.log('[LOCATION DEBUG] Supabase URL from env:', supabaseUrl);
+      // Diagnostic: Check what URL the Supabase client is actually using
+      const envUrl = import.meta.env.VITE_SUPABASE_URL;
+      console.log('[LOCATION DEBUG] ════════════════════════════════════════');
+      console.log('[LOCATION DEBUG] Supabase Configuration Diagnostic:');
+      console.log('[LOCATION DEBUG]   VITE_SUPABASE_URL from env:', envUrl || '(not set)');
+      console.log('[LOCATION DEBUG]   Note: Cannot directly access Supabase client URL from here');
+      
+      if (!envUrl) {
+        console.error('[LOCATION DEBUG] ✗ VITE_SUPABASE_URL is not set in the build');
+        console.error('[LOCATION DEBUG] This means the environment variable was not available during build time');
+        console.error('[LOCATION DEBUG] Fix: Set VITE_SUPABASE_URL in Vercel → Settings → Environment Variables, then REDEPLOY');
+      } else {
+        console.log('[LOCATION DEBUG] ✓ VITE_SUPABASE_URL is set');
+        try {
+          const urlObj = new URL(envUrl);
+          console.log('[LOCATION DEBUG]   URL hostname:', urlObj.hostname);
+          console.log('[LOCATION DEBUG]   URL protocol:', urlObj.protocol);
+        } catch (e) {
+          console.error('[LOCATION DEBUG] ✗ Invalid URL format:', envUrl);
+        }
+      }
+      
       console.log('[LOCATION DEBUG] Testing Supabase connection...');
       
       // Test Supabase connection with a simple query
@@ -64,19 +83,30 @@ export const locationService = {
         .limit(1);
       
       if (testError) {
-        console.error('[LOCATION ERROR] Supabase connection test failed:', testError.message);
+        console.error('[LOCATION ERROR] ════════════════════════════════════════');
+        console.error('[LOCATION ERROR] Supabase connection test failed');
+        console.error('[LOCATION ERROR] Error message:', testError.message);
         console.error('[LOCATION ERROR] Error code:', testError.code || 'NO_CODE');
+        console.error('[LOCATION ERROR] Error details:', testError.details || 'none');
+        console.error('[LOCATION ERROR] Error hint:', testError.hint || 'none');
         
         // Check for specific error types
         if (testError.message === 'Failed to fetch') {
-          console.error('[LOCATION ERROR] This is a network-level error. Possible causes:');
-          console.error('  1. VITE_SUPABASE_URL is not set or is using placeholder value');
-          console.error('  2. Supabase URL is incorrect or unreachable');
-          console.error('  3. CORS issue blocking the request');
-          console.error('  4. Network connectivity problem');
-          console.error('  5. Browser extension blocking the request');
-          console.error('[LOCATION ERROR] Current URL being used:', supabaseUrl || 'undefined/placeholder');
-          throw new Error(`Network error: Cannot connect to Supabase at ${supabaseUrl || 'undefined/placeholder'}. Check browser console for details.`);
+          console.error('[LOCATION ERROR] ════════════════════════════════════════');
+          console.error('[LOCATION ERROR] NETWORK ERROR: Cannot reach Supabase server');
+          console.error('[LOCATION ERROR] This means the request never reached Supabase.');
+          console.error('[LOCATION ERROR] Possible causes:');
+          console.error('[LOCATION ERROR]   1. VITE_SUPABASE_URL is not set or is using invalid/placeholder value');
+          console.error('[LOCATION ERROR]   2. Supabase URL is incorrect or unreachable');
+          console.error('[LOCATION ERROR]   3. CORS issue blocking the request');
+          console.error('[LOCATION ERROR]   4. Network connectivity problem');
+          console.error('[LOCATION ERROR]   5. Browser extension blocking the request');
+          console.error('[LOCATION ERROR] ════════════════════════════════════════');
+          console.error('[LOCATION ERROR] NEXT STEP: Open DevTools → Network tab, reload, and check:');
+          console.error('[LOCATION ERROR]   - What URL is the request trying to reach?');
+          console.error('[LOCATION ERROR]   - What is the request status? (failed, CORS error, etc.)');
+          console.error('[LOCATION ERROR]   - Are there any request headers?');
+          throw new Error(`Network error: Cannot connect to Supabase. Check browser console and Network tab for details.`);
         }
         
         throw new Error(`Supabase connection failed: ${testError.message} (Code: ${testError.code || 'NO_CODE'})`);
@@ -102,7 +132,7 @@ export const locationService = {
         
         // Provide specific guidance for common errors
         if (errorMessage === 'Failed to fetch') {
-          throw new Error(`Network error: Cannot connect to Supabase at ${supabaseUrl || 'undefined/placeholder'}. Check VITE_SUPABASE_URL and CORS settings.`);
+          throw new Error(`Network error: Cannot connect to Supabase. Check VITE_SUPABASE_URL and CORS settings. See browser console for diagnostics.`);
         } else if (errorCode === '42501') {
           throw new Error('Permission denied: Check database GRANT statements for anon/authenticated roles.');
         } else if (errorCode === '42P01') {
