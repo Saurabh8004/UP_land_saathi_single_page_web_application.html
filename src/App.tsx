@@ -658,6 +658,17 @@ function PropertySearch({ lang }: { lang: Lang }) {
       // Import the service dynamically to avoid circular dependencies
       const { savePropertyVerificationRequest } = await import('./services/propertyVerificationService');
 
+      // CRITICAL: Check actual Supabase session state, not just AuthContext
+      // The Supabase client may have a persisted session even if AuthContext shows user as null
+      // This can cause RLS violations when trying to insert with user_id = null
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      
+      // If we want to submit anonymously but there's a persisted session, sign out first
+      if (!user && currentSession) {
+        console.log('[PROPERTY_VERIFICATION] Clearing persisted session for anonymous submission');
+        await supabase.auth.signOut();
+      }
+
       // Save to database first
       // user_id is optional - null for anonymous submissions, user.id for authenticated users
       const result = await savePropertyVerificationRequest({
