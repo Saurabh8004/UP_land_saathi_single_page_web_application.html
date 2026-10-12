@@ -47,7 +47,6 @@ export async function savePropertyVerificationRequest(
         status: 'received',
         customer_name: data.full_name,
         customer_mobile: data.mobile_number,
-        customer_email: null,
         district: data.district,
         tehsil: data.tehsil || null,
         village: null,
