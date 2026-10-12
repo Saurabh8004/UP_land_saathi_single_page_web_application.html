@@ -632,14 +632,6 @@ function PropertySearch({ lang }: { lang: Lang }) {
     // Clear previous errors
     setSubmitError(null);
     
-    // Check if user is authenticated
-    if (!user) {
-      setSubmitError(lang === 'hi' 
-        ? 'अनुरोध सबमिट करने के लिए कृपया लॉगिन करें।'
-        : 'Please login to submit your request.');
-      return;
-    }
-    
     // Validate form
     if (!validateForm()) {
       return;
@@ -667,8 +659,9 @@ function PropertySearch({ lang }: { lang: Lang }) {
       const { savePropertyVerificationRequest } = await import('./services/propertyVerificationService');
 
       // Save to database first
+      // user_id is optional - null for anonymous submissions, user.id for authenticated users
       const result = await savePropertyVerificationRequest({
-        user_id: user.id,
+        user_id: user?.id || null,
         full_name: formData.fullName,
         mobile_number: formData.mobile,
         district: formData.district,
@@ -898,39 +891,6 @@ function PropertySearch({ lang }: { lang: Lang }) {
                       {lang === 'hi' ? 'त्रुटि' : 'Error'}
                     </p>
                     <p className="text-sm text-red-700 mt-1">{submitError}</p>
-                    {!user && (
-                      <Link
-                        to="/login"
-                        className="inline-block mt-2 text-sm font-medium text-red-700 underline hover:text-red-800"
-                      >
-                        {lang === 'hi' ? 'लॉगिन करें →' : 'Login →'}
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Login Prompt for Unauthenticated Users */}
-            {!user && (
-              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg mb-4">
-                <div className="flex items-start gap-3">
-                  <Lock className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-blue-900 mb-1">
-                      {lang === 'hi' ? 'सबमिट करने के लिए लॉगिन करें' : 'Login Required to Submit'}
-                    </p>
-                    <p className="text-sm text-blue-700 mb-2">
-                      {lang === 'hi' 
-                        ? 'आप फॉर्म भर सकते हैं, लेकिन अनुरोध सबमिट करने के लिए लॉगिन करना होगा।'
-                        : 'You can fill out the form, but you\'ll need to login to submit your request.'}
-                    </p>
-                    <Link
-                      to="/login"
-                      className="inline-block text-sm font-medium text-blue-700 underline hover:text-blue-800"
-                    >
-                      {lang === 'hi' ? 'लॉगिन करें →' : 'Login to continue →'}
-                    </Link>
                   </div>
                 </div>
               </div>
@@ -939,18 +899,13 @@ function PropertySearch({ lang }: { lang: Lang }) {
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={isSubmitting || !user}
+              disabled={isSubmitting}
               className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
                   <Loader2 className="w-6 h-6 animate-spin" />
                   {lang === 'hi' ? 'सुरक्षित किया जा रहा है...' : 'Saving...'}
-                </>
-              ) : !user ? (
-                <>
-                  <Lock className="w-6 h-6" />
-                  {lang === 'hi' ? 'सबमिट करने के लिए लॉगिन करें' : 'Login to Submit'}
                 </>
               ) : (
                 <>
