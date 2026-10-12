@@ -45,7 +45,7 @@ if (supabaseUrl) {
     } else {
       isValidUrl = true;
       console.log('[SUPABASE] Initializing with environment variables');
-      console.log('[SUPABASE] URL:', supabaseUrl);
+      console.log('[SUPABASE] URL hostname:', urlObj.hostname);
       console.log('[SUPABASE] URL format is valid');
     }
   } catch (e) {
