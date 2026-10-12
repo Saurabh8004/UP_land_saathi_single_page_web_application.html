@@ -11,9 +11,12 @@ const envStatus = {
   urlType: typeof supabaseUrl
 };
 
+console.log('[SUPABASE] ════════════════════════════════════════════════════════');
 console.log('[SUPABASE] Environment variable status:');
 console.log('[SUPABASE]   VITE_SUPABASE_URL:', envStatus.hasUrl ? '✓ Set' : '✗ Missing');
 console.log('[SUPABASE]   VITE_SUPABASE_ANON_KEY:', envStatus.hasAnonKey ? '✓ Set' : '✗ Missing');
+console.log('[SUPABASE]   URL type:', envStatus.urlType);
+console.log('[SUPABASE]   URL length:', supabaseUrl ? supabaseUrl.length : 0);
 
 if (!supabaseUrl || !supabaseAnonKey) {
   const missingVars = [];
@@ -52,11 +55,17 @@ if (supabaseUrl) {
 
 // Create Supabase client
 let supabase: SupabaseClient;
+let isUsingDummyClient = false;
 
 if (!supabaseUrl || !supabaseAnonKey) {
   // Cannot create a valid client without credentials
   // Create a dummy client that will fail with clear errors
-  console.error('[SUPABASE] Creating client with missing credentials - all queries will fail');
+  isUsingDummyClient = true;
+  console.error('[SUPABASE] ════════════════════════════════════════════════════════');
+  console.error('[SUPABASE] ⚠️  CREATING DUMMY CLIENT - All queries will fail!');
+  console.error('[SUPABASE] This means environment variables are NOT loaded in this build.');
+  console.error('[SUPABASE] The deployment needs to be REBUILT with the environment variables.');
+  console.error('[SUPABASE] ════════════════════════════════════════════════════════');
   supabase = createClient(
     'https://invalid.supabase.co',
     'invalid-key',
@@ -70,6 +79,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 } else {
   // Valid credentials - create real client
+  isUsingDummyClient = false;
   supabase = createClient(supabaseUrl, supabaseAnonKey, {
     auth: {
       autoRefreshToken: true,
@@ -77,8 +87,21 @@ if (!supabaseUrl || !supabaseAnonKey) {
       detectSessionInUrl: true
     }
   });
-  console.log('[SUPABASE] Client initialized successfully');
+  console.log('[SUPABASE] ════════════════════════════════════════════════════════');
+  console.log('[SUPABASE] ✓ Client initialized with REAL credentials');
   console.log('[SUPABASE] Target URL hostname:', new URL(supabaseUrl).hostname);
+  console.log('[SUPABASE] ════════════════════════════════════════════════════════');
+}
+
+// Export diagnostic function
+export function getSupabaseDiagnostics() {
+  return {
+    isUsingDummyClient,
+    hasUrl: !!supabaseUrl,
+    hasAnonKey: !!supabaseAnonKey,
+    urlHostname: supabaseUrl ? new URL(supabaseUrl).hostname : null,
+    buildTime: new Date().toISOString()
+  };
 }
 
 export { supabase };
