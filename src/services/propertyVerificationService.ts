@@ -1,7 +1,7 @@
 import { supabase } from '../lib/supabase';
 
 export interface PropertyVerificationRequest {
-  user_id: string;
+  user_id?: string | null; // Optional for anonymous submissions
   full_name: string;
   mobile_number: string;
   district: string;
@@ -67,11 +67,12 @@ export async function savePropertyVerificationRequest(
     // Insert into requests table
     // Using 'whatsapp_verification' as service_type and 'free' as package_code
     // since this is a free WhatsApp-based verification request
+    // user_id can be null for anonymous Property Verification requests
     const { data: insertData, error: insertError } = await supabase
       .from('requests')
       .insert({
         request_id: requestId,
-        user_id: data.user_id,
+        user_id: data.user_id || null, // Allow null for anonymous submissions
         service_type: 'whatsapp_verification',
         package_code: 'free',
         status: 'received',
