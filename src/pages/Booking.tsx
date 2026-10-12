@@ -103,10 +103,11 @@ export default function Booking() {
         .insert({
           request_id: newRequestId,
           user_id: user.id,
+          service_type: 'property_verification',
           package_code: formData.packageCode,
           status: 'received',
           customer_name: formData.customerName,
-          customer_mobile: formData.customerMobile,
+          mobile: formData.customerMobile,
           district: formData.district,
           tehsil: formData.tehsil || null,
           village: formData.village || null,

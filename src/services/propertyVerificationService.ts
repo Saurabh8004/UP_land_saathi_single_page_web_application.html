@@ -1,6 +1,7 @@
 import { supabase } from '../lib/supabase';
 
 export interface PropertyVerificationRequest {
+  user_id: string;
   full_name: string;
   mobile_number: string;
   district: string;
@@ -70,12 +71,12 @@ export async function savePropertyVerificationRequest(
       .from('requests')
       .insert({
         request_id: requestId,
-        user_id: null, // Anonymous request
+        user_id: data.user_id,
         service_type: 'whatsapp_verification',
         package_code: 'free',
         status: 'received',
         customer_name: data.full_name,
-        customer_mobile: data.mobile_number,
+        mobile: data.mobile_number,
         district: data.district,
         tehsil: data.tehsil || null,
         village: null,

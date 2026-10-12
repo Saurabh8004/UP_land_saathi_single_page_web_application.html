@@ -591,6 +591,7 @@ function PropertyIntelligenceVisual({ lang }: { lang: Lang }) {
 // PROPERTY VERIFICATION REQUEST FORM
 // ============================================================
 function PropertySearch({ lang }: { lang: Lang }) {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     fullName: '',
     mobile: '',
@@ -631,6 +632,14 @@ function PropertySearch({ lang }: { lang: Lang }) {
     // Clear previous errors
     setSubmitError(null);
     
+    // Check if user is authenticated
+    if (!user) {
+      setSubmitError(lang === 'hi' 
+        ? 'कृपया पहले लॉगिन करें।'
+        : 'Please login first to submit a request.');
+      return;
+    }
+    
     // Validate form
     if (!validateForm()) {
       return;
@@ -659,6 +668,7 @@ function PropertySearch({ lang }: { lang: Lang }) {
 
       // Save to database first
       const result = await savePropertyVerificationRequest({
+        user_id: user.id,
         full_name: formData.fullName,
         mobile_number: formData.mobile,
         district: formData.district,
@@ -743,6 +753,40 @@ function PropertySearch({ lang }: { lang: Lang }) {
             >
               {lang === 'hi' ? 'नया अनुरोध भेजें' : 'Send New Request'}
             </button>
+          </motion.div>
+        </div>
+      </section>
+    );
+  }
+
+  // Show login prompt if user is not authenticated
+  if (!user) {
+    return (
+      <section id="search" className="py-20 md:py-28 bg-white">
+        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-white rounded-2xl p-8 shadow-lg border border-slate-100 text-center"
+          >
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Lock className="w-8 h-8 text-blue-600" />
+            </div>
+            <h3 className="text-2xl font-bold text-navy mb-2">
+              {lang === 'hi' ? 'लॉगिन आवश्यक' : 'Login Required'}
+            </h3>
+            <p className="text-slate-600 mb-6">
+              {lang === 'hi' 
+                ? 'प्रॉपर्टी वेरिफिकेशन अनुरोध सबमिट करने के लिए कृपया लॉगिन करें।'
+                : 'Please login to submit a property verification request.'}
+            </p>
+            <Link
+              to="/login"
+              className="inline-block px-6 py-3 bg-navy text-white rounded-lg font-medium hover:bg-navy-light transition-colors"
+            >
+              {lang === 'hi' ? 'लॉगिन करें' : 'Login'}
+            </Link>
           </motion.div>
         </div>
       </section>
